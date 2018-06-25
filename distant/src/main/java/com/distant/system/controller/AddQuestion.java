@@ -1,5 +1,6 @@
 package com.distant.system.controller;
 
+import com.distant.system.dao.exception.DaoException;
 import com.distant.system.entity.Question;
 import com.distant.system.service.daoservice.QuestionService;
 import com.distant.system.service.daoservice.SubjectService;
@@ -28,10 +29,19 @@ public class AddQuestion extends HttpServlet {
             String answer2 = request.getParameter("answer2");
             String answer3 = request.getParameter("answer3");
             String subject = request.getParameter("subject");
-            int subjects_id = subjectService.getSubjectId(subject);
+            int subjects_id = 0;
+            try {
+                subjects_id = subjectService.getSubjectId(subject);
+            } catch (DaoException e) {
+                e.printStackTrace();
+            }
 // Надо форму переделать чтобы еще и язык выбирать
             Question questionFromWeb = new Question(question, answer1, answer2, answer3, correctAnswer, subjects_id, 2);
-            questionService.add(questionFromWeb);
+            try {
+                questionService.add(questionFromWeb);
+            } catch (DaoException e) {
+                e.printStackTrace();
+            }
         }
 
         //request.getRequestDispatcher("/teacher/teachermath.jsp").forward(request, response);

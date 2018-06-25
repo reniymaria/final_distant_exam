@@ -1,16 +1,23 @@
 package com.distant.system.entity;
 
 public class Mark {
+    private int mark;
     private int studentId;
     private int subjectId;
 
-    public Mark(int studentId, int subjectId) {
-
+    public Mark(int mark, int studentId, int subjectId) {
+        this.mark = mark;
         this.studentId = studentId;
         this.subjectId = subjectId;
     }
 
-    public Mark(){}
+    public int getMark() {
+        return mark;
+    }
+
+    public void setMark(int mark) {
+        this.mark = mark;
+    }
 
     public int getStudentId() {
         return studentId;
@@ -28,11 +35,5 @@ public class Mark {
         this.subjectId = subjectId;
     }
 
-    @Override
-    public String toString() {
-        return "Mark{" +
-                ", studentId=" + studentId +
-                ", subjectId=" + subjectId +
-                '}';
-    }
+
 }

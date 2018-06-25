@@ -42,6 +42,9 @@
                         <button class="header-button"><fmt:message key="con.logoutbutton"/></button>
                     </form>
                 </div>
+                <div class="header-right-item">
+                    <a class="header-button" href="/teacher/teacherhome.jsp"><span class="header-text"><fmt:message key="con.teacherpage"/></span></a>
+                </div>
             </c:when>
             <c:otherwise>
                 <div class="header-right-item">

@@ -12,6 +12,7 @@
 <%@ include file="header.jsp" %>
 <div class="parent-container">
     <div class="child-container">
+
         <div class="header-text"><fmt:message key="con.welcomtext"/></div>
     </div>
 </div>

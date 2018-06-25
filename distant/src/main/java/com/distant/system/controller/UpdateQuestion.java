@@ -1,5 +1,6 @@
 package com.distant.system.controller;
 
+import com.distant.system.dao.exception.DaoException;
 import com.distant.system.entity.Question;
 import com.distant.system.service.daoservice.QuestionService;
 
@@ -17,7 +18,12 @@ public class UpdateQuestion extends HttpServlet {
 
         QuestionService questionService = new QuestionService();
         int id = Integer.parseInt(request.getParameter("questionID"));
-        Question question = questionService.find(id);
+        Question question = null;
+        try {
+            question = questionService.find(id);
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
         request.setAttribute("question", question);
         request.getRequestDispatcher("/teacher/editquestion.jsp").forward(request, response);
 
@@ -35,7 +41,11 @@ public class UpdateQuestion extends HttpServlet {
         String answer3 = request.getParameter("answer3");
 
         Question questionFromWeb = new Question(id, question, answer1, answer2, answer3, correctAnswer);
-        questionService.update(questionFromWeb);
+        try {
+            questionService.update(questionFromWeb);
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
         request.getRequestDispatcher("/questions").forward(request, response);
 
     }

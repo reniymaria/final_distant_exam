@@ -1,5 +1,6 @@
 package com.distant.system.controller;
 
+import com.distant.system.dao.exception.DaoException;
 import com.distant.system.entity.User;
 import com.distant.system.service.daoservice.UserService;
 
@@ -29,14 +30,18 @@ public class Register extends HttpServlet {
         ResourceBundle bundle = ResourceBundle.getBundle("i18n.content",locale);
 
 
-        if(userService.checkIfExist(login)){
-            request.setAttribute("errMsg", bundle.getString("con.loginexist"));
-            request.getRequestDispatcher("/register.jsp").forward(request, response);
-        }
-        else {
-            User user = new User(login,pass,name,surname,"student");
-            userService.addStudent(user);
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
+        try {
+            if(userService.checkIfExist(login)){
+                request.setAttribute("errMsg", bundle.getString("con.loginexist"));
+                request.getRequestDispatcher("/register.jsp").forward(request, response);
+            }
+            else {
+                User user = new User(login,pass,name,surname,"student");
+                userService.addStudent(user);
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            }
+        } catch (DaoException e) {
+            e.printStackTrace();
         }
 
 

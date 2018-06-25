@@ -24,7 +24,7 @@
 </p>
 <form action="${pageContext.request.contextPath}/update" method="Post">
     Question:<br>
-    <input type=hidden name="subjectID" value="${requestScope.question.subjectID}">
+    <input type=hidden name="subjectID" value="${requestScope.question.subjectId}">
     <input type="text" name="question" value="${requestScope.question.question}"><br>
     First answer:<br>
     <input type="text" name="answer1" value="${requestScope.question.answer1}">

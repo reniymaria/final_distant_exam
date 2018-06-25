@@ -13,11 +13,11 @@
 
         <div class="parent-container">
             <div class="child-container">
-                Главная страница учителя
+                <fmt:message key ="con.main.teacher"/>
                 <br>
-                Учитель может редактировать отметки сдавших экзамен
+                <a href="/results"><fmt:message key="con.exam.results" /></a>
                 <br>
-                Открыть предметы
+
                 <br>
                 Вопросы по математике на английском языке:
                 <a href="/questions?subject=math&lang=en"><fmt:message key="con.openquestions" /></a>

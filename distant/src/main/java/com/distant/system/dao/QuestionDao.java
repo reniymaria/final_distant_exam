@@ -1,5 +1,6 @@
 package com.distant.system.dao;
 
+import com.distant.system.dao.exception.DaoException;
 import com.distant.system.entity.Question;
 
 import java.util.ArrayList;
@@ -11,15 +12,15 @@ public interface QuestionDao {
     String SQL_FIND_BY_ID = "SELECT * FROM questions WHERE id = ?";
     String SQL_UPDATE_QUESTION = "UPDATE questions SET question =? answer1=? answer2=? answer3=? answer=? WHERE id=?";
 
-    List<Question> getQuestions(String subject, String language);
+    List<Question> getQuestions(String subject, String language) throws DaoException;
 
-    void add(Question question);
+    void add(Question question) throws DaoException;
 
-    Question find(int id);
+    Question find(int id) throws DaoException;
 
-    void update(Question question);
+    void update(Question question) throws DaoException;
 
-    List<Question> numberOfQuestions(String subject, String language, int offset, int records);
+    List<Question> numberOfQuestions(String subject, String language, int offset, int records) throws DaoException;
 
-    int allQuestions(String subject, String language);
+    int allQuestions(String subject, String language) throws DaoException;
 }

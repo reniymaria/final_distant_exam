@@ -1,5 +1,6 @@
 package com.distant.system.controller;
 
+import com.distant.system.dao.exception.DaoException;
 import com.distant.system.service.daoservice.UserService;
 
 import javax.servlet.ServletException;
@@ -30,6 +31,7 @@ public class LoginAuth extends HttpServlet {
          return;
         } else {
 
+            try {
                 if (!userService.isAuthorized(login,pass)) {
                     request.setAttribute("errMsg", bundle.getString("con.errorloginpassword"));
                     request.getRequestDispatcher("/login.jsp").forward(request, response);
@@ -40,6 +42,9 @@ public class LoginAuth extends HttpServlet {
                     session.setAttribute("role", "teacher");
                     response.sendRedirect(request.getContextPath() + "/teacher/teacherhome.jsp");
                 }
+            } catch (DaoException e) {
+                e.printStackTrace();
+            }
         }
 
     }

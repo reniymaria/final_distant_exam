@@ -1,5 +1,6 @@
 package com.distant.system.controller;
 
+import com.distant.system.dao.exception.DaoException;
 import com.distant.system.entity.Question;
 import com.distant.system.service.daoservice.QuestionService;
 import com.distant.system.service.daoservice.SubjectService;
@@ -29,9 +30,19 @@ public class QuestionsList extends HttpServlet {
             page = Integer.parseInt(request.getParameter("page"));
         }
 
-        List<Question> list = questionService.numberOfQuestions(subject, language, (page - 1),
-                recordsPerPage);
-        int noOfRecords = questionService.allQuestions(subject, language);
+        List<Question> list = null;
+        try {
+            list = questionService.numberOfQuestions(subject, language, (page - 1),
+                    recordsPerPage);
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+        int noOfRecords = 0;
+        try {
+            noOfRecords = questionService.allQuestions(subject, language);
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
         request.setAttribute("QuestionList", list);
         request.setAttribute("noOfPages", noOfPages);
