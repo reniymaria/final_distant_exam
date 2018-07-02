@@ -5,6 +5,7 @@ import com.distant.system.dao.conection.ConnectionPool;
 import com.distant.system.dao.conection.ConnectionPoolException;
 import com.distant.system.dao.exception.DaoException;
 import com.distant.system.dao.mysql.AbstractDAO;
+import com.distant.system.dao.util.DaoUtil;
 import com.distant.system.entity.dto.ExamResult;
 
 
@@ -28,8 +29,8 @@ public class InMemoryMarkDao extends AbstractDAO implements MarkDao {
             connection = getConnection();
             statement = connection.prepareStatement(SQL_ADD_MARK);
             statement.setInt(1, mark);
-            statement.setInt(2, studentId);
-            statement.setInt(3, subjectId);
+            statement.setInt(2, subjectId);
+            statement.setInt(3, studentId);
             statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception during adding mark", e);
@@ -82,27 +83,37 @@ public class InMemoryMarkDao extends AbstractDAO implements MarkDao {
     @Override
     public List<ExamResult> numberOfMarks(int offset, int records) throws DaoException {
         List<ExamResult> allMarks = getExamMarks();
-        List<ExamResult> result = new ArrayList<>();
-        for (int i = 0; i < allMarks.size(); i++) {
-            if (offset == 0) {
-                if (i < records) {
-                    result.add(allMarks.get(i));
-
-                }
-            } else if (offset > 0) {
-                if (i > offset * records && i < (offset * records + records + 1)) {
-                    result.add(allMarks.get(i));
-                }
-
-            }
-        }
-        return result;
+        return DaoUtil.numberOfStrings(allMarks, offset, records);
     }
 
     @Override
     public int allMarks() throws DaoException {
         List<ExamResult> allMarks = getExamMarks();
         return allMarks.size();
+    }
+
+    @Override
+    public List<ExamResult> numberOfStudentMarks(int studentId, int offset, int records) throws DaoException {
+        List<ExamResult> allMarks = getExamMarks();
+        List<ExamResult> studentResult = new ArrayList<>();
+        for (ExamResult examResult : allMarks) {
+            if (examResult.getUserID() == studentId) {
+                studentResult.add(examResult);
+            }
+        }
+        return DaoUtil.numberOfStrings(studentResult, offset, records);
+    }
+
+    @Override
+    public int allStudentMarks(int studentId) throws DaoException {
+        List<ExamResult> allMarks = getExamMarks();
+        List<ExamResult> studentResult = new ArrayList<>();
+        for (ExamResult examResult : allMarks) {
+            if (examResult.getUserID() == studentId) {
+                studentResult.add(examResult);
+            }
+        }
+        return studentResult.size();
     }
 
     @Override

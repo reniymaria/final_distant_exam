@@ -28,4 +28,16 @@ public class MarkService {
     public void deleteMark(int userId, int subjectId) throws DaoException {
         markDao.deleteMark(userId, subjectId);
     }
+
+    public List<ExamResult> numberOfStudentMarks(int studentId, int offset, int records) throws DaoException {
+        return markDao.numberOfStudentMarks(studentId, offset, records);
+    }
+
+    public int allStudentMarks(int studentId) throws DaoException {
+        return markDao.allStudentMarks(studentId);
+    }
+
+    public void addMark(int mark, int studentId, int subjectId) throws DaoException {
+        markDao.addMark(mark, studentId, subjectId);
+    }
 }

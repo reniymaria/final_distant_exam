@@ -15,6 +15,8 @@ public interface DAOManager {
 
     SubjectDao getSubjectDao();
 
+    LanguageDao getLanguageDao();
+
     void startTransaction() throws DaoException;
 
     void setTransactionIsolation(int level) throws DaoException;

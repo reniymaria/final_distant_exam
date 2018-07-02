@@ -23,4 +23,6 @@ public interface UserDao {
 
     boolean checkIfExist(String login) throws DaoException;
 
+    int findUserID(String login) throws DaoException;
+
 }

@@ -2,10 +2,7 @@ package com.distant.system.dao.mysql;
 
 import com.distant.system.dao.*;
 import com.distant.system.dao.exception.DaoException;
-import com.distant.system.dao.mysql.impl.InMemoryMarkDao;
-import com.distant.system.dao.mysql.impl.InMemoryQuestionDao;
-import com.distant.system.dao.mysql.impl.InMemorySubjectDao;
-import com.distant.system.dao.mysql.impl.InMemoryUserDao;
+import com.distant.system.dao.mysql.impl.*;
 
 import java.sql.Connection;
 
@@ -21,6 +18,7 @@ public class MainDAOManager implements DAOManager {
     private static final MarkDao markDao = new InMemoryMarkDao();
     private static final QuestionDao questionDao = new InMemoryQuestionDao();
     private static final SubjectDao subjectDao = new InMemorySubjectDao();
+    private static final LanguageDao languageDao = new InMemoryLanguageDao();
 
     @Override
     public UserDao getUserDAO() {
@@ -40,6 +38,11 @@ public class MainDAOManager implements DAOManager {
     @Override
     public SubjectDao getSubjectDao() {
         return subjectDao;
+    }
+
+    @Override
+    public LanguageDao getLanguageDao() {
+        return languageDao;
     }
 
 

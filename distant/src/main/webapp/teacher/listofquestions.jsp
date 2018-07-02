@@ -3,84 +3,85 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title></title>
-        <link rel="stylesheet" href="../css/app.css">
-    </head>
-    <body>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
 
-        <%@ include file="/header.jsp" %>
+<%@ include file="/header.jsp" %>
 
-        <div class="parent-container">
-            <div class="child-container">
-                <fmt:message key="con.question.title" var="conquestiontitle"/>
-                <fmt:message key="con.answer1" var="conanswer1"/>
-                <fmt:message key="con.answer2" var="conanswer2"/>
-                <fmt:message key="con.answer3" var="conanswer3"/>
-                <fmt:message key="con.numbercoranswer" var="connumbercoranswer"/>
-                <fmt:message key="con.action" var="conaction"/>
+<div class="parent-container">
+    <div class="child-container">
+        <fmt:message key="con.question.title" var="conquestiontitle"/>
+        <fmt:message key="con.answer1" var="conanswer1"/>
+        <fmt:message key="con.answer2" var="conanswer2"/>
+        <fmt:message key="con.answer3" var="conanswer3"/>
+        <fmt:message key="con.numbercoranswer" var="connumbercoranswer"/>
+        <fmt:message key="con.action" var="conaction"/>
 
-                <table border="1" cellpadding="5" cellspacing="5">
-                    <tr>
-                        <th>${conquestiontitle}</th>
-                        <th>${conanswer1}</th>
-                        <th>${conanswer2}</th>
-                        <th>${conanswer3}</th>
-                        <th>${connumbercoranswer}</th>
-                        <th>${conaction}</th>
-                    </tr>
-                    <c:forEach var="question" items="${requestScope.QuestionList}">
+        <table border="1" cellpadding="5" cellspacing="5">
+            <tr>
+                <th>${conquestiontitle}</th>
+                <th>${conanswer1}</th>
+                <th>${conanswer2}</th>
+                <th>${conanswer3}</th>
+                <th>${connumbercoranswer}</th>
+                <th>${conaction}</th>
+            </tr>
+            <c:forEach var="question" items="${requestScope.QuestionList}">
 
-                        <tr>
-                            <!-- create cells of row -->
-                            <td>${question.question}</td>
-                            <td>${question.answer1}</td>
-                            <td>${question.answer2}</td>
-                            <td>${question.answer3}</td>
-                            <td>${question.correctAnswer}</td>
-                            <td>
-                                <form class="input-form" action="${pageContext.request.contextPath}/update" method="get">
-                                    <button>Редактировать</button>
-                                    <input type="hidden" name="questionID" value="${question.questionId}"/>
-                                </form>
-                            </td>
-                            <!-- close row -->
-                        </tr>
-                        <!-- close the loop -->
-                    </c:forEach>
-                </table>
+                <tr>
+                    <td>${question.question}</td>
+                    <td>${question.answer1}</td>
+                    <td>${question.answer2}</td>
+                    <td>${question.answer3}</td>
+                    <td>${question.correctAnswer}</td>
+                    <td>
+                        <form class="input-form" action="${pageContext.request.contextPath}/update" method="get">
+                            <button><fmt:message key="con.edit"/></button>
+                            <input type="hidden" name="questionID" value="${question.questionId}"/>
+                        </form>
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
 
-                <%--For displaying Page numbers.
-                The when condition does not display a link for the current page--%>
-                <table border="1" cellpadding="5" cellspacing="5">
-                    <tr>
-                        <c:if test="${requestScope.currentPage != 1}">
-                            <td><a href="questions?page=${requestScope.currentPage - 1}&lang=en&subject=math">Previous</a></td>
-                        </c:if>
 
-                        <c:forEach begin="1" end="${requestScope.noOfPages}" var="i">
-                            <c:choose>
-                                <c:when test="${requestScope.currentPage eq i}">
-                                    <td>${i}</td>
-                                </c:when>
-                                <c:otherwise>
-                                    <td><a href="questions?page=${i}&lang=en&subject=math">${i}</a></td>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:forEach>
+        <table border="1" cellpadding="5" cellspacing="5">
+            <tr>
+                <c:if test="${requestScope.currentPage != 1}">
+                    <td><a href="questions?page=${requestScope.currentPage - 1}"><fmt:message key="con.prev"/></a></td>
+                </c:if>
 
-                        <c:if test="${requestScope.currentPage lt requestScope.noOfPages}">
-                            <td><a href="questions?page=${requestScope.currentPage + 1}&lang=en&subject=math">Next</a></td>
-                        </c:if>
-                    </tr>
-                </table>
+                <c:forEach begin="1" end="${requestScope.noOfPages}" var="i">
+                    <c:choose>
+                        <c:when test="${requestScope.currentPage eq i}">
+                            <td>${i}</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td><a href="questions?page=${i}">${i}</a></td>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
 
-                <br>
+                <c:if test="${requestScope.currentPage lt requestScope.noOfPages}">
+                    <td><a href="questions?page=${requestScope.currentPage + 1}"><fmt:message key="con.next"/></a></td>
+                </c:if>
+            </tr>
+        </table>
 
-                <a class="button" href="teacher/addquestion.jsp"><fmt:message key="con.addquestionlabel"/></a>
-            </div>
-        </div>
+        <br>
 
-    </body>
+        <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
+            <button><fmt:message key="con.addquestionlabel"/></button>
+            <input type="hidden" name="command" value="addquestion"/>
+            <input type="hidden" name="subjectId" value="${requestScope.subjectId}"/>
+            <input type="hidden" name="langId" value="${requestScope.langId}"/>
+        </form>
+    </div>
+</div>
+
+</body>
 </html>

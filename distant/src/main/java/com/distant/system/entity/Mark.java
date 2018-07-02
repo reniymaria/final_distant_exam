@@ -1,6 +1,9 @@
 package com.distant.system.entity;
 
-public class Mark {
+import java.io.Serializable;
+
+public class Mark implements Serializable {
+
     private int mark;
     private int studentId;
     private int subjectId;

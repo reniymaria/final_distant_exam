@@ -6,6 +6,7 @@ import com.distant.system.dao.conection.ConnectionPool;
 import com.distant.system.dao.conection.ConnectionPoolException;
 import com.distant.system.dao.exception.DaoException;
 import com.distant.system.dao.mysql.AbstractDAO;
+import com.distant.system.dao.util.DaoUtil;
 import com.distant.system.entity.Question;
 
 import java.sql.*;
@@ -38,6 +39,47 @@ public class InMemoryQuestionDao extends AbstractDAO implements QuestionDao {
                 question.setAnswer3(rs.getString("answer3"));
                 question.setCorrectAnswer(rs.getInt("answer"));
                 question.setSubjectId(rs.getInt("subjects_id"));
+                question.setLanguageId(rs.getInt("languages_id"));
+                questions.add(question);
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Exception during getting questions from DB.", e);
+        } finally {
+            try {
+                closeMainConnection(connection);
+                ConnectionPool.getInstance().closeDBResources(rs, statement);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return questions;
+    }
+
+    @Override
+    public List<Question> getQuestionsById(int subjectId, int langId) throws DaoException {
+        List<Question> questions = new ArrayList<Question>();
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(SQL_FIND_QUESTION_BY_ID);
+            statement.setInt(1, subjectId);
+            statement.setInt(2, langId);
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                Question question = new Question();
+                question.setQuestionId(rs.getInt("id"));
+                question.setQuestion(rs.getString("question"));
+                question.setAnswer1(rs.getString("answer1"));
+                question.setAnswer2(rs.getString("answer2"));
+                question.setAnswer3(rs.getString("answer3"));
+                question.setCorrectAnswer(rs.getInt("answer"));
+                question.setSubjectId(rs.getInt("subjects_id"));
+                question.setLanguageId(rs.getInt("languages_id"));
                 questions.add(question);
             }
         } catch (SQLException | ConnectionPoolException e) {
@@ -128,12 +170,30 @@ public class InMemoryQuestionDao extends AbstractDAO implements QuestionDao {
             connection = getConnection();
             statement = connection.prepareStatement(SQL_UPDATE_QUESTION);
             statement.setString(1, question.getQuestion());
-            statement.setString(2, question.getAnswer1());
-            statement.setString(3, question.getAnswer2());
-            statement.setString(4, question.getAnswer3());
-            statement.setInt(5, question.getCorrectAnswer());
-            statement.setInt(6, question.getQuestionId());
+            statement.setInt(2, question.getQuestionId());
             statement.executeUpdate();
+
+            statement = connection.prepareStatement(SQL_UPDATE_ANSWER1);
+            statement.setString(1, question.getAnswer1());
+            statement.setInt(2, question.getQuestionId());
+            statement.executeUpdate();
+
+            statement = connection.prepareStatement(SQL_UPDATE_ANSWER2);
+            statement.setString(1, question.getAnswer2());
+            statement.setInt(2, question.getQuestionId());
+            statement.executeUpdate();
+
+            statement = connection.prepareStatement(SQL_UPDATE_ANSWER3);
+            statement.setString(1, question.getAnswer3());
+            statement.setInt(2, question.getQuestionId());
+            statement.executeUpdate();
+
+            statement = connection.prepareStatement(SQL_UPDATE_ANSWER);
+            statement.setInt(1, question.getCorrectAnswer());
+            statement.setInt(2, question.getQuestionId());
+            statement.executeUpdate();
+
+
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception during updating question", e);
         } finally {
@@ -147,28 +207,14 @@ public class InMemoryQuestionDao extends AbstractDAO implements QuestionDao {
     }
 
     @Override
-    public List<Question> numberOfQuestions(String subject, String language, int offset, int records) throws DaoException {
-        List<Question> allQuestions = getQuestions(subject, language);
-        List<Question> result = new ArrayList<>();
-        for (int i = 0; i < allQuestions.size(); i++) {
-            if (offset == 0) {
-                if (i < records) {
-                    result.add(allQuestions.get(i));
-
-                }
-            } else if (offset > 0) {
-                if (i > offset * records && i < (offset * records + records + 1)) {
-                    result.add(allQuestions.get(i));
-                }
-
-            }
-        }
-        return result;
+    public List<Question> numberOfQuestions(int subjectId, int langId, int offset, int records) throws DaoException {
+        List<Question> allQuestions = getQuestionsById(subjectId, langId);
+        return DaoUtil.numberOfStrings(allQuestions, offset, records);
     }
 
     @Override
-    public int allQuestions(String subject, String language) throws DaoException {
-        List<Question> allQuestions = getQuestions(subject, language);
+    public int allQuestions(int subjectId, int langId) throws DaoException {
+        List<Question> allQuestions = getQuestionsById(subjectId, langId);
         return allQuestions.size();
 
     }

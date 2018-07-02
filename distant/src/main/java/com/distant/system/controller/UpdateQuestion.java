@@ -9,7 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 @WebServlet("/update")
 public class UpdateQuestion extends HttpServlet {
@@ -33,20 +36,30 @@ public class UpdateQuestion extends HttpServlet {
 
         QuestionService questionService = new QuestionService();
 
-        int id = Integer.parseInt(request.getParameter("id"));
+        HttpSession session = request.getSession(true);
+        Locale locale = new Locale(session.getAttribute("language").toString());
+        ResourceBundle bundle = ResourceBundle.getBundle("i18n.content", locale);
+
+        int questionId = Integer.parseInt(request.getParameter("questionId"));
         String question = request.getParameter("question");
         int correctAnswer = Integer.parseInt(request.getParameter("correctAnswer"));
         String answer1 = request.getParameter("answer1");
         String answer2 = request.getParameter("answer2");
         String answer3 = request.getParameter("answer3");
+        int subjectId =Integer.parseInt(request.getParameter("subjectId"));
+        int langId = Integer.parseInt(request.getParameter("langId"));
 
-        Question questionFromWeb = new Question(id, question, answer1, answer2, answer3, correctAnswer);
+        Question questionFromWeb = new Question(questionId, question, answer1, answer2, answer3, correctAnswer);
         try {
             questionService.update(questionFromWeb);
         } catch (DaoException e) {
             e.printStackTrace();
         }
-        request.getRequestDispatcher("/questions").forward(request, response);
+
+        request.setAttribute("subjectId", subjectId);
+        request.setAttribute("langId", langId);
+        request.setAttribute("msgeditquestion", bundle.getString("con.msgeditquestion"));
+        request.getRequestDispatcher("/teacher/actioncompleted.jsp").forward(request, response);
 
     }
 

@@ -12,7 +12,8 @@
         <%@ include file="header.jsp" %>
         <div class="parent-container">
             <div class="child-container">
-                <form class="input-form" action="${pageContext.request.contextPath}/register" method="Post">
+                <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Post">
+                    <input type = "hidden" name = "command" value = "register" >
                     <input placeholder="<fmt:message key="con.usernamelabel"/>" type="text" name="login"/><br/>
                     <input placeholder="<fmt:message key="con.passwordlabel"/>" type="password" name="password"/><br/>
                     <input placeholder="<fmt:message key="con.passwordlabel"/>" type="password" name="repassword"/><br/>

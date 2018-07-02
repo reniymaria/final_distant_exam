@@ -9,27 +9,20 @@
 </head>
 <body>
 <%@ include file="/header.jsp" %>
-<br>
-<div>------------------------------------------------------------------------------</div>
-<br>
-<p>
-    Add question:
-</p>
-<form action="${pageContext.request.contextPath}/addquestion" method = "Post">
-    Question:<br>
-    <input type="text" name="question"><br>
-    First answer:<br>
-    <input type="text" name="answer1">
-    Second answer:<br>
-    <input type="text" name="answer2">
-    Third answer:<br>
-    <input type="text" name="answer3">
-    Number of correct answer:<br>
-    <input type="text" name="correctAnswer">
-    Subject:<br>
-    <input type="text" name="subject">
-    <button><fmt:message key = "con.buttonsubmit"/></button>
-</form>
 
+<div class="parent-container">
+    <div class="child-container">
+        <form class="input-form" action="${pageContext.request.contextPath}/addquestion" method="Post">
+            <input placeholder="<fmt:message key="con.question.title"/>" type="text" name="question"><br>
+            <input placeholder="<fmt:message key="con.answer1"/>" type="text" name="answer1">
+            <input placeholder="<fmt:message key="con.answer2"/>" type="text" name="answer2">
+            <input placeholder="<fmt:message key="con.answer3"/>" type="text" name="answer3">
+            <input placeholder="<fmt:message key="con.numbercoranswer"/>" type="text" name="correctAnswer">
+            <input  type="hidden" name="subjectId" value ="${requestScope.subjectId}">
+            <input  type="hidden" name="langId" value ="${requestScope.languageId}">
+            <button><fmt:message key="con.buttonsubmit"/></button>
+        </form>
+    </div>
+</div>
 </body>
 </html>

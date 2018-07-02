@@ -20,7 +20,8 @@
                         <c:out value="${requestScope.errMsg}"/>
                     </c:if>
                 </div>
-                <form class="input-form" action="${pageContext.request.contextPath}/loginpage" method="Post">
+                <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Post">
+                    <input type = "hidden" name = "command" value = "login" >
                     <input placeholder="<fmt:message key="con.usernamelabel"/>" type="text" name="login"/><br/>
                     <input placeholder="<fmt:message key="con.passwordlabel"/>" type="password" name="password"/><br/>
                     <button><fmt:message key="con.buttonsubmit"/></button>

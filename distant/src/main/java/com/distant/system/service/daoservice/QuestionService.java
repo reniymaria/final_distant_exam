@@ -1,12 +1,9 @@
 package com.distant.system.service.daoservice;
 
 import com.distant.system.dao.DAOFactory;
-import com.distant.system.dao.DAOFactorySingl;
 import com.distant.system.dao.DAOManager;
 import com.distant.system.dao.QuestionDao;
 import com.distant.system.dao.exception.DaoException;
-import com.distant.system.factory.Factory;
-import com.distant.system.factory.FactoryImpl;
 import com.distant.system.entity.Question;
 
 import java.util.List;
@@ -32,11 +29,11 @@ public class QuestionService {
         questionDao.update(question);
     }
 
-    public List<Question> numberOfQuestions(String subject, String language, int offset, int records) throws DaoException {
-        return questionDao.numberOfQuestions(subject, language, offset, records);
+    public List<Question> numberOfQuestions(int subjectId, int langId, int offset, int records) throws DaoException {
+        return questionDao.numberOfQuestions(subjectId, langId, offset, records);
     }
 
-    public int allQuestions(String subject, String language) throws DaoException {
-        return questionDao.allQuestions(subject,language);
+    public int allQuestions(int subjectId, int langId) throws DaoException {
+        return questionDao.allQuestions(subjectId, langId);
     }
 }

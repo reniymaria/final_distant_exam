@@ -13,10 +13,10 @@
     <nav class="header-container">
         <i class="header-item header-logo"></i>
         <div class="header-item">
-            <a class="header-button" href="index.jsp"><span class="header-text"><fmt:message key="con.homepage" /></span></a>
+            <a class="header-button" href="/index.jsp"><span class="header-text"><fmt:message key="con.homepage" /></span></a>
         </div>
         <div class="header-item">
-            <a class="header-button" href="books.jsp"><span class="header-text"><fmt:message key="con.bookspage" /></span></a>
+            <a class="header-button" href="/books.jsp"><span class="header-text"><fmt:message key="con.bookspage" /></span></a>
         </div>
 
         <form class="header-item header-right-item language">
@@ -30,15 +30,20 @@
             <c:when test="${sessionScope.role=='student'}">
                 <div class="header-right-item">
                     <span class="header-text"><fmt:message key="con.student"/></span>
-                    <form action="${pageContext.request.contextPath}/logout" method="Get">
+                    <form action="${pageContext.request.contextPath}/controller" method="Get">
+                        <input type = "hidden" name = "command" value = "logout" >
                         <button class="header-button"><fmt:message key="con.logoutbutton"/></button>
                     </form>
+                </div>
+                <div class="header-right-item">
+                    <a class="header-button" href="/student/studenthome.jsp"><span class="header-text"><fmt:message key="con.studentpage"/></span></a>
                 </div>
             </c:when>
             <c:when test="${sessionScope.role=='teacher'}">
                 <div class="header-right-item">
                     <span class="header-text"><fmt:message key="con.teacher"/> </span>
-                    <form action="${pageContext.request.contextPath}/logout" method="Get">
+                    <form action="${pageContext.request.contextPath}/controller" method="Get">
+                        <input type = "hidden" name = "command" value = "logout" >
                         <button class="header-button"><fmt:message key="con.logoutbutton"/></button>
                     </form>
                 </div>

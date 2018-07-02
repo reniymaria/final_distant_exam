@@ -1,6 +1,8 @@
 package com.distant.system.entity;
 
-public class Language {
+import java.io.Serializable;
+
+public class Language implements Serializable {
 
     private int languageID;
     private String language;

@@ -32,4 +32,8 @@ public class UserService {
         userDao.addStudent(user);
     }
 
+    public int findUserID(String login) throws DaoException {
+        return userDao.findUserID(login);
+    }
+
 }

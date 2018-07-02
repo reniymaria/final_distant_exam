@@ -1,6 +1,9 @@
 package com.distant.system.entity;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
+
     private int userID;
     private String login;
     private String password;

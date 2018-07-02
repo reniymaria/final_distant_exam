@@ -1,12 +1,10 @@
-package com.distant.system.controller;
+package com.distant.system.command;
 
 import com.distant.system.dao.exception.DaoException;
 import com.distant.system.entity.User;
 import com.distant.system.service.daoservice.UserService;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,10 +12,16 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-@WebServlet("/register")
-public class Register extends HttpServlet {
+public class RegisterCommand extends AbstractCommand {
+    @Override
+    public void executeGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.getRequestDispatcher("/register.jsp").forward(request, response);
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    }
+
+    @Override
+    public void executePost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         UserService userService = new UserService();
         String login = request.getParameter("login");
         String pass = request.getParameter("password");
@@ -43,12 +47,5 @@ public class Register extends HttpServlet {
         } catch (DaoException e) {
             e.printStackTrace();
         }
-
-
     }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/register.jsp").forward(request, response);
-    }
-
 }

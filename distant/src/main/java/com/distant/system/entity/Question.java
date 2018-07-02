@@ -1,6 +1,9 @@
 package com.distant.system.entity;
 
-public class Question {
+import java.io.Serializable;
+
+public class Question implements Serializable {
+
     private int questionId;
     private String question;
     private String answer1;

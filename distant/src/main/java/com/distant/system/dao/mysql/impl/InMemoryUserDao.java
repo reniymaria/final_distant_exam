@@ -53,7 +53,7 @@ public class InMemoryUserDao extends AbstractDAO implements UserDao {
 
 
     @Override
-    public String findPosition(String login) throws DaoException  {
+    public String findPosition(String login) throws DaoException {
         String position = "";
         List<User> users = allUsers();
         for (User usersList : users) {
@@ -95,11 +95,11 @@ public class InMemoryUserDao extends AbstractDAO implements UserDao {
     }
 
     @Override
-    public boolean isAuthorized(String login, String password) throws DaoException{
+    public boolean isAuthorized(String login, String password) throws DaoException {
         boolean isFound = false;
         List<User> users = allUsers();
-        for(User allUser: users){
-            if(allUser.getLogin().equalsIgnoreCase(login) && allUser.getPassword().equals(password)){
+        for (User allUser : users) {
+            if (allUser.getLogin().equalsIgnoreCase(login) && allUser.getPassword().equals(password)) {
                 isFound = true;
                 break;
             }
@@ -109,7 +109,7 @@ public class InMemoryUserDao extends AbstractDAO implements UserDao {
     }
 
     @Override
-    public boolean checkIfExist(String login) throws DaoException{
+    public boolean checkIfExist(String login) throws DaoException {
         List<User> users = allUsers();
         boolean isExist = false;
         for (User user : users) {
@@ -118,6 +118,20 @@ public class InMemoryUserDao extends AbstractDAO implements UserDao {
             }
         }
         return isExist;
+    }
+
+    @Override
+    public int findUserID(String login) throws DaoException {
+        List<User> users = allUsers();
+        int userId = 0;
+        for (User user : users) {
+            if (user.getLogin().equalsIgnoreCase(login)) {
+                userId = user.getUserID();
+            }
+
+        }
+        return userId;
+
     }
 
 

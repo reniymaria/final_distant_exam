@@ -1,9 +1,9 @@
 package com.distant.system.entity.dto;
 
-
+import java.io.Serializable;
 import java.util.Objects;
 
-public class ExamResult {
+public class ExamResult implements Serializable {
 
     private String name;
     private String surname;

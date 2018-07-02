@@ -12,8 +12,23 @@
 <%@ include file="header.jsp" %>
 <div class="parent-container">
     <div class="child-container">
-
         <div class="header-text"><fmt:message key="con.welcomtext"/></div>
+
+        <br>
+        <br>
+
+        <c:choose>
+            <c:when test="${sessionScope.role=='student'}">
+                <a class="button" href="/student/studenthome.jsp"><fmt:message key="con.studentpage"/></a>
+            </c:when>
+            <c:when test="${sessionScope.role=='teacher'}">
+                <a class="button" href="/teacher/teacherhome.jsp"><fmt:message key="con.teacherpage"/></a>
+            </c:when>
+            <c:otherwise>
+                <a class="button" href="login.jsp"><fmt:message key="con.loginmessage"/></a>
+            </c:otherwise>
+        </c:choose>
+
     </div>
 </div>
 </body>

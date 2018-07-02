@@ -15,12 +15,12 @@
             <div class="child-container">
                 <fmt:message key ="con.main.teacher"/>
                 <br>
-                <a href="/results"><fmt:message key="con.exam.results" /></a>
                 <br>
-
+                <a class="button" href="/results"><fmt:message key="con.exam.results" /></a>
                 <br>
-                Вопросы по математике на английском языке:
-                <a href="/questions?subject=math&lang=en"><fmt:message key="con.openquestions" /></a>
+                <br>
+                <a class="button" href="/subjects"><fmt:message key="con.subjects" /></a>
+                <br>
             </div>
         </div>
     </body>

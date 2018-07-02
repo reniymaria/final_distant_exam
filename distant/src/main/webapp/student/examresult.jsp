@@ -13,14 +13,16 @@
 
 <div class="parent-container">
     <div class="child-container">
-        <fmt:message key ="con.main.student"/>
-        <br>
-        <br>
-        <a class="button" href="/subjectlist"><fmt:message key="con.available.exams" /></a>
-        <br>
-        <br>
-        <a class="button" href="/examlist"><fmt:message key="con.open.exam.results" /></a>
+        <div class="error-message">
+            <c:if test="${requestScope.result != null}">
+                <c:out value="${requestScope.result}"/>
+            </c:if>
+            <br>
+            <a href="/examlist">All exam results</a>
+        </div>
     </div>
 </div>
 </body>
 </html>
+
+
