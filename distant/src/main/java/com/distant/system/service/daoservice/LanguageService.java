@@ -15,4 +15,8 @@ public class LanguageService {
 
     }
 
+    public String getLanguageById(int id) throws DaoException {
+        return languageDao.getLanguageById(id);
+    }
+
 }

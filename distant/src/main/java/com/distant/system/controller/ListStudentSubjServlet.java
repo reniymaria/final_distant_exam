@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/subjectlist")
+@WebServlet("/subject_list")
 public class ListStudentSubjServlet extends HttpServlet {
 
     /**
@@ -49,7 +49,7 @@ public class ListStudentSubjServlet extends HttpServlet {
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
 
-        request.getRequestDispatcher("/student/examslist.jsp").forward(request, response);
+        request.getRequestDispatcher("/examing_list").forward(request, response);
 
     }
 }

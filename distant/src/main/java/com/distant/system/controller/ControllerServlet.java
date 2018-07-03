@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.distant.system.command.AbstractCommand;
-import com.distant.system.command.CommandContainer;
+import com.distant.system.controller.command.AbstractCommand;
+import com.distant.system.controller.command.CommandContainer;
 
 /**
  * Servlet implementation class ControllerServlet

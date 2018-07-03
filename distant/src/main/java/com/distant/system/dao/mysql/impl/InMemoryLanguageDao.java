@@ -43,4 +43,33 @@ public class InMemoryLanguageDao extends AbstractDAO implements LanguageDao {
 
         return languageID;
     }
+
+    @Override
+    public String getLanguageById(int id) throws DaoException {
+        String language = "";
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(SQL_LANGUAGE_BY_ID);
+            statement.setInt(1, id);
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                language = rs.getString("language");
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Exception during finding question", e);
+        } finally {
+            try {
+                closeMainConnection(connection);
+                ConnectionPool.getInstance().closeDBResources(rs, statement);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return language;
+    }
 }

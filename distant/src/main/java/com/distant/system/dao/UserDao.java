@@ -25,4 +25,6 @@ public interface UserDao {
 
     int findUserID(String login) throws DaoException;
 
+    String getNameSurname(String login) throws DaoException;
+
 }

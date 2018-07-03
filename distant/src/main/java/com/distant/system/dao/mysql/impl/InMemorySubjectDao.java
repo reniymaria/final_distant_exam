@@ -188,4 +188,33 @@ public class InMemorySubjectDao extends AbstractDAO implements SubjectDao {
             }
         }
     }
+
+    @Override
+    public String getSubjectById(int id) throws DaoException {
+        String subject = "";
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(SQL_SUBJECT_BY_ID);
+            statement.setInt(1, id);
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                subject = rs.getString("subject");
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Exception during getting subjects from DB.", e);
+        } finally {
+            try {
+                closeMainConnection(connection);
+                ConnectionPool.getInstance().closeDBResources(rs, statement);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return subject;
+    }
 }

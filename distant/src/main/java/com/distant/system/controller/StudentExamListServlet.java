@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
-@WebServlet("/examlist")
+@WebServlet("/exam_list")
 public class StudentExamListServlet extends HttpServlet {
 
     /**
@@ -25,7 +27,19 @@ public class StudentExamListServlet extends HttpServlet {
         MarkService markService =  new MarkService();
 
         HttpSession session = request.getSession();
+        Locale locale = new Locale(session.getAttribute("language").toString());
+        ResourceBundle bundle = ResourceBundle.getBundle("i18n.content", locale);
+
         int studentId = (int) session.getAttribute("studentID");
+
+        try {
+            if(markService.allStudentMarks(studentId) == 0){
+                request.setAttribute("listEmpty", bundle.getString("con.list.empty"));
+            }
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+
 
         int page = 1;
         int recordsPerPage = 3;
@@ -50,7 +64,7 @@ public class StudentExamListServlet extends HttpServlet {
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
 
-        request.getRequestDispatcher("/student/allexamresults.jsp").forward(request, response);
+        request.getRequestDispatcher("/mark_results").forward(request, response);
 
     }
 }

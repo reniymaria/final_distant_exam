@@ -9,23 +9,23 @@
     <title>Distant exam</title>
 </head>
 <body>
-<%@ include file="header.jsp" %>
+<%@ include file="WEB-INF/jsp/header.jsp" %>
 <div class="parent-container">
-    <div class="child-container">
+    <div class="child-container align-center">
         <div class="header-text"><fmt:message key="con.welcomtext"/></div>
-
-        <br>
-        <br>
 
         <c:choose>
             <c:when test="${sessionScope.role=='student'}">
-                <a class="button" href="/student/studenthome.jsp"><fmt:message key="con.studentpage"/></a>
+                <a class="button margin-top-20" href="${pageContext.request.contextPath}/student_home"><fmt:message
+                        key="con.studentpage"/></a>
             </c:when>
             <c:when test="${sessionScope.role=='teacher'}">
-                <a class="button" href="/teacher/teacherhome.jsp"><fmt:message key="con.teacherpage"/></a>
+                <a class="button margin-top-20" href="${pageContext.request.contextPath}/teacher_home"><fmt:message
+                        key="con.teacherpage"/></a>
             </c:when>
             <c:otherwise>
-                <a class="button" href="login.jsp"><fmt:message key="con.loginmessage"/></a>
+                <a class="button margin-top-20" href="${pageContext.request.contextPath}/login"><fmt:message
+                        key="con.loginmessage"/></a>
             </c:otherwise>
         </c:choose>
 

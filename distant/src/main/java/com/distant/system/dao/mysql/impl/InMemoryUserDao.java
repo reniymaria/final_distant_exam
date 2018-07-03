@@ -134,5 +134,18 @@ public class InMemoryUserDao extends AbstractDAO implements UserDao {
 
     }
 
+    @Override
+    public String getNameSurname(String login) throws DaoException {
+        String nameAndSurname = "";
+        List<User> users = allUsers();
+        for (User user : users) {
+            if (user.getLogin().equalsIgnoreCase(login)) {
+                nameAndSurname = user.getName() + " " + user.getSurname();
+            }
+
+        }
+        return nameAndSurname;
+    }
+
 
 }

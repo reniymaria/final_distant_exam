@@ -6,18 +6,22 @@ import com.distant.system.service.daoservice.QuestionService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 @WebServlet("/questions")
 public class ListQuestionsServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         QuestionService questionService = new QuestionService();
+
+
+        HttpSession session = request.getSession(true);
+        Locale locale = new Locale(session.getAttribute("language").toString());
+        ResourceBundle bundle = ResourceBundle.getBundle("i18n.content", locale);
 
         int subjectId = 0;
         int langId = 0;
@@ -56,10 +60,14 @@ public class ListQuestionsServlet extends HttpServlet {
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
 
-
         request.setAttribute("subjectId", subjectId);
         request.setAttribute("langId", langId);
-        request.getRequestDispatcher("/teacher/listofquestions.jsp").forward(request, response);
+
+        if(noOfRecords==0){
+            request.setAttribute("listEmpty", bundle.getString("con.list.empty"));
+        }
+
+        request.getRequestDispatcher("/question_list").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

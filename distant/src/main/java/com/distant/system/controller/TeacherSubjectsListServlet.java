@@ -46,7 +46,7 @@ public class TeacherSubjectsListServlet extends HttpServlet {
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
 
-        request.getRequestDispatcher("/teacher/listsubject.jsp").forward(request, response);
+        request.getRequestDispatcher("/teacher_list_subject").forward(request, response);
 
     }
 

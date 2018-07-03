@@ -41,7 +41,11 @@ public class SubjectService {
         subjectDao.addSubject(subject);
     }
 
-    public void updateSubject(int subjectId, String value) throws DaoException{
-        subjectDao.updateSubject(subjectId,value);
+    public void updateSubject(int subjectId, String value) throws DaoException {
+        subjectDao.updateSubject(subjectId, value);
+    }
+
+    public String getSubjectById(int id) throws DaoException {
+        return subjectDao.getSubjectById(id);
     }
 }
