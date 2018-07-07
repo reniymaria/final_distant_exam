@@ -17,8 +17,10 @@
                 <div class="error-message">
                     <c:out value="${requestScope.result}"/>
                 </div>
-                <a class="button margin-top-20" href="${pageContext.request.contextPath}/exam_list"><fmt:message
-                        key="con.exam.results"/></a>
+                <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
+                    <input type="hidden" name="command" value="exam_list">
+                    <button><fmt:message key="con.open.exam.results" /></button>
+                </form>
             </div>
         </div>
     </c:when>
@@ -30,8 +32,10 @@
                         <c:out value="${requestScope.resultFailed}"/>
                     </c:if>
                 </div>
-                <a class="button margin-top-20" href="${pageContext.request.contextPath}/subject_list"><fmt:message
-                        key="con.available.exams"/></a>
+                <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
+                    <input type="hidden" name="command" value="subject_list">
+                    <button><fmt:message key="con.available.exams" /></button>
+                </form>
             </div>
         </div>
     </c:otherwise>

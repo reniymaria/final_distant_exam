@@ -50,8 +50,9 @@
                             <td>${examresult.subject}</td>
                             <td>${examresult.mark}</td>
                             <td>
-                                <form class="input-form" onsubmit="preventSubmit(event, '${condeletemessage}')" action="${pageContext.request.contextPath}/results" method="Post">
+                                <form class="input-form" onsubmit="preventSubmit(event, '${condeletemessage}')" action="${pageContext.request.contextPath}/controller" method="Post">
                                     <button>${deletebutton}</button>
+                                    <input type="hidden" name="command" value="results">
                                     <input type="hidden" name="subjectID" value="${examresult.subjectID}"/>
                                     <input type="hidden" name="userID" value="${examresult.userID}"/>
                                 </form>

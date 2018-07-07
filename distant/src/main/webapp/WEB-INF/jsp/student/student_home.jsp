@@ -14,8 +14,14 @@
 <div class="parent-container">
     <div class="child-container align-center">
         <fmt:message key ="con.main.student"/>
-        <a class="button margin-top-20" href="${pageContext.request.contextPath}/subject_list"><fmt:message key="con.available.exams" /></a>
-        <a class="button margin-top-20" href="${pageContext.request.contextPath}/exam_list"><fmt:message key="con.open.exam.results" /></a>
+        <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
+            <input type="hidden" name="command" value="subject_list">
+            <button><fmt:message key="con.available.exams" /></button>
+        </form>
+        <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
+            <input type="hidden" name="command" value="exam_list">
+            <button><fmt:message key="con.open.exam.results" /></button>
+        </form>
     </div>
 </div>
 </body>

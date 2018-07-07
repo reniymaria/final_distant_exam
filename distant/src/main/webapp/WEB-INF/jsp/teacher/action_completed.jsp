@@ -20,8 +20,10 @@
                 <c:out value="${requestScope.msgdeletesubject}"/>
                 <br>
                 <br>
-                <a class="button" href="${pageContext.request.contextPath}/subjects"><fmt:message
-                        key="con.open.subjects"/></a>
+                <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
+                    <input type="hidden" name="command" value="subjects">
+                    <button><fmt:message key="con.subjects"/></button>
+                </form>
             </c:if>
 
 
@@ -29,24 +31,29 @@
                 <c:out value="${requestScope.msgaddsubject}"/>
                 <br>
                 <br>
-                <a class="button" href="${pageContext.request.contextPath}/subjects"><fmt:message
-                        key="con.open.subjects"/></a>
+                <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
+                    <input type="hidden" name="command" value="subjects">
+                    <button><fmt:message key="con.subjects"/></button>
+                </form>
             </c:if>
 
             <c:if test="${requestScope.msgeditsubject != null}">
                 <c:out value="${requestScope.msgeditsubject}"/>
                 <br>
                 <br>
-                <a class="button" href="${pageContext.request.contextPath}/subjects"><fmt:message
-                        key="con.open.subjects"/></a>
+                <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
+                    <input type="hidden" name="command" value="subjects">
+                    <button><fmt:message key="con.subjects"/></button>
+                </form>
             </c:if>
 
             <c:if test="${requestScope.msgaddquestion != null}">
                 <c:out value="${requestScope.msgaddquestion}"/>
                 <br>
                 <br>
-                <form class="input-form" action="${pageContext.request.contextPath}/questions" method="Post">
-                    <button><fmt:message key="con.open.questions"/></button>
+                <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
+                    <button><fmt:message key="con.openquestions.en"/></button>
+                    <input type="hidden" name="command" value="questions"/>
                     <input type="hidden" name="subjectId" value="${requestScope.subjectId}"/>
                     <input type="hidden" name="langId" value="${requestScope.langId}"/>
                 </form>
@@ -56,8 +63,9 @@
                 <c:out value="${requestScope.msgeditquestion}"/>
                 <br>
                 <br>
-                <form class="input-form" action="${pageContext.request.contextPath}/questions" method="Post">
-                    <button><fmt:message key="con.open.questions"/></button>
+                <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
+                    <button><fmt:message key="con.openquestions.en"/></button>
+                    <input type="hidden" name="command" value="questions"/>
                     <input type="hidden" name="subjectId" value="${requestScope.subjectId}"/>
                     <input type="hidden" name="langId" value="${requestScope.langId}"/>
                 </form>

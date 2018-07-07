@@ -29,6 +29,11 @@
                     <c:out value="${requestScope.emptyMess1}"/>
                 </c:if>
             </div>
+            <div class="error-message">
+                <c:if test="${requestScope.registerMessage != null}">
+                    <c:out value="${requestScope.registerMessage}"/>
+                </c:if>
+            </div>
             <input placeholder="<fmt:message key="con.usernamelabel"/>" type="text" name="login" required/><br/>
             <div class="error-message">
                 <c:if test="${requestScope.emptyMess2 != null}">

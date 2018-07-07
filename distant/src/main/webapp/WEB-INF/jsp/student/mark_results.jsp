@@ -49,24 +49,40 @@
                     <tr>
                         <c:if test="${requestScope.currentPage != 1}">
                             <td>
-                                <a href="${pageContext.request.contextPath}/exam_list?page=${requestScope.currentPage - 1}">Previous</a>
+                                <form action="${pageContext.request.contextPath}/controller" method="Get">
+                                    <input type="hidden" name="command" value="exam_list">
+                                    <input type="hidden" name="page" value="${requestScope.currentPage - 1}">
+                                    <button class="table-btn"><fmt:message key="con.prev"/></button>
+                                </form>
                             </td>
                         </c:if>
 
                         <c:forEach begin="1" end="${requestScope.noOfPages}" var="i">
                             <c:choose>
                                 <c:when test="${requestScope.currentPage eq i}">
-                                    <td>${i}</td>
+                                    <td>
+                                        <button disabled="true" class="table-btn table-btn-current">${i}</button>
+                                    </td>
                                 </c:when>
                                 <c:otherwise>
-                                    <td><a href="${pageContext.request.contextPath}/exam_list?page=${i}">${i}</a></td>
+                                    <td>
+                                        <form action="${pageContext.request.contextPath}/controller" method="Get">
+                                            <input type="hidden" name="command" value="exam_list">
+                                            <input type="hidden" name="page" value="${i}">
+                                            <button class="table-btn">${i}</button>
+                                        </form>
+                                    </td>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
 
                         <c:if test="${requestScope.currentPage lt requestScope.noOfPages}">
                             <td>
-                                <a href="${pageContext.request.contextPath}/exam_list?page=${requestScope.currentPage + 1}">Next</a>
+                                <form action="${pageContext.request.contextPath}/controller" method="Get">
+                                    <input type="hidden" name="command" value="exam_list">
+                                    <input type="hidden" name="page" value="${requestScope.currentPage + 1}">
+                                    <button class="table-btn"><fmt:message key="con.next"/></button>
+                                </form>
                             </td>
                         </c:if>
                     </tr>

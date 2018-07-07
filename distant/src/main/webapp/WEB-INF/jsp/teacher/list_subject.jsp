@@ -23,7 +23,6 @@
             </c:if>
         </div>
 
-
         <table border="1" cellpadding="5" cellspacing="5">
             <tr>
                 <th>${consubject}</th>
@@ -34,24 +33,27 @@
                 <tr>
                     <td>${subject.subject}</td>
                     <td>
-                        <form class="input-form" onsubmit="preventSubmit(event, '${condeletemessage}')" action="${pageContext.request.contextPath}/controller" method="post">
+                        <form class="input-form" onsubmit="preventSubmit(event, '${condeletemessage}')"
+                              action="${pageContext.request.contextPath}/controller" method="post">
                             <button><fmt:message key="con.delete"/></button>
                             <input type="hidden" name="command" value="deletesubject"/>
                             <input type="hidden" name="subjectId" value="${subject.subjectID}"/>
                         </form>
-                        <form class="input-form" action="${pageContext.request.contextPath}/controller" method="get">
+                        <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Post">
                             <button><fmt:message key="con.edit"/></button>
                             <input type="hidden" name="command" value="editsubject"/>
                             <input type="hidden" name="subjectId" value="${subject.subjectID}"/>
                             <input type="hidden" name="subject" value="${subject.subject}"/>
                         </form>
-                        <form class="input-form" action="${pageContext.request.contextPath}/questions" method="Post">
+                        <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
                             <button><fmt:message key="con.openquestions.ru"/></button>
+                            <input type="hidden" name="command" value="questions"/>
                             <input type="hidden" name="subjectId" value="${subject.subjectID}"/>
                             <input type="hidden" name="langId" value="2"/>
                         </form>
-                        <form class="input-form" action="${pageContext.request.contextPath}/questions" method="Post">
+                        <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
                             <button><fmt:message key="con.openquestions.en"/></button>
+                            <input type="hidden" name="command" value="questions"/>
                             <input type="hidden" name="subjectId" value="${subject.subjectID}"/>
                             <input type="hidden" name="langId" value="1"/>
                         </form>
@@ -64,22 +66,44 @@
         <table border="1" cellpadding="5" cellspacing="5">
             <tr>
                 <c:if test="${requestScope.currentPage != 1}">
-                    <td><a href="${pageContext.request.contextPath}/subjects?page=${requestScope.currentPage - 1}"><fmt:message key="con.prev"/></a></td>
+                    <td>
+                        <form action="${pageContext.request.contextPath}/controller" method="Get">
+                            <input type="hidden" name="command" value="subjects">
+                            <input type="hidden" name="page" value="${requestScope.currentPage - 1}">
+                            <button class="table-btn"><fmt:message key="con.prev"/></button>
+                        </form>
+                    </td>
                 </c:if>
 
                 <c:forEach begin="1" end="${requestScope.noOfPages}" var="i">
                     <c:choose>
                         <c:when test="${requestScope.currentPage eq i}">
-                            <td>${i}</td>
+                            <td>
+                                <button disabled="true" class="table-btn table-btn-current">${i}</button>
+                            </td>
                         </c:when>
                         <c:otherwise>
-                            <td><a href="${pageContext.request.contextPath}/subjects?page=${i}">${i}</a></td>
+                            <td>
+                                <form action="${pageContext.request.contextPath}/controller"
+                                      method="Get">
+                                    <input type="hidden" name="command" value="subjects">
+                                    <input type="hidden" name="page" value="${i}">
+                                    <button class="table-btn">${i}</button>
+                                </form>
+                            </td>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
 
                 <c:if test="${requestScope.currentPage lt requestScope.noOfPages}">
-                    <td><a href="${pageContext.request.contextPath}/subjects?page=${requestScope.currentPage + 1}"><fmt:message key="con.next"/></a></td>
+                    <td>
+                        <form action="${pageContext.request.contextPath}/controller"
+                              method="Get">
+                            <input type="hidden" name="command" value="subjects">
+                            <input type="hidden" name="page" value="${requestScope.currentPage + 1}">
+                            <button class="table-btn"><fmt:message key="con.next"/></button>
+                        </form>
+                    </td>
                 </c:if>
             </tr>
         </table>

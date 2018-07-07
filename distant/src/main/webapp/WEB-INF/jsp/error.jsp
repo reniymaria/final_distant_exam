@@ -9,10 +9,10 @@
     <title>Distant exam</title>
 </head>
 <body>
-<%@ include file="WEB-INF/jsp/header.jsp" %>
+<%@ include file="/WEB-INF/jsp/header.jsp" %>
 <div class="parent-container">
-    <div class="child-container align-center homepage-container">
-        <div class="header-text homepage-text"><fmt:message key="con.welcomtext"/></div>
+    <div class="child-container align-center homepage-error-container">
+        <div class="header-text homepage-text"><fmt:message key="con.error.page"/></div>
 
         <c:choose>
             <c:when test="${sessionScope.role=='student'}">
@@ -33,6 +33,7 @@
 </div>
 </body>
 </html>
+
 
 
 

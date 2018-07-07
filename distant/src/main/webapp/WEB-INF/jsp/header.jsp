@@ -30,7 +30,7 @@
             <c:when test="${sessionScope.role=='student'}">
                 <div class="header-right-item">
                     <span class="header-text"><fmt:message key="con.student"/>${sessionScope.nameSurname}</span>
-                    <form action="${pageContext.request.contextPath}/controller" method="Get">
+                    <form action="${pageContext.request.contextPath}/controller" method="Post">
                         <input type = "hidden" name = "command" value = "logout" >
                         <button class="header-button"><fmt:message key="con.logoutbutton"/></button>
                     </form>
@@ -42,7 +42,7 @@
             <c:when test="${sessionScope.role=='teacher'}">
                 <div class="header-right-item">
                     <span class="header-text"><fmt:message key="con.teacher"/>${sessionScope.nameSurname}</span>
-                    <form action="${pageContext.request.contextPath}/controller" method="Get">
+                    <form action="${pageContext.request.contextPath}/controller" method="Post">
                         <input type = "hidden" name = "command" value = "logout" >
                         <button class="header-button"><fmt:message key="con.logoutbutton"/></button>
                     </form>

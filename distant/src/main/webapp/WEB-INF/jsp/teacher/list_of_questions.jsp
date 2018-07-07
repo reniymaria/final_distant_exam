@@ -26,7 +26,8 @@
                 <div class="error-message">
                     <c:out value="${requestScope.listEmpty}"/>
                 </div>
-                <form class="input-form" action="${pageContext.request.contextPath}/addquestion" method="Get">
+                <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
+                    <input type="hidden" name="command" value="addquestion">
                     <button><fmt:message key="con.addquestionlabel"/></button>
                     <input type="hidden" name="subjectId" value="${requestScope.subjectId}"/>
                     <input type="hidden" name="langId" value="${requestScope.langId}"/>
@@ -55,8 +56,9 @@
                             <td>${question.answer3}</td>
                             <td>${question.correctAnswer}</td>
                             <td>
-                                <form class="input-form" action="${pageContext.request.contextPath}/update"
+                                <form class="input-form" action="${pageContext.request.contextPath}/controller"
                                       method="get">
+                                    <input type="hidden" name="command" value="update_question">
                                     <button><fmt:message key="con.edit"/></button>
                                     <input type="hidden" name="questionID" value="${question.questionId}"/>
                                 </form>
@@ -68,29 +70,52 @@
                     <tr>
                         <c:if test="${requestScope.currentPage != 1}">
                             <td>
-                                <a href="${pageContext.request.contextPath}/questions?page=${requestScope.currentPage - 1}"><fmt:message
-                                        key="con.prev"/></a></td>
+                                <form action="${pageContext.request.contextPath}/controller" method="Get">
+                                    <input type="hidden" name="command" value="questions">
+                                    <input type="hidden" name="subjectId" value="${requestScope.subjectId}"/>
+                                    <input type="hidden" name="langId" value="${requestScope.langId}"/>
+                                    <input type="hidden" name="page" value="${requestScope.currentPage - 1}">
+                                    <button class="table-btn"><fmt:message
+                                            key="con.prev"/></button>
+                                </form>
+                            </td>
                         </c:if>
 
                         <c:forEach begin="1" end="${requestScope.noOfPages}" var="i">
                             <c:choose>
                                 <c:when test="${requestScope.currentPage eq i}">
-                                    <td>${i}</td>
+                                    <td><button disabled="true" class="table-btn table-btn-current">${i}</button></td>
                                 </c:when>
                                 <c:otherwise>
-                                    <td><a href="${pageContext.request.contextPath}/questions?page=${i}">${i}</a></td>
+                                    <td>
+                                        <form action="${pageContext.request.contextPath}/controller" method="Get">
+                                            <input type="hidden" name="command" value="questions">
+                                            <input type="hidden" name="subjectId" value="${requestScope.subjectId}"/>
+                                            <input type="hidden" name="langId" value="${requestScope.langId}"/>
+                                            <input type="hidden" name="page" value="${i}">
+                                            <button class="table-btn">${i}</button>
+                                        </form>
+                                    </td>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
                         <c:if test="${requestScope.currentPage lt requestScope.noOfPages}">
                             <td>
-                                <a href="${pageContext.request.contextPath}/questions?page=${requestScope.currentPage + 1}"><fmt:message
-                                        key="con.next"/></a></td>
+                                <form action="${pageContext.request.contextPath}/controller" method="Get">
+                                    <input type="hidden" name="command" value="questions">
+                                    <input type="hidden" name="subjectId" value="${requestScope.subjectId}"/>
+                                    <input type="hidden" name="langId" value="${requestScope.langId}"/>
+                                    <input type="hidden" name="page" value="${requestScope.currentPage + 1}">
+                                    <button class="table-btn"><fmt:message
+                                            key="con.next"/></button>
+                                </form>
+                            </td>
                         </c:if>
                     </tr>
                 </table>
                 <br>
-                <form class="input-form" action="${pageContext.request.contextPath}/addquestion" method="Get">
+                <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
+                    <input type="hidden" name="command" value="addquestion">
                     <button><fmt:message key="con.addquestionlabel"/></button>
                     <input type="hidden" name="subjectId" value="${requestScope.subjectId}"/>
                     <input type="hidden" name="langId" value="${requestScope.langId}"/>

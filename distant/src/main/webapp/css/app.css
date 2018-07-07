@@ -35,7 +35,16 @@ a {
     box-shadow: inset 0 0 10px#ffffff;
 }
 
-.input-form input, .input-form button {
+.button:hover {
+    box-shadow: inset 0 0 20px#ffffff;
+}
+
+.button:active {
+    box-shadow: inset 0 0 30px#ffffff;
+    background-color: #696969;
+}
+
+.input-form input, .input-form button, .input-form textarea {
     background-color: #000000b8;
     color: #cac8c8;
     outline: none;
@@ -43,10 +52,22 @@ a {
     font-size: 18px;
     padding: 7px;
     border-radius: 10px;
+    overflow: hidden;
 }
 
 .input-form button {
+    margin-top: 3px;
+    margin-bottom: 3px;
     box-shadow: inset 0 0 10px#ffffff;
+}
+
+.input-form button:hover {
+    box-shadow: inset 0 0 20px#ffffff;
+}
+
+.input-form button:active {
+    box-shadow: inset 0 0 30px#ffffff;
+    background-color: #696969;
 }
 
 .input-form input:-webkit-autofill {
@@ -140,6 +161,60 @@ button.header-button {
     opacity: 1;
     background: rgba(0, 0, 0, 0.75);
     border-radius: 15px;
+}
+
+.homepage-container {
+    background-image: url(../img/main.jpg);
+    width: 600px;
+    height: 360px;
+}
+
+.homepage-error-container {
+    background-image: url(../img/catcry.jpg);
+    width: 600px;
+    height: 350px;
+    background-size: 650px 400px;
+}
+
+.homepage-text {
+    font-size: 30px;
+    text-shadow: 2px 2px 13px black;
+}
+
+.homepage-btn {
+    position: relative;
+    top: 200px;
+    right: -200px;
+    font-size: 23px;
+    background-color: #b90005;
+    color: white;
+}
+
+.table-btn {
+    border-radius: 50px;
+    color: #fff;
+    background-color: #000;
+    box-shadow: #fff 0 0 10px;
+    border: none;
+    outline: none;
+}
+
+
+.table-btn:hover {
+    box-shadow: #fff 0 0 30px;
+}
+
+.table-btn:active {
+    background-color: #555;
+    box-shadow: #fff 0 0 30px;
+}
+
+.table-btn-current {
+    background-color: #555;
+}
+
+.table-btn-current:hover {
+    box-shadow: #fff 0 0 10px;
 }
 
 .error-message {

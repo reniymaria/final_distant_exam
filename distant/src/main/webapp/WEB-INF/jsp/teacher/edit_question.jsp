@@ -12,9 +12,10 @@
 
 <div class="parent-container">
     <div class="child-container">
-        <form class="input-form" action="${pageContext.request.contextPath}/update" method="Post">
+        <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Post">
             <input type="hidden" name="questionId" value="${requestScope.question.questionId}">
-            <input type="text" name="question" value="${requestScope.question.question}"><br>
+            <input type="hidden" name="command" value="update_question">
+            <textarea name="question">${requestScope.question.question}</textarea><br/>
             <input type="text" name="answer1" value="${requestScope.question.answer1}">
             <input type="text" name="answer2" value="${requestScope.question.answer2}">
             <input type="text" name="answer3" value="${requestScope.question.answer3}">

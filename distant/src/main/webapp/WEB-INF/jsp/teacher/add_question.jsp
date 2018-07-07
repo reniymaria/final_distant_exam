@@ -15,13 +15,14 @@
         <h1 class="form-title"><fmt:message key="con.subject.title"/>${requestScope.subject}</h1>
         <h1 class="form-title"><fmt:message key="con.language"/>${requestScope.lang}</h1>
 
-        <form class="input-form" action="${pageContext.request.contextPath}/addquestion" method="Post">
+        <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Post">
+            <input type = "hidden" name = "command" value = "addquestion" >
             <div class="error-message">
                 <c:if test="${requestScope.emptyMess1 != null}">
                     <c:out value="${requestScope.emptyMess1}"/>
                 </c:if>
             </div>
-            <input placeholder="<fmt:message key="con.question.title"/>" type="text" name="question" required><br>
+            <textarea placeholder="<fmt:message key="con.question.title"/>" name="question" required></textarea><br>
             <div class="error-message">
                 <c:if test="${requestScope.emptyMess2 != null}">
                     <c:out value="${requestScope.emptyMess2}"/>
