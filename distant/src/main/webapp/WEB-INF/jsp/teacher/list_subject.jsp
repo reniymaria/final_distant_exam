@@ -39,7 +39,7 @@
                             <input type="hidden" name="command" value="deletesubject"/>
                             <input type="hidden" name="subjectId" value="${subject.subjectID}"/>
                         </form>
-                        <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Post">
+                        <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
                             <button><fmt:message key="con.edit"/></button>
                             <input type="hidden" name="command" value="editsubject"/>
                             <input type="hidden" name="subjectId" value="${subject.subjectID}"/>

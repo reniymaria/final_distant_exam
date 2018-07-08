@@ -28,13 +28,15 @@ public class Question implements Serializable {
         this.languageId = languageId;
     }
 
-    public Question(int questionId, String question, String answer1, String answer2, String answer3, int correctAnswer) {
+    public Question(int questionId, String question, String answer1, String answer2, String answer3, int correctAnswer, int subjectId, int languageId) {
         this.questionId = questionId;
         this.question = question;
         this.answer1 = answer1;
         this.answer2 = answer2;
         this.answer3 = answer3;
         this.correctAnswer = correctAnswer;
+        this.subjectId = subjectId;
+        this.languageId = languageId;
     }
 
     public int getQuestionId() {

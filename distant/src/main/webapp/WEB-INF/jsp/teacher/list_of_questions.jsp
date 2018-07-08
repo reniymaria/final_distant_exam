@@ -57,10 +57,10 @@
                             <td>${question.correctAnswer}</td>
                             <td>
                                 <form class="input-form" action="${pageContext.request.contextPath}/controller"
-                                      method="get">
+                                      method="GET">
                                     <input type="hidden" name="command" value="update_question">
                                     <button><fmt:message key="con.edit"/></button>
-                                    <input type="hidden" name="questionID" value="${question.questionId}"/>
+                                    <input type="hidden" name="questionId" value="${question.questionId}"/>
                                 </form>
                             </td>
                         </tr>
@@ -84,7 +84,9 @@
                         <c:forEach begin="1" end="${requestScope.noOfPages}" var="i">
                             <c:choose>
                                 <c:when test="${requestScope.currentPage eq i}">
-                                    <td><button disabled="true" class="table-btn table-btn-current">${i}</button></td>
+                                    <td>
+                                        <button disabled="true" class="table-btn table-btn-current">${i}</button>
+                                    </td>
                                 </c:when>
                                 <c:otherwise>
                                     <td>

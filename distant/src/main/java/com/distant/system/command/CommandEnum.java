@@ -85,6 +85,11 @@ public enum CommandEnum {
         {
             this.command = new StudentExamListCommand();
         }
+    },
+    DELETE_EXAM_RESULT {
+        {
+            this.command = new TeacherDeleteExamResultCommand();
+        }
     };
 
 

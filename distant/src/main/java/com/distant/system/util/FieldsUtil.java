@@ -40,4 +40,8 @@ public class FieldsUtil {
         return false;
     }
 
+    public static boolean isEmptyNum(int value) {
+        return value == 0;
+    }
+
 }

@@ -7,6 +7,13 @@ public class Subject implements Serializable {
     private int subjectID;
     private String subject;
 
+    public Subject(int subjectID, String subject) {
+        this.subjectID = subjectID;
+        this.subject = subject;
+    }
+
+    public Subject() {
+    }
 
     public int getSubjectID() {
         return subjectID;

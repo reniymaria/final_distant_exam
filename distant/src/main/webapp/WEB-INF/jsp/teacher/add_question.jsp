@@ -9,6 +9,7 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
+<fmt:message key="con.tooltip.answer" var="contooltipanswer"/>
 
 <div class="parent-container">
     <div class="child-container align-center">
@@ -46,7 +47,7 @@
                     <c:out value="${requestScope.answerIncorrect}"/>
                 </c:if>
             </div>
-            <input placeholder="<fmt:message key="con.numbercoranswer"/>" type="text" name="correctAnswer" required>
+            <input placeholder="<fmt:message key="con.numbercoranswer"/>" type="number" name="correctAnswer" title="${contooltipanswer}" pattern="[1-3]{1}" required>
 
             <input type="hidden" name="subjectId" value="${requestScope.subjectId}">
             <input type="hidden" name="langId" value="${requestScope.langId}">

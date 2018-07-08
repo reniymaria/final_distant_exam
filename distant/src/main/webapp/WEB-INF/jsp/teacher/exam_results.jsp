@@ -3,37 +3,45 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title></title>
-        <link rel="stylesheet" href="../css/app.css">
-    </head>
-    <body>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
 
-        <%@ include file="/WEB-INF/jsp/header.jsp" %>
+<%@ include file="/WEB-INF/jsp/header.jsp" %>
 
+<fmt:message key="con.name" var="conname"/>
+<fmt:message key="con.surname" var="consurname"/>
+<fmt:message key="con.subject" var="consubject"/>
+<fmt:message key="con.mark" var="conmark"/>
+<fmt:message key="con.action" var="conaction"/>
+<fmt:message key="con.delete" var="deletebutton"/>
+<fmt:message key="con.next" var="nextbutton"/>
+<fmt:message key="con.prev" var="previousbutton"/>
+<fmt:message key="con.delete.message" var="condeletemessage"/>
+<fmt:message key="con.teacherpage" var="conteacherpage"/>
+
+
+<c:choose>
+    <c:when test="${requestScope.listEmpty != null}">
         <div class="parent-container">
             <div class="child-container">
-                <fmt:message key="con.name" var="conname"/>
-                <fmt:message key="con.surname" var="consurname"/>
-                <fmt:message key="con.subject" var="consubject"/>
-                <fmt:message key="con.mark" var="conmark"/>
-                <fmt:message key="con.action" var="conaction"/>
-                <fmt:message key="con.delete" var="deletebutton"/>
-                <fmt:message key="con.next" var="nextbutton"/>
-                <fmt:message key="con.prev" var="previousbutton"/>
-                <fmt:message key="con.delete.message" var="condeletemessage"/>
+                <div class="error-message">
+                    <c:out value="${requestScope.listEmpty}"/>
+                </div>
+                <br>
+                <a class="button" href="${pageContext.request.contextPath}/teacher_home">${conteacherpage}</a>
+            </div>
+        </div>
+    </c:when>
 
+    <c:otherwise>
+        <div class="parent-container">
+            <div class="child-container">
                 <table border="1" cellpadding="5" cellspacing="5">
                     <div class="error-message">
-                        <c:if test="${requestScope.errMsg != null}">
-                            <c:out value="${requestScope.errMsg}"/>
-                        </c:if>
-                    </div>
-                    <div class="error-message">
-                        <c:if test="${requestScope.listEmpty != null}">
-                            <c:out value="${requestScope.listEmpty}"/>
-                        </c:if>
                     </div>
                     <tr>
                         <th>${conname}</th>
@@ -50,9 +58,10 @@
                             <td>${examresult.subject}</td>
                             <td>${examresult.mark}</td>
                             <td>
-                                <form class="input-form" onsubmit="preventSubmit(event, '${condeletemessage}')" action="${pageContext.request.contextPath}/controller" method="Post">
+                                <form class="input-form" onsubmit="preventSubmit(event, '${condeletemessage}')"
+                                      action="${pageContext.request.contextPath}/controller" method="POST">
                                     <button>${deletebutton}</button>
-                                    <input type="hidden" name="command" value="results">
+                                    <input type="hidden" name="command" value="delete_exam_result">
                                     <input type="hidden" name="subjectID" value="${examresult.subjectID}"/>
                                     <input type="hidden" name="userID" value="${examresult.userID}"/>
                                 </form>
@@ -64,28 +73,52 @@
                 <table border="1" cellpadding="5" cellspacing="5">
                     <tr>
                         <c:if test="${requestScope.currentPage != 1}">
-                            <td><a href="results?page=${requestScope.currentPage - 1}">${previousbutton}</a></td>
+                            <td>
+                                <form class="input-form" action="${pageContext.request.contextPath}/controller"
+                                      method="Get">
+                                    <input type="hidden" name="command" value="results">
+                                    <input type="hidden" name="page" value="${requestScope.currentPage - 1}">
+                                    <button>${previousbutton}</button>
+                                </form>
+                            </td>
                         </c:if>
 
                         <c:forEach begin="1" end="${requestScope.noOfPages}" var="i">
                             <c:choose>
                                 <c:when test="${requestScope.currentPage eq i}">
-                                    <td>${i}</td>
+                                    <td>
+                                        <button disabled="true" class="table-btn table-btn-current">${i}</button>
+                                    </td>
                                 </c:when>
                                 <c:otherwise>
-                                    <td><a href="${pageContext.request.contextPath}/results?page=${i}">${i}</a></td>
+                                    <td>
+                                        <form class="input-form" action="${pageContext.request.contextPath}/controller"
+                                              method="Get">
+                                            <input type="hidden" name="command" value="results">
+                                            <input type="hidden" name="page" value="${i}">
+                                            <button>${i}</button>
+                                        </form>
+                                    </td>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
 
                         <c:if test="${requestScope.currentPage lt requestScope.noOfPages}">
-                            <td><a href="${pageContext.request.contextPath}/results?page=${requestScope.currentPage + 1}">${nextbutton}</a></td>
+                            <td>
+                                <form class="input-form" action="${pageContext.request.contextPath}/controller"
+                                      method="Get">
+                                    <input type="hidden" name="command" value="results">
+                                    <input type="hidden" name="page" value="${requestScope.currentPage + 1}">
+                                    <button>${nextbutton}</button>
+                                </form>
+                            </td>
                         </c:if>
                     </tr>
                 </table>
             </div>
         </div>
-
-        <script src="../js/app.js"></script>
-    </body>
+    </c:otherwise>
+</c:choose>
+<script src="../js/app.js"></script>
+</body>
 </html>

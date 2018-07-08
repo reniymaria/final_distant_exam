@@ -15,6 +15,13 @@
     <div class="child-container">
         <div class="error-message">
 
+            <c:if test="${requestScope.examDeletedMsg != null}">
+                <c:out value="${requestScope.examDeletedMsg}"/>
+                <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
+                    <input type="hidden" name="command" value="results">
+                    <button><fmt:message key="con.exam.results"/></button>
+                </form>
+            </c:if>
 
             <c:if test="${requestScope.msgdeletesubject != null}">
                 <c:out value="${requestScope.msgdeletesubject}"/>
@@ -52,7 +59,7 @@
                 <br>
                 <br>
                 <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
-                    <button><fmt:message key="con.openquestions.en"/></button>
+                    <button><fmt:message key="con.openquestions"/></button>
                     <input type="hidden" name="command" value="questions"/>
                     <input type="hidden" name="subjectId" value="${requestScope.subjectId}"/>
                     <input type="hidden" name="langId" value="${requestScope.langId}"/>
@@ -64,12 +71,13 @@
                 <br>
                 <br>
                 <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
-                    <button><fmt:message key="con.openquestions.en"/></button>
+                    <button><fmt:message key="con.openquestions"/></button>
                     <input type="hidden" name="command" value="questions"/>
-                    <input type="hidden" name="subjectId" value="${requestScope.subjectId}"/>
-                    <input type="hidden" name="langId" value="${requestScope.langId}"/>
+                    <input type="hidden" name="subjectId" value="${requestScope.question.subjectId}"/>
+                    <input type="hidden" name="langId" value="${requestScope.question.languageId}"/>
                 </form>
             </c:if>
+
         </div>
     </div>
 </div>

@@ -145,6 +145,8 @@ public class InMemoryQuestionDao extends AbstractDAO implements QuestionDao {
                 question.setAnswer2(rs.getString("answer2"));
                 question.setAnswer3(rs.getString("answer3"));
                 question.setCorrectAnswer(rs.getInt("answer"));
+                question.setLanguageId(rs.getInt("languages_id"));
+                question.setSubjectId(rs.getInt("subjects_id"));
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception during finding question", e);
