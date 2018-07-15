@@ -31,7 +31,7 @@
     <c:otherwise>
         <div class="parent-container">
             <div class="child-container">
-                <table border="1" cellpadding="5" cellspacing="5">
+                <table cellpadding="5" cellspacing="5">
                     <tr>
                         <th>${consubject}</th>
                         <th>${conmark}</th>
@@ -45,7 +45,7 @@
                     </c:forEach>
                 </table>
 
-                <table border="1" cellpadding="5" cellspacing="5">
+                <table cellpadding="5" cellspacing="5">
                     <tr>
                         <c:if test="${requestScope.currentPage != 1}">
                             <td>

@@ -16,7 +16,7 @@
         <fmt:message key="con.exam.title" var="conexamtitle"/>
         <fmt:message key="con.action" var="conaction"/>
 
-        <table border="1" cellpadding="5" cellspacing="5">
+        <table cellpadding="5" cellspacing="5">
             <tr>
                 <th>${conexamtitle}</th>
                 <th>${conaction}</th>
@@ -44,7 +44,7 @@
             </c:forEach>
         </table>
 
-        <table border="1" cellpadding="5" cellspacing="5">
+        <table cellpadding="5" cellspacing="5">
             <tr>
                 <c:if test="${requestScope.currentPage != 1}">
                     <td>

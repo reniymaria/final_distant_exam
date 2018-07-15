@@ -4,12 +4,18 @@ function preventSubmit(e, text) {
 
 }
 
-function onFileSubmit(e) {
+function onFileSubmit(e, text) {
 
     var elem = document.getElementById("uploading");
+    var value = elem.value;
 
-    if(elem.value == '') {
+    if(value == '') {
         e.preventDefault();
+    }
+
+    if(value != '' && !(/\.xlsx$/.test(value) || /\.xls$/.test(value))) {
+        e.preventDefault();
+        alert(text);
     }
 
     return true;

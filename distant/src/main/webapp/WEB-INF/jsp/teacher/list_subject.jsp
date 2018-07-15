@@ -23,7 +23,7 @@
             </c:if>
         </div>
 
-        <table border="1" cellpadding="5" cellspacing="5">
+        <table cellpadding="5" cellspacing="5">
             <tr>
                 <th>${consubject}</th>
                 <th>${conaction}</th>
@@ -63,7 +63,7 @@
         </table>
 
 
-        <table border="1" cellpadding="5" cellspacing="5">
+        <table cellpadding="5" cellspacing="5">
             <tr>
                 <c:if test="${requestScope.currentPage != 1}">
                     <td>

@@ -19,6 +19,7 @@
 <fmt:message key="con.numbercoranswer" var="connumbercoranswer"/>
 <fmt:message key="con.action" var="conaction"/>
 <fmt:message key="con.delete.message" var="condeletemessage"/>
+<fmt:message key="con.file.error.type" var="confileerrortype"/>
 
 <c:choose>
     <c:when test="${requestScope.listEmpty != null}">
@@ -27,21 +28,21 @@
                 <div class="error-message">
                     <c:out value="${requestScope.listEmpty}"/>
                 </div>
-                <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
+                <form class="input-form upload-form" onsubmit="onFileSubmit(event, '${confileerrortype}')" action="${pageContext.request.contextPath}/upload" method="Post"
+                      enctype="multipart/form-data">
+                    <label for="uploading"><a class="button button-full margin-right-10"><fmt:message key="con.choose.excel"/></a></label>
+                    <input type="file" size="50" name="file_upload" id="uploading">
+                    <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
+                    <input type="hidden" name="langId" value="${sessionScope.langId}"/>
+                    <button><fmt:message key="con.upload"/></button>
+                </form>
+                <form class="input-form upload-form" action="${pageContext.request.contextPath}/controller" method="Get">
                     <input type="hidden" name="command" value="addquestion">
                     <button><fmt:message key="con.addquestionlabel"/></button>
                     <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
                     <input type="hidden" name="langId" value="${sessionScope.langId}"/>
                 </form>
                 <br>
-                <form class="input-form" onsubmit="onFileSubmit(event)" action="${pageContext.request.contextPath}/upload" method="Post"
-                      enctype="multipart/form-data">
-                    <label for="uploading"><a class="button button-full"><fmt:message key="con.choose.excel"/></a></label>
-                    <input type="file" size="50" name="file_upload" id="uploading">
-                    <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
-                    <input type="hidden" name="langId" value="${sessionScope.langId}"/>
-                    <button><fmt:message key="con.upload"/></button>
-                </form>
             </div>
         </div>
 
@@ -50,7 +51,17 @@
     <c:otherwise>
         <div class="parent-container">
             <div class="child-container">
-                <table border="1" cellpadding="5" cellspacing="5">
+
+                <form class="input-form upload-form" onsubmit="onFileSubmit(event, '${confileerrortype}')" action="${pageContext.request.contextPath}/upload" method="Post"
+                      enctype="multipart/form-data">
+                    <label for="uploading"><a class="button button-full margin-right-10"><fmt:message key="con.choose.excel"/></a></label>
+                    <input type="file" size="50" name="file_upload" id="uploading">
+                    <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
+                    <input type="hidden" name="langId" value="${sessionScope.langId}"/>
+                    <button><fmt:message key="con.upload"/></button>
+                </form>
+
+                <table cellpadding="5" cellspacing="5">
                     <tr>
                         <th>${conquestiontitle}</th>
                         <th>${conanswer1}</th>
@@ -84,7 +95,7 @@
                         </tr>
                     </c:forEach>
                 </table>
-                <table border="1" cellpadding="5" cellspacing="5">
+                <table cellpadding="5" cellspacing="5">
                     <tr>
                         <c:if test="${requestScope.currentPage != 1}">
                             <td>
@@ -134,21 +145,13 @@
                     </tr>
                 </table>
                 <br>
-                <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
+                <form class="input-form upload-form" action="${pageContext.request.contextPath}/controller" method="Get">
                     <input type="hidden" name="command" value="addquestion">
                     <button><fmt:message key="con.addquestionlabel"/></button>
                     <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
                     <input type="hidden" name="langId" value="${sessionScope.langId}"/>
                 </form>
                 <br>
-                <form class="input-form" onsubmit="onFileSubmit(event)" action="${pageContext.request.contextPath}/upload" method="Post"
-                      enctype="multipart/form-data">
-                    <label for="uploading"><a class="button button-full"><fmt:message key="con.choose.excel"/></a></label>
-                    <input type="file" size="50" name="file_upload" id="uploading">
-                    <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
-                    <input type="hidden" name="langId" value="${sessionScope.langId}"/>
-                    <button><fmt:message key="con.upload"/></button>
-                </form>
             </div>
         </div>
     </c:otherwise>
