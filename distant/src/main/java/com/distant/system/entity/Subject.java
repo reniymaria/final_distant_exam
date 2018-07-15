@@ -1,6 +1,7 @@
 package com.distant.system.entity;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Subject implements Serializable {
 
@@ -36,5 +37,20 @@ public class Subject implements Serializable {
     public String toString() {
         return subject;
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Subject subject1 = (Subject) o;
+        return subjectID == subject1.subjectID &&
+                Objects.equals(subject, subject1.subject);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(subjectID, subject);
     }
 }

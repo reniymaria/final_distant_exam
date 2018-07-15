@@ -239,3 +239,17 @@ table,td, tr {
     border-collapse: collapse;
     padding: 7px;
 }
+
+label {
+    cursor: pointer;
+    margin-bottom: 20px;
+
+
+}
+
+input[type=file] {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+

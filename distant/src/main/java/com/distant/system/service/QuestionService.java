@@ -36,4 +36,12 @@ public class QuestionService {
     public int allQuestions(int subjectId, int langId) throws DaoException {
         return questionDao.allQuestions(subjectId, langId);
     }
+
+    public void add(List<Question> questions) throws DaoException {
+        questionDao.add(questions);
+    }
+
+    public void deleteQuestion(int id) throws DaoException {
+        questionDao.deleteQuestion(id);
+    }
 }

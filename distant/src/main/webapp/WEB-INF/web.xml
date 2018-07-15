@@ -34,6 +34,24 @@
     <!-- simple-->
 
     <servlet>
+        <servlet-name>uploadjsp</servlet-name>
+        <jsp-file>/WEB-INF/jsp/upload.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>uploadjsp</servlet-name>
+        <url-pattern>/uploadjsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>result_upload</servlet-name>
+        <jsp-file>/WEB-INF/jsp/result_upload.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>result_upload</servlet-name>
+        <url-pattern>/result_upload</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>home</servlet-name>
         <jsp-file>/index.jsp</jsp-file>
     </servlet>

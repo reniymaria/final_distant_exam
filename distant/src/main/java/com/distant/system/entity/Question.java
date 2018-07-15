@@ -1,6 +1,7 @@
 package com.distant.system.entity;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Question implements Serializable {
 
@@ -101,5 +102,26 @@ public class Question implements Serializable {
 
     public void setLanguageId(int languageId) {
         this.languageId = languageId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Question question1 = (Question) o;
+        return questionId == question1.questionId &&
+                correctAnswer == question1.correctAnswer &&
+                subjectId == question1.subjectId &&
+                languageId == question1.languageId &&
+                Objects.equals(question, question1.question) &&
+                Objects.equals(answer1, question1.answer1) &&
+                Objects.equals(answer2, question1.answer2) &&
+                Objects.equals(answer3, question1.answer3);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(questionId, question, answer1, answer2, answer3, correctAnswer, subjectId, languageId);
     }
 }

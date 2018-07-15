@@ -16,6 +16,13 @@ import java.util.List;
 
 public class InMemoryUserDao extends AbstractDAO implements UserDao {
 
+    private static final String ID = "id";
+    private static final String LOGIN = "login";
+    private static final String PASSWORD = "password";
+    public static final String NAME = "name";
+    private static final String SURNAME = "surname";
+    private static final String ROLE = "role";
+
     @Override
     public List<User> allUsers() throws DaoException {
         Connection connection = null;
@@ -30,12 +37,12 @@ public class InMemoryUserDao extends AbstractDAO implements UserDao {
             rs = statement.executeQuery();
             while (rs.next()) {
                 User user = new User();
-                user.setUserID(rs.getInt("id"));
-                user.setLogin(rs.getString("login"));
-                user.setPassword(rs.getString("password"));
-                user.setName(rs.getString("name"));
-                user.setSurname(rs.getString("surname"));
-                user.setRole(rs.getString("role"));
+                user.setUserID(rs.getInt(ID));
+                user.setLogin(rs.getString(LOGIN));
+                user.setPassword(rs.getString(PASSWORD));
+                user.setName(rs.getString(NAME));
+                user.setSurname(rs.getString(SURNAME));
+                user.setRole(rs.getString(ROLE));
                 users.add(user);
             }
         } catch (SQLException | ConnectionPoolException e) {
@@ -65,10 +72,6 @@ public class InMemoryUserDao extends AbstractDAO implements UserDao {
         return position;
     }
 
-    @Override
-    public List<User> findUsers(String role) {
-        return null;
-    }
 
     @Override
     public void addStudent(User user) throws DaoException {

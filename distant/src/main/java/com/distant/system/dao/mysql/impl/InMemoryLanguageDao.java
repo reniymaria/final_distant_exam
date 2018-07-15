@@ -15,6 +15,8 @@ import java.sql.SQLException;
 public class InMemoryLanguageDao extends AbstractDAO implements LanguageDao {
 
 
+    public static final String LANGUAGE = "language";
+
     @Override
     public int findId(String language) throws DaoException {
         int languageID = 0;
@@ -57,7 +59,7 @@ public class InMemoryLanguageDao extends AbstractDAO implements LanguageDao {
             statement.setInt(1, id);
             rs = statement.executeQuery();
             while (rs.next()) {
-                language = rs.getString("language");
+                language = rs.getString(LANGUAGE);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception during finding question", e);

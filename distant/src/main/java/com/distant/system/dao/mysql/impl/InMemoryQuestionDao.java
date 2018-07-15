@@ -16,6 +16,15 @@ import java.util.List;
 
 public class InMemoryQuestionDao extends AbstractDAO implements QuestionDao {
 
+    private static final String ID = "id";
+    private static final String QUESTION = "question";
+    private static final String ANSWER_1 = "answer1";
+    private static final String ANSWER_2 = "answer2";
+    private static final String ANSWER_3 = "answer3";
+    private static final String ANSWER = "answer";
+    private static final String SUBJECTS_ID = "subjects_id";
+    private static final String LANGUAGES_ID = "languages_id";
+
     @Override
     public List<Question> getQuestions(String subject, String language) throws DaoException {
         List<Question> questions = new ArrayList<Question>();
@@ -32,14 +41,14 @@ public class InMemoryQuestionDao extends AbstractDAO implements QuestionDao {
             rs = statement.executeQuery();
             while (rs.next()) {
                 Question question = new Question();
-                question.setQuestionId(rs.getInt("id"));
-                question.setQuestion(rs.getString("question"));
-                question.setAnswer1(rs.getString("answer1"));
-                question.setAnswer2(rs.getString("answer2"));
-                question.setAnswer3(rs.getString("answer3"));
-                question.setCorrectAnswer(rs.getInt("answer"));
-                question.setSubjectId(rs.getInt("subjects_id"));
-                question.setLanguageId(rs.getInt("languages_id"));
+                question.setQuestionId(rs.getInt(ID));
+                question.setQuestion(rs.getString(QUESTION));
+                question.setAnswer1(rs.getString(ANSWER_1));
+                question.setAnswer2(rs.getString(ANSWER_2));
+                question.setAnswer3(rs.getString(ANSWER_3));
+                question.setCorrectAnswer(rs.getInt(ANSWER));
+                question.setSubjectId(rs.getInt(SUBJECTS_ID));
+                question.setLanguageId(rs.getInt(LANGUAGES_ID));
                 questions.add(question);
             }
         } catch (SQLException | ConnectionPoolException e) {
@@ -72,14 +81,14 @@ public class InMemoryQuestionDao extends AbstractDAO implements QuestionDao {
             rs = statement.executeQuery();
             while (rs.next()) {
                 Question question = new Question();
-                question.setQuestionId(rs.getInt("id"));
-                question.setQuestion(rs.getString("question"));
-                question.setAnswer1(rs.getString("answer1"));
-                question.setAnswer2(rs.getString("answer2"));
-                question.setAnswer3(rs.getString("answer3"));
-                question.setCorrectAnswer(rs.getInt("answer"));
-                question.setSubjectId(rs.getInt("subjects_id"));
-                question.setLanguageId(rs.getInt("languages_id"));
+                question.setQuestionId(rs.getInt(ID));
+                question.setQuestion(rs.getString(QUESTION));
+                question.setAnswer1(rs.getString(ANSWER_1));
+                question.setAnswer2(rs.getString(ANSWER_2));
+                question.setAnswer3(rs.getString(ANSWER_3));
+                question.setCorrectAnswer(rs.getInt(ANSWER));
+                question.setSubjectId(rs.getInt(SUBJECTS_ID));
+                question.setLanguageId(rs.getInt(LANGUAGES_ID));
                 questions.add(question);
             }
         } catch (SQLException | ConnectionPoolException e) {
@@ -126,6 +135,13 @@ public class InMemoryQuestionDao extends AbstractDAO implements QuestionDao {
     }
 
     @Override
+    public void add(List<Question> questions) throws DaoException {
+        for (Question question : questions) {
+            add(question);
+        }
+    }
+
+    @Override
     public Question find(int id) throws DaoException {
         Question question = new Question();
 
@@ -139,14 +155,14 @@ public class InMemoryQuestionDao extends AbstractDAO implements QuestionDao {
             statement.setInt(1, id);
             rs = statement.executeQuery();
             while (rs.next()) {
-                question.setQuestionId(rs.getInt("id"));
-                question.setQuestion(rs.getString("question"));
-                question.setAnswer1(rs.getString("answer1"));
-                question.setAnswer2(rs.getString("answer2"));
-                question.setAnswer3(rs.getString("answer3"));
-                question.setCorrectAnswer(rs.getInt("answer"));
-                question.setLanguageId(rs.getInt("languages_id"));
-                question.setSubjectId(rs.getInt("subjects_id"));
+                question.setQuestionId(rs.getInt(ID));
+                question.setQuestion(rs.getString(QUESTION));
+                question.setAnswer1(rs.getString(ANSWER_1));
+                question.setAnswer2(rs.getString(ANSWER_2));
+                question.setAnswer3(rs.getString(ANSWER_3));
+                question.setCorrectAnswer(rs.getInt(ANSWER));
+                question.setLanguageId(rs.getInt(LANGUAGES_ID));
+                question.setSubjectId(rs.getInt(SUBJECTS_ID));
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception during finding question", e);
@@ -219,6 +235,28 @@ public class InMemoryQuestionDao extends AbstractDAO implements QuestionDao {
         List<Question> allQuestions = getQuestionsById(subjectId, langId);
         return allQuestions.size();
 
+    }
+
+    @Override
+    public void deleteQuestion(int id) throws DaoException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(SQL_DELETE_QUESTION);
+            statement.setInt(1, id);
+            statement.execute();
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Exception during delete question", e);
+        } finally {
+            try {
+                closeMainConnection(connection);
+                ConnectionPool.getInstance().closeDBResources(statement);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

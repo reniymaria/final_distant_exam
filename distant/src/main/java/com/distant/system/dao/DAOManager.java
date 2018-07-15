@@ -17,14 +17,6 @@ public interface DAOManager {
 
     LanguageDao getLanguageDao();
 
-    void startTransaction() throws DaoException;
-
-    void setTransactionIsolation(int level) throws DaoException;
-
-    void commit() throws DaoException;
-
-    void rollback() throws DaoException;
-
     void close() throws DaoException;
 
 }

@@ -1,8 +1,8 @@
 package com.distant.system.controller;
 
-import com.distant.system.command.ActionCommand;
-import com.distant.system.command.factory.ActionFactory;
-import com.distant.system.util.ConfigurationManager;
+import com.distant.system.controller.command.ActionCommand;
+import com.distant.system.controller.command.factory.ActionFactory;
+import com.distant.system.controller.util.ConfigurationManager;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

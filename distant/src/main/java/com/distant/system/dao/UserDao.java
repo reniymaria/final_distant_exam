@@ -15,8 +15,6 @@ public interface UserDao {
 
     String findPosition(String login) throws DaoException;
 
-    List<User> findUsers(String role);
-
     void addStudent(User user) throws DaoException;
 
     boolean isAuthorized(String login, String password) throws DaoException;

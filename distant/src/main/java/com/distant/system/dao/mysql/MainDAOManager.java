@@ -8,7 +8,6 @@ import java.sql.Connection;
 
 /**
  * It is a factory for creating DAO implementation objects as singletons.
- * Doesn't support transactional operations.
  */
 
 public class MainDAOManager implements DAOManager {
@@ -43,27 +42,6 @@ public class MainDAOManager implements DAOManager {
     @Override
     public LanguageDao getLanguageDao() {
         return languageDao;
-    }
-
-
-    @Override
-    public void startTransaction() throws DaoException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void setTransactionIsolation(int level) throws DaoException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void commit() throws DaoException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void rollback() throws DaoException {
-        throw new UnsupportedOperationException();
     }
 
     @Override

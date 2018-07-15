@@ -65,6 +65,18 @@
                     <input type="hidden" name="langId" value="${requestScope.langId}"/>
                 </form>
             </c:if>
+            <c:if test="${requestScope.uploadSuccess != null}">
+                <c:out value="${requestScope.uploadSuccess}"/>
+                <br>
+                <br>
+                <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
+                    <button><fmt:message key="con.openquestions"/></button>
+                    <input type="hidden" name="command" value="questions"/>
+                    <input type="hidden" name="subjectId" value="${requestScope.subjectId}"/>
+                    <input type="hidden" name="langId" value="${requestScope.langId}"/>
+                </form>
+            </c:if>
+
 
             <c:if test="${requestScope.msgeditquestion != null}">
                 <c:out value="${requestScope.msgeditquestion}"/>
@@ -78,6 +90,18 @@
                 </form>
             </c:if>
 
+
+            <c:if test="${requestScope.msgdeletequestion != null}">
+                <c:out value="${requestScope.msgdeletequestion}"/>
+                <br>
+                <br>
+                <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
+                    <button><fmt:message key="con.openquestions"/></button>
+                    <input type="hidden" name="command" value="questions"/>
+                    <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
+                    <input type="hidden" name="langId" value="${sessionScope.langId}"/>
+                </form>
+            </c:if>
         </div>
     </div>
 </div>

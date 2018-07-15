@@ -19,6 +19,13 @@ import java.util.List;
 
 public class InMemoryMarkDao extends AbstractDAO implements MarkDao {
 
+    private static final String NAME = "name";
+    private static final String SURNAME = "surname";
+    private static final String SUBJECT = "subject";
+    private static final String MARK = "mark";
+    private static final String SUBJECTS_ID = "subjects_id";
+    private static final String USERS_ID = "users_id";
+
     @Override
     public void addMark(int mark, int studentId, int subjectId) throws DaoException {
 
@@ -58,12 +65,12 @@ public class InMemoryMarkDao extends AbstractDAO implements MarkDao {
             rs = statement.executeQuery();
             while (rs.next()) {
                 ExamResult examResult = new ExamResult();
-                examResult.setName(rs.getString("name"));
-                examResult.setSurname(rs.getString("surname"));
-                examResult.setSubject(rs.getString("subject"));
-                examResult.setMark(rs.getInt("mark"));
-                examResult.setSubjectID(rs.getInt("subjects_id"));
-                examResult.setUserID(rs.getInt("users_id"));
+                examResult.setName(rs.getString(NAME));
+                examResult.setSurname(rs.getString(SURNAME));
+                examResult.setSubject(rs.getString(SUBJECT));
+                examResult.setMark(rs.getInt(MARK));
+                examResult.setSubjectID(rs.getInt(SUBJECTS_ID));
+                examResult.setUserID(rs.getInt(USERS_ID));
                 examList.add(examResult);
             }
         } catch (SQLException | ConnectionPoolException e) {

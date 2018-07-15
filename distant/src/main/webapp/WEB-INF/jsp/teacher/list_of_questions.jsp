@@ -18,6 +18,7 @@
 <fmt:message key="con.answer3" var="conanswer3"/>
 <fmt:message key="con.numbercoranswer" var="connumbercoranswer"/>
 <fmt:message key="con.action" var="conaction"/>
+<fmt:message key="con.delete.message" var="condeletemessage"/>
 
 <c:choose>
     <c:when test="${requestScope.listEmpty != null}">
@@ -29,11 +30,21 @@
                 <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
                     <input type="hidden" name="command" value="addquestion">
                     <button><fmt:message key="con.addquestionlabel"/></button>
-                    <input type="hidden" name="subjectId" value="${requestScope.subjectId}"/>
-                    <input type="hidden" name="langId" value="${requestScope.langId}"/>
+                    <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
+                    <input type="hidden" name="langId" value="${sessionScope.langId}"/>
+                </form>
+                <br>
+                <form class="input-form" onsubmit="onFileSubmit(event)" action="${pageContext.request.contextPath}/upload" method="Post"
+                      enctype="multipart/form-data">
+                    <label for="uploading"><a class="button button-full"><fmt:message key="con.choose.excel"/></a></label>
+                    <input type="file" size="50" name="file_upload" id="uploading">
+                    <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
+                    <input type="hidden" name="langId" value="${sessionScope.langId}"/>
+                    <button><fmt:message key="con.upload"/></button>
                 </form>
             </div>
         </div>
+
     </c:when>
 
     <c:otherwise>
@@ -62,6 +73,13 @@
                                     <button><fmt:message key="con.edit"/></button>
                                     <input type="hidden" name="questionId" value="${question.questionId}"/>
                                 </form>
+                                <form class="input-form" onsubmit="preventSubmit(event, '${condeletemessage}')"
+                                      action="${pageContext.request.contextPath}/controller"
+                                      method="Post">
+                                    <input type="hidden" name="command" value="delete_question">
+                                    <button><fmt:message key="con.delete"/></button>
+                                    <input type="hidden" name="questionId" value="${question.questionId}"/>
+                                </form>
                             </td>
                         </tr>
                     </c:forEach>
@@ -72,8 +90,8 @@
                             <td>
                                 <form action="${pageContext.request.contextPath}/controller" method="Get">
                                     <input type="hidden" name="command" value="questions">
-                                    <input type="hidden" name="subjectId" value="${requestScope.subjectId}"/>
-                                    <input type="hidden" name="langId" value="${requestScope.langId}"/>
+                                    <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
+                                    <input type="hidden" name="langId" value="${sessionScope.langId}"/>
                                     <input type="hidden" name="page" value="${requestScope.currentPage - 1}">
                                     <button class="table-btn"><fmt:message
                                             key="con.prev"/></button>
@@ -92,8 +110,8 @@
                                     <td>
                                         <form action="${pageContext.request.contextPath}/controller" method="Get">
                                             <input type="hidden" name="command" value="questions">
-                                            <input type="hidden" name="subjectId" value="${requestScope.subjectId}"/>
-                                            <input type="hidden" name="langId" value="${requestScope.langId}"/>
+                                            <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
+                                            <input type="hidden" name="langId" value="${sessionScope.langId}"/>
                                             <input type="hidden" name="page" value="${i}">
                                             <button class="table-btn">${i}</button>
                                         </form>
@@ -105,8 +123,8 @@
                             <td>
                                 <form action="${pageContext.request.contextPath}/controller" method="Get">
                                     <input type="hidden" name="command" value="questions">
-                                    <input type="hidden" name="subjectId" value="${requestScope.subjectId}"/>
-                                    <input type="hidden" name="langId" value="${requestScope.langId}"/>
+                                    <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
+                                    <input type="hidden" name="langId" value="${sessionScope.langId}"/>
                                     <input type="hidden" name="page" value="${requestScope.currentPage + 1}">
                                     <button class="table-btn"><fmt:message
                                             key="con.next"/></button>
@@ -119,13 +137,22 @@
                 <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
                     <input type="hidden" name="command" value="addquestion">
                     <button><fmt:message key="con.addquestionlabel"/></button>
-                    <input type="hidden" name="subjectId" value="${requestScope.subjectId}"/>
-                    <input type="hidden" name="langId" value="${requestScope.langId}"/>
+                    <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
+                    <input type="hidden" name="langId" value="${sessionScope.langId}"/>
+                </form>
+                <br>
+                <form class="input-form" onsubmit="onFileSubmit(event)" action="${pageContext.request.contextPath}/upload" method="Post"
+                      enctype="multipart/form-data">
+                    <label for="uploading"><a class="button button-full"><fmt:message key="con.choose.excel"/></a></label>
+                    <input type="file" size="50" name="file_upload" id="uploading">
+                    <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
+                    <input type="hidden" name="langId" value="${sessionScope.langId}"/>
+                    <button><fmt:message key="con.upload"/></button>
                 </form>
             </div>
         </div>
     </c:otherwise>
 </c:choose>
-
+<script src="../js/app.js"></script>
 </body>
 </html>

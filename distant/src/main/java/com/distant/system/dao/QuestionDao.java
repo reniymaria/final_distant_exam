@@ -16,12 +16,15 @@ public interface QuestionDao {
     String SQL_UPDATE_ANSWER2 = "UPDATE questions SET answer2=? WHERE id=?";
     String SQL_UPDATE_ANSWER3 = "UPDATE questions SET answer3=? WHERE id=?";
     String SQL_UPDATE_ANSWER = "UPDATE questions SET answer=? WHERE id=?";
+    String SQL_DELETE_QUESTION =  "DELETE FROM questions WHERE id=?";
 
     List<Question> getQuestions(String subject, String language) throws DaoException;
 
     List<Question> getQuestionsById(int subjectId, int langId) throws DaoException;
 
     void add(Question question) throws DaoException;
+
+    void add(List<Question> questions) throws DaoException;
 
     Question find(int id) throws DaoException;
 
@@ -30,4 +33,6 @@ public interface QuestionDao {
     List<Question> numberOfQuestions(int subjectId, int langId, int offset, int records) throws DaoException;
 
     int allQuestions(int subjectId, int langId) throws DaoException;
+
+    void deleteQuestion(int id) throws DaoException;
 }

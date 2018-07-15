@@ -5,8 +5,7 @@ import com.distant.system.dao.DAOManager;
 
 
 /**
- * A factory for creating transactional and non transactional MySqlDAO
- * factories.
+ * A factory for creating MySqlDAO factories.
  */
 public class MySqlDAOFactory extends DAOFactory {
 

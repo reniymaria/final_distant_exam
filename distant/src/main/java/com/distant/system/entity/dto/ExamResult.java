@@ -5,6 +5,9 @@ import java.util.Objects;
 
 public class ExamResult implements Serializable {
 
+    public ExamResult() {
+    }
+
     private String name;
     private String surname;
     private int mark;

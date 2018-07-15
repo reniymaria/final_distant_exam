@@ -17,6 +17,9 @@ import java.util.List;
 public class InMemorySubjectDao extends AbstractDAO implements SubjectDao {
 
 
+    private static final String ID = "id";
+    private static final String SUBJECT = "subject";
+
     @Override
     public List<Subject> getAllsubjects() throws DaoException {
         List<Subject> subjects = new ArrayList<Subject>();
@@ -31,8 +34,8 @@ public class InMemorySubjectDao extends AbstractDAO implements SubjectDao {
             rs = statement.executeQuery();
             while (rs.next()) {
                 Subject subject = new Subject();
-                subject.setSubjectID(rs.getInt("id"));
-                subject.setSubject(rs.getString("subject"));
+                subject.setSubjectID(rs.getInt(ID));
+                subject.setSubject(rs.getString(SUBJECT));
                 subjects.add(subject);
             }
         } catch (SQLException | ConnectionPoolException e) {
@@ -77,8 +80,8 @@ public class InMemorySubjectDao extends AbstractDAO implements SubjectDao {
             rs = statement.executeQuery();
             while (rs.next()) {
                 Subject subject = new Subject();
-                subject.setSubjectID(rs.getInt("id"));
-                subject.setSubject(rs.getString("subject"));
+                subject.setSubjectID(rs.getInt(ID));
+                subject.setSubject(rs.getString(SUBJECT));
                 subjects.add(subject);
             }
         } catch (SQLException | ConnectionPoolException e) {
@@ -132,7 +135,7 @@ public class InMemorySubjectDao extends AbstractDAO implements SubjectDao {
             statement.setInt(1, subjectId);
             statement.execute();
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException("Exception during adding mark", e);
+            throw new DaoException("Exception during delete subject", e);
         } finally {
             try {
                 closeMainConnection(connection);
@@ -155,7 +158,7 @@ public class InMemorySubjectDao extends AbstractDAO implements SubjectDao {
             statement.setInt(2, subjectId);
             statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException("Exception during updating question", e);
+            throw new DaoException("Exception during updating subject", e);
         } finally {
             try {
                 closeMainConnection(connection);
@@ -178,7 +181,7 @@ public class InMemorySubjectDao extends AbstractDAO implements SubjectDao {
             statement.setString(1, subject);
             statement.executeUpdate();
         } catch (SQLException | ConnectionPoolException e) {
-            throw new DaoException("Exception during updating question", e);
+            throw new DaoException("Exception during updating subject", e);
         } finally {
             try {
                 closeMainConnection(connection);
