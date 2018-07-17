@@ -1,13 +1,13 @@
 package com.distant.system.controller.command.factory.impl;
 
 import com.distant.system.controller.command.ActionCommand;
-import com.distant.system.controller.util.FieldsUtil;
+import com.distant.system.controller.util.Validation;
 import com.distant.system.controller.util.HashUtil;
 import com.distant.system.controller.SessionRequestContent;
-import com.distant.system.dao.exception.DaoException;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.service.UserService;
 import com.distant.system.controller.util.ConfigurationManager;
+import com.distant.system.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,6 +34,7 @@ public class LogInCommand implements ActionCommand {
     private static final String NAME_SURNAME = "nameSurname";
     private static final String TEACHER = "teacher";
     private static final String NAME_SURNAME1 = "nameSurname";
+    private static final String PATH_PAGE_ERROR_503 = "path.page.error.503";
 
     private UserService userService = new UserService();
 
@@ -49,8 +50,8 @@ public class LogInCommand implements ActionCommand {
             login = requestContent.getParameter(LOGIN_PARAM);
             pass = requestContent.getParameter(PASSWORD_PARAM);
         } catch (NoSuchRequestParameterException e) {
-            LOGGER.warn("Parameters are not found");
-            e.printStackTrace();
+            LOGGER.warn("Parameters are not found", e);
+
         }
 
 
@@ -65,13 +66,13 @@ public class LogInCommand implements ActionCommand {
         }
         ResourceBundle bundle = ResourceBundle.getBundle(BASE_NAME, locale);
 
-        if (FieldsUtil.isEmpty(login)) {
+        if (Validation.isEmpty(login)) {
             requestContent.setAttribute(EMPTY_MESS_1, bundle.getString(CON_FIELD_EMPTY));
-            if (FieldsUtil.isEmpty(pass)) {
+            if (Validation.isEmpty(pass)) {
                 requestContent.setAttribute(EMPTY_MESS_2, bundle.getString(CON_FIELD_EMPTY));
             }
             page = ConfigurationManager.getProperty(LOGIN_PAGE_PATH);
-        } else if (FieldsUtil.isEmpty(pass)) {
+        } else if (Validation.isEmpty(pass)) {
             requestContent.setAttribute(EMPTY_MESS_2, bundle.getString(CON_FIELD_EMPTY));
             page = ConfigurationManager.getProperty(LOGIN_PAGE_PATH);
         } else {
@@ -89,9 +90,8 @@ public class LogInCommand implements ActionCommand {
                     requestContent.setSessionAttribute(NAME_SURNAME1, userService.getNameSurname(login));
                     page = ConfigurationManager.getProperty(TEACHER_HOME_PAGE_PATH);
                 }
-            } catch (DaoException e) {
-                LOGGER.error("Error during authorization");
-                e.printStackTrace();
+            } catch (ServiceException e) {
+                return page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
             }
         }
 

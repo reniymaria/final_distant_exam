@@ -70,6 +70,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>service_exception</servlet-name>
+        <jsp-file>/WEB-INF/jsp/error503.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>service_exception</servlet-name>
+        <url-pattern>/service_exception</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>books</servlet-name>
         <jsp-file>/WEB-INF/jsp/books.jsp</jsp-file>
     </servlet>

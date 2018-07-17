@@ -1,8 +1,8 @@
 package com.distant.system.controller.util;
 
-import com.distant.system.dao.exception.DaoException;
 import com.distant.system.entity.Question;
 import com.distant.system.service.QuestionService;
+import com.distant.system.service.exception.ServiceException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -58,7 +58,7 @@ public class ParseExcel {
 
         try {
             questionService.add(questions);
-        } catch (DaoException e) {
+        } catch (ServiceException e) {
             e.printStackTrace();
         }
 

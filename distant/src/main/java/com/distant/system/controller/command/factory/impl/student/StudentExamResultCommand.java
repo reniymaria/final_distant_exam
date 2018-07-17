@@ -7,6 +7,7 @@ import com.distant.system.entity.Question;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.service.MarkService;
 import com.distant.system.controller.util.ConfigurationManager;
+import com.distant.system.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,6 +26,7 @@ public class StudentExamResultCommand implements ActionCommand {
     private static final String CON_EXAM_RESULT_FAILED = "con.exam.result.failed";
     private static final String RESULT_ATTR = "result";
     private static final String CON_EXAMRESULT_STUDENT = "con.examresult.student";
+    private static final String PATH_PAGE_ERROR_503 = "path.page.error.503";
 
     private MarkService markService = new MarkService();
 
@@ -78,9 +80,9 @@ public class StudentExamResultCommand implements ActionCommand {
 
             try {
                 markService.addMark(examResult, studentId, subjectId);
-            } catch (DaoException e) {
-                LOGGER.error("Dao exception", e);
-                e.printStackTrace();
+            } catch (ServiceException e) {
+                LOGGER.error("Service exception", e);
+                return page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
             }
             requestContent.removeSessionAttribute(StudentExamResultCommand.EXAM_QUESTIONS_ATTR);
             page = ConfigurationManager.getProperty(EXAM_RESULT_PATH_PAGE);

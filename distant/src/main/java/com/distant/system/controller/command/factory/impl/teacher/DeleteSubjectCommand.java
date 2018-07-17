@@ -6,6 +6,7 @@ import com.distant.system.dao.exception.DaoException;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.service.SubjectService;
 import com.distant.system.controller.util.ConfigurationManager;
+import com.distant.system.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,6 +20,7 @@ public class DeleteSubjectCommand implements ActionCommand {
     private static final String ACTION_COMPLETED = "path.page.action.completed";
     private static final String MSGDELETESUBJECT = "msgdeletesubject";
     private static final String CON_MSGDELETESUBJECT = "con.msgdeletesubject";
+    private static final String PATH_PAGE_ERROR_503 = "path.page.error.503";
 
     private SubjectService subjectService = new SubjectService();
 
@@ -43,11 +45,10 @@ public class DeleteSubjectCommand implements ActionCommand {
         ResourceBundle bundle = ResourceBundle.getBundle(I18N_CONTENT, locale);
 
         try {
-
             subjectService.deleteSubject(subjectId);
-        } catch (DaoException e) {
-            LOGGER.error("Dao exception", e);
-            e.printStackTrace();
+        } catch (ServiceException e) {
+            LOGGER.error("Service exception", e);
+            return page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
         }
         requestContent.setAttribute(MSGDELETESUBJECT, bundle.getString(CON_MSGDELETESUBJECT));
         page = ConfigurationManager.getProperty(ACTION_COMPLETED);

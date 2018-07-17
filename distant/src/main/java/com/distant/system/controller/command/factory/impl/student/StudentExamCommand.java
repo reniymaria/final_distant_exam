@@ -8,6 +8,7 @@ import com.distant.system.entity.Question;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.service.QuestionService;
 import com.distant.system.controller.util.ConfigurationManager;
+import com.distant.system.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,6 +27,7 @@ public class StudentExamCommand implements ActionCommand {
     private static final String EXAM_QUESTIONS_ATTR = "examQuestions";
     private static final String EXAMLANG_PARAM = "examlang";
     private static final String SUBJECT_PARAM = "subject";
+    private static final String PATH_PAGE_ERROR_503 = "path.page.error.503";
 
     private QuestionService questionService = new QuestionService();
 
@@ -51,12 +53,12 @@ public class StudentExamCommand implements ActionCommand {
         ResourceBundle bundle = ResourceBundle.getBundle(I18N_CONTENT, locale);
 
 
-        List<Question> examQuestion = new ArrayList<>();
+        List<Question> examQuestion;
         try {
             examQuestion = DaoUtil.getRandomFive(questionService.getQuestions(subject, examlang));
-        } catch (DaoException e) {
-            LOGGER.error("Dao exception", e);
-            e.printStackTrace();
+        } catch (ServiceException e) {
+            LOGGER.error("Service exception", e);
+            return page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
         }
 
         if (examQuestion.size() < 5) {

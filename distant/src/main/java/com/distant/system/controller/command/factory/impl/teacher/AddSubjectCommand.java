@@ -1,12 +1,12 @@
 package com.distant.system.controller.command.factory.impl.teacher;
 
 import com.distant.system.controller.command.ActionCommand;
-import com.distant.system.controller.util.FieldsUtil;
+import com.distant.system.controller.util.Validation;
 import com.distant.system.controller.SessionRequestContent;
-import com.distant.system.dao.exception.DaoException;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.service.SubjectService;
 import com.distant.system.controller.util.ConfigurationManager;
+import com.distant.system.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,6 +25,7 @@ public class AddSubjectCommand implements ActionCommand {
     private static final String CON_FIELD_EMPTY = "con.field.empty";
     private static final String MSGADDSUBJECT_ATTR = "msgaddsubject";
     private static final String CON_MSGADDSUBJECT = "con.msgaddsubject";
+    private static final String PATH_PAGE_ERROR_503 = "path.page.error.503";
 
     private SubjectService subjectService = new SubjectService();
 
@@ -47,16 +48,16 @@ public class AddSubjectCommand implements ActionCommand {
 
 
 
-        if (FieldsUtil.isEmpty(subject)) {
+        if (Validation.isEmpty(subject)) {
             requestContent.setAttribute(EMPTY_MESS_1_ATTR, bundle.getString(CON_FIELD_EMPTY));
             page = ConfigurationManager.getProperty(ADD_SUBJECT_PATH_PAGE);
            return page;
         } else {
             try {
                 subjectService.addSubject(subject);
-            } catch (DaoException e) {
-                LOGGER.warn("Dao exception foe subject",e);
-                e.printStackTrace();
+            } catch (ServiceException e) {
+                LOGGER.error("Service exception", e);
+                return page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
             }
 
             requestContent.setAttribute(MSGADDSUBJECT_ATTR, bundle.getString(CON_MSGADDSUBJECT));

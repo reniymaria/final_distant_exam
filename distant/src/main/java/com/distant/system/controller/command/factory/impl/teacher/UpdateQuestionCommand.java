@@ -2,14 +2,14 @@ package com.distant.system.controller.command.factory.impl.teacher;
 
 import com.distant.system.controller.command.ActionCommand;
 import com.distant.system.controller.SessionRequestContent;
-import com.distant.system.dao.exception.DaoException;
 import com.distant.system.entity.Question;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.service.LanguageService;
 import com.distant.system.service.QuestionService;
 import com.distant.system.service.SubjectService;
 import com.distant.system.controller.util.ConfigurationManager;
-import com.distant.system.controller.util.FieldsUtil;
+import com.distant.system.controller.util.Validation;
+import com.distant.system.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -39,6 +39,7 @@ public class UpdateQuestionCommand implements ActionCommand {
     private static final String EMPTY_MESS_5 = "emptyMess5";
     private static final String SUBJECT_ATTR = "subject";
     private static final String LANG_ATTR = "lang";
+    private static final String PATH_PAGE_ERROR_503 = "path.page.error.503";
 
 
     private QuestionService questionService = new QuestionService();
@@ -113,30 +114,30 @@ public class UpdateQuestionCommand implements ActionCommand {
 
         ResourceBundle bundle = ResourceBundle.getBundle(I18N_CONTENT, locale);
 
-        if (FieldsUtil.isEmpty(question)) {
+        if (Validation.isEmpty(question)) {
             requestContent.setAttribute(EMPTY_MESS_1, bundle.getString(CON_FIELD_EMPTY));
             page = ConfigurationManager.getProperty(TEACHER_EDIT_QUESTION_PATH);
-        } else if (FieldsUtil.isEmpty(answer1)) {
+        } else if (Validation.isEmpty(answer1)) {
             requestContent.setAttribute(EMPTY_MESS_2, bundle.getString(CON_FIELD_EMPTY));
             page = ConfigurationManager.getProperty(TEACHER_EDIT_QUESTION_PATH);
-        } else if (FieldsUtil.isEmpty(answer2)) {
+        } else if (Validation.isEmpty(answer2)) {
             requestContent.setAttribute(EMPTY_MESS_3, bundle.getString(CON_FIELD_EMPTY));
             page = ConfigurationManager.getProperty(TEACHER_EDIT_QUESTION_PATH);
-        } else if (FieldsUtil.isEmpty(answer3)) {
+        } else if (Validation.isEmpty(answer3)) {
             requestContent.setAttribute(EMPTY_MESS_4, bundle.getString(CON_FIELD_EMPTY));
             page = ConfigurationManager.getProperty(TEACHER_EDIT_QUESTION_PATH);
-        } else if (FieldsUtil.isEmptyNum(correctAnswer)) {
+        } else if (Validation.isEmptyNum(correctAnswer)) {
             requestContent.setAttribute(EMPTY_MESS_5, bundle.getString(CON_FIELD_EMPTY));
             page = ConfigurationManager.getProperty(TEACHER_EDIT_QUESTION_PATH);
         } else if (page == null) {
 
-            Question questionFromWeb = new Question(questionId, question, answer1, answer2, answer3, correctAnswer, questionDB.getSubjectId(),questionDB.getLanguageId());
+            Question questionFromWeb = new Question(questionId, question, answer1, answer2, answer3, correctAnswer, questionDB.getSubjectId(), questionDB.getLanguageId());
 
             try {
                 questionService.update(questionFromWeb);
-            } catch (DaoException e) {
-                LOGGER.error("Dao exception", e);
-                e.printStackTrace();
+            } catch (ServiceException e) {
+                LOGGER.error("Service exception", e);
+                return page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
             }
 
             requestContent.setAttribute(MSGEDITQUESTION_ATTR, bundle.getString(CON_MSGEDITQUESTION));
@@ -167,12 +168,14 @@ public class UpdateQuestionCommand implements ActionCommand {
         }
 
         if (id != 0) {
+
             try {
                 question = questionService.find(id);
-            } catch (DaoException e) {
-                LOGGER.error("Dao exception", e);
-                e.printStackTrace();
+            } catch (ServiceException e) {
+                LOGGER.error("Service exception", e);
+                return page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
             }
+
             requestContent.setSessionAttribute(QUESTION_ATTR, question);
         } else {
             try {
@@ -186,9 +189,9 @@ public class UpdateQuestionCommand implements ActionCommand {
         try {
             subject = subjectService.getSubjectById(question.getSubjectId());
             lang = languageService.getLanguageById(question.getLanguageId());
-        } catch (DaoException e) {
-            LOGGER.error("Dao exception", e);
-            e.printStackTrace();
+        } catch (ServiceException e) {
+            LOGGER.error("Service exception", e);
+            return page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
         }
 
         requestContent.setAttribute(SUBJECT_ATTR, subject);

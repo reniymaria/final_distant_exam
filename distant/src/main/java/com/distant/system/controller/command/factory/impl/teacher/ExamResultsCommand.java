@@ -7,6 +7,7 @@ import com.distant.system.entity.dto.ExamResult;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.service.MarkService;
 import com.distant.system.controller.util.ConfigurationManager;
+import com.distant.system.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,12 +26,13 @@ public class ExamResultsCommand implements ActionCommand {
     private static final String MARK_LIST_ATTR = "MarkList";
     private static final String NO_OF_PAGES_ATTR = "noOfPages";
     private static final String CURRENT_PAGE_ATTR = "currentPage";
+    private static final String PATH_PAGE_ERROR_503 = "path.page.error.503";
 
     private MarkService markService = new MarkService();
 
     private static final Logger LOGGER = LogManager.getLogger(ExamResultsCommand.class);
 
-    
+
     @Override
     public String executePost(SessionRequestContent requestContent) {
         return null;
@@ -54,42 +56,34 @@ public class ExamResultsCommand implements ActionCommand {
             if (markService.allMarks() == 0) {
                 requestContent.setAttribute(LIST_EMPTY_ATTR, bundle.getString(CON_LIST_EMPTY));
             }
-        } catch (DaoException e) {
-            LOGGER.error("Dao exception", e);
-            e.printStackTrace();
-        }
 
-        int page = 1;
-        int recordsPerPage = 3;
-        try {
-            if (requestContent.getParameter(PAGE_PARAM) != null) {
-                page = Integer.parseInt(requestContent.getParameter(PAGE_PARAM));
+
+            int page = 1;
+            int recordsPerPage = 3;
+            try {
+                if (requestContent.getParameter(PAGE_PARAM) != null) {
+                    page = Integer.parseInt(requestContent.getParameter(PAGE_PARAM));
+                }
+            } catch (NoSuchRequestParameterException e) {
+                LOGGER.warn("No such parameter", e);
+                e.printStackTrace();
             }
-        } catch (NoSuchRequestParameterException e) {
-            LOGGER.warn("No such parameter", e);
-            e.printStackTrace();
-        }
 
-        List<ExamResult> listExam = null;
-        try {
+            List<ExamResult> listExam = null;
             listExam = markService.numberOfMarks((page - 1),
                     recordsPerPage);
-        } catch (DaoException e) {
-            LOGGER.error("Dao exception", e);
-            e.printStackTrace();
-        }
-        int noOfRecords = 0;
-        try {
+            int noOfRecords = 0;
             noOfRecords = markService.allMarks();
-        } catch (DaoException e) {
-            LOGGER.error("Dao exception", e);
-            e.printStackTrace();
-        }
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-        requestContent.setAttribute(MARK_LIST_ATTR, listExam);
-        requestContent.setAttribute(NO_OF_PAGES_ATTR, noOfPages);
-        requestContent.setAttribute(CURRENT_PAGE_ATTR, page);
 
+
+            int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+            requestContent.setAttribute(MARK_LIST_ATTR, listExam);
+            requestContent.setAttribute(NO_OF_PAGES_ATTR, noOfPages);
+            requestContent.setAttribute(CURRENT_PAGE_ATTR, page);
+        } catch (ServiceException e) {
+            LOGGER.error("Service exception", e);
+            return pageString = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
+        }
         pageString = ConfigurationManager.getProperty(EXAM_RESULTS_PATH_PAGE);
         return pageString;
     }

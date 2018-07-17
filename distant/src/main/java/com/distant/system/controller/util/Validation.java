@@ -6,13 +6,13 @@ import java.util.List;
 /**
  * Defines static methods for fields validation.
  */
-public class FieldsUtil {
+public class Validation {
 
 
     /**
      * Not instantiate utility class.
      */
-    private FieldsUtil() {
+    private Validation() {
         throw new AssertionError("Class contains static methods only. You should not instantiate it!");
     }
 

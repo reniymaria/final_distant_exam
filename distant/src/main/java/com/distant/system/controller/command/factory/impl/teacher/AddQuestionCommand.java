@@ -2,14 +2,14 @@ package com.distant.system.controller.command.factory.impl.teacher;
 
 import com.distant.system.controller.command.ActionCommand;
 import com.distant.system.controller.SessionRequestContent;
-import com.distant.system.dao.exception.DaoException;
 import com.distant.system.entity.Question;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.service.LanguageService;
 import com.distant.system.service.QuestionService;
 import com.distant.system.service.SubjectService;
 import com.distant.system.controller.util.ConfigurationManager;
-import com.distant.system.controller.util.FieldsUtil;
+import com.distant.system.controller.util.Validation;
+import com.distant.system.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,6 +40,7 @@ public class AddQuestionCommand implements ActionCommand {
     private static final String ANSWER_INCORRECT = "answerIncorrect";
     private static final String MSGADDQUESTION = "msgaddquestion";
     private static final String CON_MSGADDQUESTION = "con.msgaddquestion";
+    private static final String PATH_PAGE_ERROR_503 = "path.page.error.503";
 
     private QuestionService questionService = new QuestionService();
     private SubjectService subjectService = new SubjectService();
@@ -87,44 +88,40 @@ public class AddQuestionCommand implements ActionCommand {
 
         try {
             subject = subjectService.getSubjectById(subjectId);
-            lang = languageService.getLanguageById(langId);
-        } catch (DaoException e) {
-            LOGGER.error("DAO exception", e);
-            e.printStackTrace();
-        }
+
+        lang = languageService.getLanguageById(langId);
 
         requestContent.setAttribute(SUBJECT_ID, subjectId);
         requestContent.setAttribute(LANG_ID, langId);
         requestContent.setAttribute(SUBJECT, subject);
         requestContent.setAttribute(LANG, lang);
 
-        if (FieldsUtil.isEmpty(question)) {
+        if (Validation.isEmpty(question)) {
             requestContent.setAttribute(EMPTY_MESS_1, bundle.getString(CON_FIELD_EMPTY));
             page = ConfigurationManager.getProperty(TEACHER_ADD_QUESTION_PATH_PAGE);
-        } else if (FieldsUtil.isEmpty(answer1)) {
+        } else if (Validation.isEmpty(answer1)) {
             requestContent.setAttribute(EMPTY_MESS_2, bundle.getString(CON_FIELD_EMPTY));
             page = ConfigurationManager.getProperty(TEACHER_ADD_QUESTION_PATH_PAGE);
-        } else if (FieldsUtil.isEmpty(answer2)) {
+        } else if (Validation.isEmpty(answer2)) {
             requestContent.setAttribute(EMPTY_MESS_3, bundle.getString(CON_FIELD_EMPTY));
             page = ConfigurationManager.getProperty(TEACHER_ADD_QUESTION_PATH_PAGE);
-        } else if (FieldsUtil.isEmpty(answer3)) {
+        } else if (Validation.isEmpty(answer3)) {
             requestContent.setAttribute(EMPTY_MESS_4, bundle.getString(CON_FIELD_EMPTY));
             page = ConfigurationManager.getProperty(TEACHER_ADD_QUESTION_PATH_PAGE);
-        } else if (!FieldsUtil.isNumberCorrectAnswer(correctAnswer)) {
+        } else if (!Validation.isNumberCorrectAnswer(correctAnswer)) {
             requestContent.setAttribute(ANSWER_INCORRECT, bundle.getString(CON_ANSWER_INVALID));
             page = ConfigurationManager.getProperty(TEACHER_ADD_QUESTION_PATH_PAGE);
         } else if (page == null) {
             Question questionFromWeb = new Question(question, answer1, answer2, answer3, correctAnswer, subjectId, langId);
 
-            try {
-                questionService.add(questionFromWeb);
-            } catch (DaoException e) {
-                LOGGER.error("DAO exception", e);
-                e.printStackTrace();
-            }
+            questionService.add(questionFromWeb);
 
             requestContent.setAttribute(MSGADDQUESTION, bundle.getString(CON_MSGADDQUESTION));
             page = ConfigurationManager.getProperty(ACTION_COMPLETED);
+        }
+        } catch (ServiceException e) {
+            LOGGER.error("Service exception", e);
+            return page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
         }
 
         return page;
@@ -142,7 +139,6 @@ public class AddQuestionCommand implements ActionCommand {
             langId = Integer.parseInt(requestContent.getParameter(LANG_ID));
         } catch (NoSuchRequestParameterException e) {
             LOGGER.warn("Parameter is not found", e);
-            e.printStackTrace();
         }
 
         String subject = null;
@@ -150,10 +146,11 @@ public class AddQuestionCommand implements ActionCommand {
 
         try {
             subject = subjectService.getSubjectById(subjectId);
-            lang = languageService.getLanguageById(langId);
-        } catch (DaoException e) {
-            LOGGER.error("DAO exception for lang or subject", e);
-            e.printStackTrace();
+
+        lang = languageService.getLanguageById(langId);
+        } catch (ServiceException e) {
+            LOGGER.error("Service exception", e);
+            return page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
         }
         requestContent.setAttribute(SUBJECT_ID, subjectId);
         requestContent.setAttribute(LANG_ID, langId);

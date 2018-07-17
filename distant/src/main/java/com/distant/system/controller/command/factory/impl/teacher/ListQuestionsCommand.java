@@ -7,6 +7,7 @@ import com.distant.system.entity.Question;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.service.QuestionService;
 import com.distant.system.controller.util.ConfigurationManager;
+import com.distant.system.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,6 +30,7 @@ public class ListQuestionsCommand implements ActionCommand {
     private static final String CURRENT_PAGE_ATTR = "currentPage";
     private static final String SUBJECT_ID_ATTR = "subjectId";
     private static final String LANG_ID_ATTR = "langId";
+    private static final String PATH_PAGE_ERROR_503 = "path.page.error.503";
 
 
     private QuestionService questionService = new QuestionService();
@@ -77,29 +79,24 @@ public class ListQuestionsCommand implements ActionCommand {
         try {
             list = questionService.numberOfQuestions(subjectId, langId, (page - 1),
                     recordsPerPage);
-        } catch (DaoException e) {
-            LOGGER.error("Dao exception", e);
-            e.printStackTrace();
-        }
-        int noOfRecords = 0;
-        try {
+
+            int noOfRecords = 0;
             noOfRecords = questionService.allQuestions(subjectId, langId);
-        } catch (DaoException e) {
-            LOGGER.error("Dao exception", e);
-            e.printStackTrace();
+            int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+            requestContent.setAttribute(QUESTION_LIST_ATTR, list);
+            requestContent.setAttribute(NO_OF_PAGES_ATTR, noOfPages);
+            requestContent.setAttribute(CURRENT_PAGE_ATTR, page);
+
+            requestContent.setSessionAttribute(SUBJECT_ID_ATTR, subjectId);
+            requestContent.setSessionAttribute(LANG_ID_ATTR, langId);
+
+            if (noOfRecords == 0) {
+                requestContent.setAttribute(LIST_EMPTY_ATTR, bundle.getString(CON_LIST_EMPTY));
+            }
+        } catch (ServiceException e) {
+            LOGGER.error("Service exception", e);
+            return pageString = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
         }
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-        requestContent.setAttribute(QUESTION_LIST_ATTR, list);
-        requestContent.setAttribute(NO_OF_PAGES_ATTR, noOfPages);
-        requestContent.setAttribute(CURRENT_PAGE_ATTR, page);
-
-        requestContent.setSessionAttribute(SUBJECT_ID_ATTR, subjectId);
-        requestContent.setSessionAttribute(LANG_ID_ATTR, langId);
-
-        if (noOfRecords == 0) {
-            requestContent.setAttribute(LIST_EMPTY_ATTR, bundle.getString(CON_LIST_EMPTY));
-        }
-
         pageString = ConfigurationManager.getProperty(QUESTION_LIST_PATH);
         return pageString;
     }

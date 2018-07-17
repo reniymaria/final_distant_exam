@@ -1,12 +1,12 @@
 package com.distant.system.controller.command.factory.impl.teacher;
 
 import com.distant.system.controller.command.ActionCommand;
-import com.distant.system.controller.util.FieldsUtil;
+import com.distant.system.controller.util.Validation;
 import com.distant.system.controller.SessionRequestContent;
-import com.distant.system.dao.exception.DaoException;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.service.SubjectService;
 import com.distant.system.controller.util.ConfigurationManager;
+import com.distant.system.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,6 +26,7 @@ public class EditSubjectCommand implements ActionCommand {
     private static final String SUBJECT_ATTR = "subject";
     private static final String SUBJECT_ID_ATTR = "subjectId";
     private static final String SUBJECT_ID = "subjectId";
+    private static final String PATH_PAGE_ERROR_503 = "path.page.error.503";
 
     private SubjectService subjectService = new SubjectService();
 
@@ -63,18 +64,18 @@ public class EditSubjectCommand implements ActionCommand {
 
         ResourceBundle bundle = ResourceBundle.getBundle(I18N_CONTENT, locale);
 
-        if (FieldsUtil.isEmpty(subject)) {
+        if (Validation.isEmpty(subject)) {
             requestContent.setAttribute(EMPTY_MESS_1, bundle.getString(CON_FIELD_EMPTY));
             requestContent.setAttribute(SUBJECT_ATTR, subject);
             page = ConfigurationManager.getProperty(EDIT_SUBJECT_PATH);
             return page;
         } else {
+            requestContent.removeSessionAttribute(SUBJECT_ID_ATTR);
             try {
-                requestContent.removeSessionAttribute(SUBJECT_ID_ATTR);
                 subjectService.updateSubject(subjectId, subject);
-            } catch (DaoException e) {
-                LOGGER.error("DAO exception", e);
-                e.printStackTrace();
+            } catch (ServiceException e) {
+                LOGGER.error("Service exception", e);
+                return page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
             }
 
             requestContent.setAttribute(MSGEDITSUBJECT, bundle.getString(CON_MSGEDITSUBJECT));

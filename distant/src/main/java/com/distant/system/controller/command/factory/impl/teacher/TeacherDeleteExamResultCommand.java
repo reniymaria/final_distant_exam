@@ -6,6 +6,7 @@ import com.distant.system.dao.exception.DaoException;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.service.MarkService;
 import com.distant.system.controller.util.ConfigurationManager;
+import com.distant.system.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,6 +22,7 @@ public class TeacherDeleteExamResultCommand implements ActionCommand {
     private static final String LANGUAGE = "language";
     private static final String I18N_CONTENT = "i18n.content";
     private static final String ACTION_COMPLETED = "path.page.action.completed";
+    private static final String PATH_PAGE_ERROR_503 = "path.page.error.503";
 
     private MarkService markService = new MarkService();
 
@@ -58,9 +60,9 @@ public class TeacherDeleteExamResultCommand implements ActionCommand {
 
         try {
             markService.deleteMark(userID, subjectID);
-        } catch (DaoException e) {
-            LOGGER.error("Dao exception", e);
-            e.printStackTrace();
+        } catch (ServiceException e) {
+            LOGGER.error("Service exception", e);
+            return page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
         }
 
         requestContent.setAttribute(ERR_MSG_ATTR, bundle.getString(CON_VALUE_IS_DELETED));

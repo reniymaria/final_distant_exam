@@ -7,6 +7,7 @@ import com.distant.system.entity.dto.ExamResult;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.service.MarkService;
 import com.distant.system.controller.util.ConfigurationManager;
+import com.distant.system.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,6 +27,7 @@ public class StudentExamListCommand implements ActionCommand {
     private static final String EXAM_LIST = "ExamList";
     private static final String NO_OF_PAGES = "noOfPages";
     private static final String CURRENT_PAGE = "currentPage";
+    private static final String PATH_PAGE_ERROR_503 = "path.page.error.503";
 
     private MarkService markService = new MarkService();
 
@@ -58,9 +60,9 @@ public class StudentExamListCommand implements ActionCommand {
             if (markService.allStudentMarks(studentId) == 0) {
                 requestContent.setAttribute(LIST_EMPTY, bundle.getString(CON_LIST_EMPTY));
             }
-        } catch (DaoException e) {
-            LOGGER.error("Dao exception", e);
-            e.printStackTrace();
+        } catch (ServiceException e) {
+            LOGGER.error("Service exception", e);
+            return pageList = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
         }
 
 
@@ -74,20 +76,14 @@ public class StudentExamListCommand implements ActionCommand {
             LOGGER.warn("No such parameter page is found ", e);
             e.printStackTrace();
         }
-
+        int noOfRecords = 0;
         List<ExamResult> list = null;
         try {
             list = markService.numberOfStudentMarks(studentId, (page - 1), recordsPerPage);
-        } catch (DaoException e) {
-            LOGGER.error("Dao exception", e);
-            e.printStackTrace();
-        }
-        int noOfRecords = 0;
-        try {
             noOfRecords = markService.allStudentMarks(studentId);
-        } catch (DaoException e) {
-            LOGGER.error("Dao exception", e);
-            e.printStackTrace();
+        } catch (ServiceException e) {
+            LOGGER.error("Service exception", e);
+            return pageList = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
         }
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
         requestContent.setAttribute(EXAM_LIST, list);
