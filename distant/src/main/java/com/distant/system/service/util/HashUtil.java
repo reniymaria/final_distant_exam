@@ -1,4 +1,4 @@
-package com.distant.system.controller.util;
+package com.distant.system.service.util;
 
 import org.apache.commons.codec.digest.DigestUtils;
 

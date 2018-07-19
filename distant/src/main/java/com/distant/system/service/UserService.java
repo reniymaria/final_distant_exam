@@ -1,5 +1,6 @@
 package com.distant.system.service;
 
+import com.distant.system.service.util.HashUtil;
 import com.distant.system.dao.DAOFactory;
 
 import com.distant.system.dao.DAOManager;
@@ -8,59 +9,55 @@ import com.distant.system.dao.UserDao;
 import com.distant.system.dao.exception.DaoException;
 import com.distant.system.entity.User;
 import com.distant.system.service.exception.ServiceException;
+import com.distant.system.service.exception.ValidationException;
+import com.distant.system.service.util.Validation;
 
 
 public class UserService {
+
     private static final DAOManager daoManager = DAOFactory.getFactory().getMainDAOManager();
     private static final UserDao userDao = daoManager.getUserDAO();
 
-    public String findPosition(String login) throws ServiceException {
-        try {
-            return userDao.findPosition(login);
-        } catch (DaoException e) {
-            throw new ServiceException("Exception during find position", e);
+    private static final String CON_FIELD_EMPTY = "con.field.empty";
+    private static final String CON_ERROR_LOGIN_PASSWORD = "con.error.login.password";
+    private static final String CON_LOGINEXIST = "con.loginexist";
+
+    public void addStudent(User user) throws ServiceException, ValidationException {
+
+        if (!Validation.isRegistrationDataValid(user)) {
+            throw new ValidationException(CON_FIELD_EMPTY);
         }
-    }
-
-    public boolean checkIfExist(String login) throws ServiceException {
         try {
-            return userDao.checkIfExist(login);
-        } catch (DaoException e) {
-            throw new ServiceException("Exception during check", e);
-        }
-
-    }
-
-    public boolean isAuthorized(String login, String password) throws ServiceException {
-        try {
-            return userDao.isAuthorized(login, password);
-        } catch (DaoException e) {
-            throw new ServiceException("Exception during a", e);
-        }
-    }
-
-    public void addStudent(User user) throws ServiceException {
-        try {
-            userDao.addStudent(user);
+            if (userDao.checkIfExist(user.getLogin())) {
+                throw new ValidationException(CON_LOGINEXIST);
+            } else {
+                String hashPassword = HashUtil.md5Apache(user.getPassword());
+                user.setPassword(hashPassword);
+                userDao.addStudent(user);
+            }
         } catch (DaoException e) {
             throw new ServiceException("Exception for user service", e);
         }
     }
 
-    public int findUserID(String login) throws ServiceException {
-        try {
-            return userDao.findUserID(login);
-        } catch (DaoException e) {
-            throw new ServiceException("Exception for user service", e);
-        }
-    }
+    public User logIn(String login, String password) throws ValidationException, ServiceException {
+        User user;
 
-    public String getNameSurname(String login) throws ServiceException {
         try {
-            return userDao.getNameSurname(login);
+            if (!Validation.isLoginDataValid(login, password)) {
+                throw new ValidationException(CON_FIELD_EMPTY);
+            }
+
+            String hashPass = HashUtil.md5Apache(password);
+            user = userDao.logIn(login, hashPass);
+            if (user.getLogin() == null) {
+                throw new ValidationException(CON_ERROR_LOGIN_PASSWORD);
+            }
         } catch (DaoException e) {
             throw new ServiceException("Exception for user service", e);
+
         }
+        return user;
     }
 
 }

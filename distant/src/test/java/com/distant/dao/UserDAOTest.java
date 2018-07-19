@@ -5,7 +5,7 @@ import com.distant.system.dao.UserDao;
 import com.distant.system.dao.conection.ConnectionPool;
 import com.distant.system.dao.exception.DaoException;
 import com.distant.system.entity.User;
-import com.distant.system.controller.util.HashUtil;
+import com.distant.system.service.util.HashUtil;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;

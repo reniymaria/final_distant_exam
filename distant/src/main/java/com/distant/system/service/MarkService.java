@@ -6,6 +6,7 @@ import com.distant.system.dao.MarkDao;
 import com.distant.system.dao.exception.DaoException;
 import com.distant.system.entity.dto.ExamResult;
 import com.distant.system.service.exception.ServiceException;
+import com.distant.system.service.exception.ValidationException;
 
 import java.util.List;
 
@@ -63,6 +64,7 @@ public class MarkService {
         }
 
     }
+
 
     public void addMark(int mark, int studentId, int subjectId) throws ServiceException {
         try {

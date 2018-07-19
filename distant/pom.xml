@@ -23,6 +23,7 @@
         <commons-fileupload-version>1.3</commons-fileupload-version>
         <taglibs-version>1.1.2</taglibs-version>
         <comons-codec-version>1.9</comons-codec-version>
+        <commons-validator-version>1.6</commons-validator-version>
     </properties>
 
     <dependencies>
@@ -47,6 +48,12 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>${apache-poi-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>${commons-validator-version}</version>
         </dependency>
 
         <dependency>

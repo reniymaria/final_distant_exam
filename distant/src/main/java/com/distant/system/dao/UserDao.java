@@ -10,6 +10,7 @@ import java.util.List;
 public interface UserDao {
     String SQL_ADD_STUDENT = "INSERT INTO users (login, password, name, surname, role) VALUES (?, ?, ?, ?, 'student')";
     String SQL_FIND_ALL_USERS = "SELECT * FROM users";
+    String SQL_FIND_USER = "SELECT id, login, name, surname, role FROM users WHERE login =? AND password =?";
 
     List<User> allUsers() throws DaoException;
 
@@ -24,5 +25,7 @@ public interface UserDao {
     int findUserID(String login) throws DaoException;
 
     String getNameSurname(String login) throws DaoException;
+
+    User logIn(String login, String password) throws DaoException;
 
 }

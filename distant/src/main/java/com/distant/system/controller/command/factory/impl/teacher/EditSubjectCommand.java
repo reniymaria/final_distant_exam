@@ -1,7 +1,7 @@
 package com.distant.system.controller.command.factory.impl.teacher;
 
 import com.distant.system.controller.command.ActionCommand;
-import com.distant.system.controller.util.Validation;
+import com.distant.system.service.util.Validation;
 import com.distant.system.controller.SessionRequestContent;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.service.SubjectService;

@@ -2,13 +2,14 @@ package com.distant.system.controller.command.factory.impl.teacher;
 
 import com.distant.system.controller.command.ActionCommand;
 import com.distant.system.controller.SessionRequestContent;
+import com.distant.system.controller.util.CommandUtil;
 import com.distant.system.entity.Question;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.service.LanguageService;
 import com.distant.system.service.QuestionService;
 import com.distant.system.service.SubjectService;
 import com.distant.system.controller.util.ConfigurationManager;
-import com.distant.system.controller.util.Validation;
+import com.distant.system.service.util.Validation;
 import com.distant.system.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,8 +19,6 @@ import java.util.ResourceBundle;
 
 public class UpdateQuestionCommand implements ActionCommand {
 
-    private static final String LANGUAGE = "language";
-    private static final String I18N_CONTENT = "i18n.content";
     private static final String ACTION_COMPLETED = "path.page.action.completed";
     private static final String CORRECT_ANSWER_PARAM = "correctAnswer";
     private static final String TEACHER_EDIT_QUESTION_PATH = "path.page.teacher.edit.question";
@@ -59,15 +58,8 @@ public class UpdateQuestionCommand implements ActionCommand {
         String answer2 = null;
         String answer3 = null;
         int correctAnswer = 0;
-        Locale locale = null;
 
 
-        try {
-            locale = new Locale(requestContent.getSessionAttribute(LANGUAGE).toString());
-        } catch (NoSuchRequestParameterException e) {
-            LOGGER.warn("No such parameter found", e);
-            e.printStackTrace();
-        }
         try {
             questionId = Integer.parseInt(requestContent.getParameter(QUESTION_ID_PARAM));
         } catch (NoSuchRequestParameterException e) {
@@ -112,7 +104,7 @@ public class UpdateQuestionCommand implements ActionCommand {
             e.printStackTrace();
         }
 
-        ResourceBundle bundle = ResourceBundle.getBundle(I18N_CONTENT, locale);
+        ResourceBundle bundle = CommandUtil.takeBundle(requestContent);
 
         if (Validation.isEmpty(question)) {
             requestContent.setAttribute(EMPTY_MESS_1, bundle.getString(CON_FIELD_EMPTY));
@@ -191,7 +183,7 @@ public class UpdateQuestionCommand implements ActionCommand {
             lang = languageService.getLanguageById(question.getLanguageId());
         } catch (ServiceException e) {
             LOGGER.error("Service exception", e);
-            return page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
+            page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
         }
 
         requestContent.setAttribute(SUBJECT_ATTR, subject);

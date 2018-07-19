@@ -19,9 +19,10 @@
     <c:when test="${requestScope.listEmpty != null}">
         <div class="parent-container">
             <div class="child-container">
-                <div class="error-message">
-                    <c:out value="${requestScope.listEmpty}"/>
-                </div>
+                    <div class="input-form">
+                        <c:out value="${requestScope.listEmpty}"/>
+                        <br>
+                    </div>
                 <a class="button margin-top-20" href="${pageContext.request.contextPath}/student_home"><fmt:message
                         key="con.studentpage"/></a>
             </div>

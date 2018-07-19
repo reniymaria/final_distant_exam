@@ -20,16 +20,16 @@
         </div>
 
         <form class="header-item header-right-item language">
-            <select class="header-language header-button header-text" subjectID="language" name="language" onchange="submit()">
+            <select class="header-language header-button header-text" name="language" onchange="submit()">
                 <option value="ru" ${language == 'ru' ? 'selected' : ''}>Русский</option>
                 <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
             </select>
         </form>
 
         <c:choose>
-            <c:when test="${sessionScope.role=='student'}">
+            <c:when test="${sessionScope.user.role=='student'}">
                 <div class="header-right-item">
-                    <span class="header-text"><fmt:message key="con.student"/>${sessionScope.nameSurname}</span>
+                    <span class="header-text"><fmt:message key="con.student"/>${sessionScope.user.name}&nbsp${sessionScope.user.surname}</span>
                     <form action="${pageContext.request.contextPath}/controller" method="Post">
                         <input type = "hidden" name = "command" value = "logout" >
                         <button class="header-button"><fmt:message key="con.logoutbutton"/></button>
@@ -39,9 +39,9 @@
                     <a class="header-button" href="${pageContext.request.contextPath}/student_home"><span class="header-text"><fmt:message key="con.studentpage"/></span></a>
                 </div>
             </c:when>
-            <c:when test="${sessionScope.role=='teacher'}">
+            <c:when test="${sessionScope.user.role=='teacher'}">
                 <div class="header-right-item">
-                    <span class="header-text"><fmt:message key="con.teacher"/>${sessionScope.nameSurname}</span>
+                    <span class="header-text"><fmt:message key="con.teacher"/>${sessionScope.user.name}&nbsp${sessionScope.user.surname}</span>
                     <form action="${pageContext.request.contextPath}/controller" method="Post">
                         <input type = "hidden" name = "command" value = "logout" >
                         <button class="header-button"><fmt:message key="con.logoutbutton"/></button>

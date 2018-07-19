@@ -13,14 +13,16 @@
 
 <div class="parent-container">
     <div class="child-container align-center">
-        <fmt:message key ="con.main.student"/>
+        <fmt:message key="con.main.student"/>
         <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
             <input type="hidden" name="command" value="subject_list">
-            <button><fmt:message key="con.available.exams" /></button>
+            <input type="hidden" name="page" value="1">
+            <button><fmt:message key="con.available.exams"/></button>
         </form>
         <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
             <input type="hidden" name="command" value="exam_list">
-            <button><fmt:message key="con.open.exam.results" /></button>
+            <input type="hidden" name="page" value="1">
+            <button><fmt:message key="con.open.exam.results"/></button>
         </form>
     </div>
 </div>

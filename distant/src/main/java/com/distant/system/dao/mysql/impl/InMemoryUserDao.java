@@ -150,5 +150,41 @@ public class InMemoryUserDao extends AbstractDAO implements UserDao {
         return nameAndSurname;
     }
 
+    @Override
+    public User logIn(String login, String password) throws DaoException {
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
+        User user = new User();
+
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(SQL_FIND_USER);
+            statement.setString(1, login);
+            statement.setString(2, password);
+            rs = statement.executeQuery();
+
+            while (rs.next()) {
+                user.setUserID(rs.getInt(ID));
+                user.setLogin(rs.getString(LOGIN));
+                user.setName(rs.getString(NAME));
+                user.setSurname(rs.getString(SURNAME));
+                user.setRole(rs.getString(ROLE));
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Exception during getting user from DB.", e);
+        } finally {
+            try {
+                closeMainConnection(connection);
+                ConnectionPool.getInstance().closeDBResources(rs, statement);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return user;
+    }
+
 
 }
