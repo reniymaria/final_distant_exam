@@ -22,6 +22,7 @@
                     <div class="input-form">
                         <c:out value="${requestScope.listEmpty}"/>
                         <br>
+                        <br>
                     </div>
                 <a class="button margin-top-20" href="${pageContext.request.contextPath}/student_home"><fmt:message
                         key="con.studentpage"/></a>
@@ -88,6 +89,8 @@
                         </c:if>
                     </tr>
                 </table>
+                <a class="button margin-top-20" href="${pageContext.request.contextPath}/student_home"><fmt:message
+                        key="con.studentpage"/></a>
             </div>
         </div>
     </c:otherwise>

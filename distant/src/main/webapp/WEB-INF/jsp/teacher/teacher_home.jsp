@@ -16,10 +16,12 @@
         <fmt:message key="con.main.teacher"/>
         <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
             <input type="hidden" name="command" value="results">
+            <input type="hidden" name="page" value="1">
             <button><fmt:message key="con.exam.results"/></button>
         </form>
         <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
             <input type="hidden" name="command" value="subjects">
+            <input type="hidden" name="page" value="1">
             <button><fmt:message key="con.subjects"/></button>
         </form>
     </div>

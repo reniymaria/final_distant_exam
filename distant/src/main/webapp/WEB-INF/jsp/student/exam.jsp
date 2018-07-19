@@ -14,11 +14,14 @@
     <c:when test="${requestScope.questionNotEnough!= null}">
         <div class="parent-container">
             <div class="child-container align-center">
-                <div class="error-message">
+                <div class="input-form">
                     <c:out value="${requestScope.questionNotEnough}"/>
                 </div>
-                <a class="button margin-top-20" href="${pageContext.request.contextPath}/subject_list"><fmt:message
-                        key="con.available.exams"/></a>
+                <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
+                    <input type="hidden" name="command" value="subject_list">
+                    <input type="hidden" name="page" value="1">
+                    <button><fmt:message key="con.available.exams"/></button>
+                </form>
             </div>
         </div>
     </c:when>

@@ -9,6 +9,7 @@ import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.service.MarkService;
 import com.distant.system.controller.util.ConfigurationManager;
 import com.distant.system.service.exception.ServiceException;
+import com.distant.system.service.exception.ValidationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,7 +26,6 @@ public class StudentExamListCommand implements ActionCommand {
     private static final String CURRENT_PAGE = "currentPage";
     private static final String PATH_PAGE_ERROR_503 = "path.page.error.503";
     private static final String USER = "user";
-    private static final String CON_LIST_EMPTY = "con.list.empty";
 
     private MarkService markService = new MarkService();
 
@@ -42,7 +42,7 @@ public class StudentExamListCommand implements ActionCommand {
 
         ResourceBundle bundle = CommandUtil.takeBundle(requestContent);
 
-        String pageNumber;
+        String pageNumber = null;
         int studentId;
         int noOfRecords = 0;
         List<ExamResult> list = null;
@@ -50,31 +50,30 @@ public class StudentExamListCommand implements ActionCommand {
         int recordsPerPage = 3;
 
         try {
+
             User user = (User) requestContent.getSessionAttribute(USER);
             studentId = user.getUserID();
 
-            if (markService.allStudentMarks(studentId) == 0) {
-                requestContent.setAttribute(LIST_EMPTY, bundle.getString(CON_LIST_EMPTY));
-            }
             page = Integer.parseInt(requestContent.getParameter(PAGE));
-
             list = markService.numberOfStudentMarks(studentId, (page - 1), recordsPerPage);
             noOfRecords = markService.allStudentMarks(studentId);
+
         } catch (NoSuchRequestParameterException e) {
             LOGGER.warn("No such parameter page is found ", e);
             page = 1;
+        } catch (ValidationException e) {
+            requestContent.setAttribute(LIST_EMPTY, bundle.getString(e.getMessage()));
         } catch (ServiceException e) {
             LOGGER.error("Service exception", e);
             pageNumber = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
         }
-
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
         requestContent.setAttribute(EXAM_LIST, list);
         requestContent.setAttribute(NO_OF_PAGES, noOfPages);
         requestContent.setAttribute(CURRENT_PAGE, page);
-
-        pageNumber = ConfigurationManager.getProperty(MARK_RESULTS_PATH);
-
+        if (pageNumber == null) {
+            pageNumber = ConfigurationManager.getProperty(MARK_RESULTS_PATH);
+        }
         return pageNumber;
     }
 }

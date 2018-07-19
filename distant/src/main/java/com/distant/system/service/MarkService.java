@@ -15,13 +15,9 @@ public class MarkService {
     private static final DAOManager daoManager = DAOFactory.getFactory().getMainDAOManager();
     private static final MarkDao markDao = daoManager.getMarkDAO();
 
-    public List<ExamResult> getExamMarks() throws ServiceException {
-        try {
-            return markDao.getExamMarks();
-        } catch (DaoException e) {
-            throw new ServiceException("Exception during getting examMarks", e);
-        }
-    }
+    private static final String CON_LIST_EMPTY = "con.list.empty";
+    private static final String CON_EXAM_RESULT_FAILED = "con.exam.result.failed";
+
 
     public List<ExamResult> numberOfMarks(int offset, int records) throws ServiceException {
         try {
@@ -31,9 +27,13 @@ public class MarkService {
         }
     }
 
-    public int allMarks() throws ServiceException {
+    public int allMarks() throws ServiceException, ValidationException {
         try {
-            return markDao.allMarks();
+            if (markDao.allMarks() == 0) {
+                throw new ValidationException(CON_LIST_EMPTY);
+            } else {
+                return markDao.allMarks();
+            }
         } catch (DaoException e) {
             throw new ServiceException("Exception during getting all marks", e);
         }
@@ -56,19 +56,27 @@ public class MarkService {
 
     }
 
-    public int allStudentMarks(int studentId) throws ServiceException {
+    public int allStudentMarks(int studentId) throws ServiceException, ValidationException {
         try {
-            return markDao.allStudentMarks(studentId);
+
+            if (markDao.allStudentMarks(studentId) == 0) {
+                throw new ValidationException(CON_LIST_EMPTY);
+            } else {
+                return markDao.allStudentMarks(studentId);
+            }
         } catch (DaoException e) {
             throw new ServiceException("Exception during getting all student marks", e);
         }
 
     }
 
-
-    public void addMark(int mark, int studentId, int subjectId) throws ServiceException {
+    public void addMark(int mark, int studentId, int subjectId) throws ServiceException, ValidationException {
         try {
-            markDao.addMark(mark, studentId, subjectId);
+            if (mark == 0) {
+                throw new ValidationException(CON_EXAM_RESULT_FAILED);
+            } else {
+                markDao.addMark(mark, studentId, subjectId);
+            }
         } catch (DaoException e) {
             throw new ServiceException("Exception during adding mark", e);
         }

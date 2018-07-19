@@ -1,6 +1,7 @@
 package com.distant.system.service.util;
 
 
+import com.distant.system.entity.Question;
 import com.distant.system.entity.User;
 import org.apache.commons.validator.GenericValidator;
 
@@ -77,5 +78,31 @@ public class Validation {
         }
         return true;
     }
+
+    public static boolean isQuestionDataValid(Question question){
+        String questionTitle = question.getQuestion();
+        String answer1 = question.getAnswer1();
+        String answer2 = question.getAnswer2();
+        String answer3 = question.getAnswer3();
+        int correctAnswer = question.getCorrectAnswer();
+        if (GenericValidator.isBlankOrNull(questionTitle)) {
+            return false;
+        }
+        if (GenericValidator.isBlankOrNull(answer1)) {
+            return false;
+        }
+        if (GenericValidator.isBlankOrNull(answer2)) {
+            return false;
+        }
+        if (GenericValidator.isBlankOrNull(answer3)) {
+            return false;
+        }
+        if (!GenericValidator.isInRange(correctAnswer,1,3)) {
+            return false;
+        }
+        return true;
+
+    }
+
 
 }

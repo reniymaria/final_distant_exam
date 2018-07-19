@@ -14,11 +14,12 @@
     <c:when test="${requestScope.result != null}">
         <div class="parent-container">
             <div class="child-container align-center">
-                <div class="error-message">
+                <div class="input-form">
                     <c:out value="${requestScope.result}"/>
                 </div>
                 <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
                     <input type="hidden" name="command" value="exam_list">
+                    <input type="hidden" name="page" value="1">
                     <button><fmt:message key="con.open.exam.results" /></button>
                 </form>
             </div>
@@ -34,6 +35,7 @@
                 </div>
                 <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
                     <input type="hidden" name="command" value="subject_list">
+                    <input type="hidden" name="page" value="1">
                     <button><fmt:message key="con.available.exams" /></button>
                 </form>
             </div>
