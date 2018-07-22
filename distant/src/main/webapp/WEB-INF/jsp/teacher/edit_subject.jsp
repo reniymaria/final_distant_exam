@@ -20,8 +20,8 @@
                 </c:if>
             </div>
             <input type="hidden" name="command" value="editsubject">
-            <input type="text" name="subject" value="${requestScope.subject}" required>
-            <input type="hidden" name="subjectId" value="${sessionScope.subjectId}">
+            <input type="text" name="subject" value="${sessionScope.subjectSession.subject}" required>
+            <input type="hidden" name="subjectId" value="${sessionScope.subjectSession.subjectID}">
             <button><fmt:message key="con.buttonsubmit"/></button>
         </form>
 

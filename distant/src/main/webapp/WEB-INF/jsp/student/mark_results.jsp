@@ -89,7 +89,7 @@
                         </c:if>
                     </tr>
                 </table>
-                <a class="button margin-top-20" href="${pageContext.request.contextPath}/student_home"><fmt:message
+                <a class="button" href="${pageContext.request.contextPath}/student_home"><fmt:message
                         key="con.studentpage"/></a>
             </div>
         </div>

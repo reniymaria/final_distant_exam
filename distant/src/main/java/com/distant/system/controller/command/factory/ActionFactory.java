@@ -6,7 +6,11 @@ import com.distant.system.controller.command.factory.impl.EmptyCommand;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * A factory for defining commands and saving the last command
+ */
 public class ActionFactory {
+
     private static final String COMMAND_PARAM = "command";
     private static ActionCommand lastCommand;
 

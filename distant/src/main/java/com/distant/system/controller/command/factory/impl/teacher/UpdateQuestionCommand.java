@@ -10,12 +10,11 @@ import com.distant.system.service.QuestionService;
 import com.distant.system.service.SubjectService;
 import com.distant.system.controller.util.ConfigurationManager;
 import com.distant.system.service.exception.ValidationException;
-import com.distant.system.service.util.Validation;
+
 import com.distant.system.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class UpdateQuestionCommand implements ActionCommand {
@@ -59,9 +58,8 @@ public class UpdateQuestionCommand implements ActionCommand {
         String answer3;
         int correctAnswer;
 
-
         try {
-            questionId = Integer.parseInt(requestContent.getParameter(QUESTION_ID_PARAM));
+
             question = requestContent.getParameter(QUESTION_PARAM);
             answer1 = requestContent.getParameter(ANSWER_1_PARAM);
             answer2 = requestContent.getParameter(ANSWER_2_PARAM);
@@ -69,12 +67,13 @@ public class UpdateQuestionCommand implements ActionCommand {
             correctAnswer = Integer.parseInt(requestContent.getParameter(CORRECT_ANSWER_PARAM));
 
             Question questionDB = (Question) requestContent.getSessionAttribute(QUESTION_ATTR);
+            questionId = questionDB.getQuestionId();
+
             Question questionFromWeb = new Question(questionId, question, answer1, answer2, answer3, correctAnswer, questionDB.getSubjectId(), questionDB.getLanguageId());
 
             questionService.update(questionFromWeb);
 
             requestContent.setAttribute(MSGEDITQUESTION_ATTR, bundle.getString(CON_MSGEDITQUESTION));
-            requestContent.setAttribute(QUESTION_ATTR, questionFromWeb);
             page = ConfigurationManager.getProperty(ACTION_COMPLETED);
 
         } catch (NoSuchRequestParameterException e) {
@@ -97,27 +96,20 @@ public class UpdateQuestionCommand implements ActionCommand {
     public String executeGet(SessionRequestContent requestContent) {
 
         String page;
-
-        String subject;
-        String lang;
         Question question;
+        int questionId;
 
         try {
 
-            question = (Question) requestContent.getSessionAttribute(QUESTION_ATTR);
-
-            subject = subjectService.getSubjectById(question.getSubjectId());
-            lang = languageService.getLanguageById(question.getLanguageId());
-
-            requestContent.setAttribute(SUBJECT_ATTR, subject);
-            requestContent.setAttribute(LANG_ATTR, lang);
-            requestContent.setAttribute(QUESTION_ATTR, question);
-
-            page = ConfigurationManager.getProperty(TEACHER_EDIT_QUESTION_PATH);
+            questionId = Integer.parseInt(requestContent.getParameter(QUESTION_ID_PARAM));
+            question = questionService.find(questionId);
+            requestContent.setSessionAttribute(QUESTION_ATTR, question);
+            page = editQuestion(question, requestContent);
 
         } catch (NoSuchRequestParameterException e) {
             LOGGER.warn("No such parameter found", e);
-            page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
+            Question question1 = getSessionQuestion(requestContent);
+            page = editQuestion(question1, requestContent);
         } catch (ServiceException e) {
             LOGGER.error("Service exception", e);
             page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
@@ -125,4 +117,41 @@ public class UpdateQuestionCommand implements ActionCommand {
 
         return page;
     }
+
+    private Question getSessionQuestion(SessionRequestContent requestContent) {
+        Question questionDB = null;
+
+        try {
+            questionDB = (Question) requestContent.getSessionAttribute(QUESTION_ATTR);
+        } catch (NoSuchRequestParameterException e) {
+            LOGGER.error("No such parameter", e);
+        }
+        return questionDB;
+    }
+
+    private String editQuestion(Question question, SessionRequestContent requestContent) {
+
+        String page = null;
+        String subject = null;
+        String lang = null;
+
+
+        try {
+            subject = subjectService.getSubjectById(question.getSubjectId());
+            lang = languageService.getLanguageById(question.getLanguageId());
+        } catch (ServiceException e) {
+            LOGGER.error("Service exception", e);
+            page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
+        }
+
+        requestContent.setAttribute(SUBJECT_ATTR, subject);
+        requestContent.setAttribute(LANG_ATTR, lang);
+        requestContent.setAttribute(QUESTION_ATTR, question);
+        if (page == null) {
+            page = ConfigurationManager.getProperty(TEACHER_EDIT_QUESTION_PATH);
+        }
+        return page;
+    }
+
+
 }

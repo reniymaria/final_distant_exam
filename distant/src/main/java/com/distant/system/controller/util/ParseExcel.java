@@ -3,6 +3,7 @@ package com.distant.system.controller.util;
 import com.distant.system.entity.Question;
 import com.distant.system.service.QuestionService;
 import com.distant.system.service.exception.ServiceException;
+import com.distant.system.service.exception.ValidationException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -24,7 +25,7 @@ public class ParseExcel {
     }
 
 
-    public static void parseExcel(String file, int langId, int subjectId) throws IOException, InvalidFormatException {
+    public static boolean parseExcel(String file, int langId, int subjectId) throws IOException, InvalidFormatException {
 
         Workbook workbook = WorkbookFactory.create(new File(file));
 
@@ -58,10 +59,10 @@ public class ParseExcel {
 
         try {
             questionService.add(questions);
-        } catch (ServiceException e) {
-            e.printStackTrace();
+        } catch (ValidationException | ServiceException e) {
+            return false;
         }
-
+        return true;
     }
 }
 

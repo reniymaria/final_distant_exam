@@ -14,6 +14,14 @@
 <div class="parent-container">
     <div class="child-container align-center">
         <fmt:message key="con.main.teacher"/>
+
+        <c:if test="${sessionScope.user.name == 'Olga'}">
+
+        </c:if>
+
+        <c:if test="${sessionScope.user.name == 'Leonid'}">
+
+        </c:if>
         <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
             <input type="hidden" name="command" value="results">
             <input type="hidden" name="page" value="1">

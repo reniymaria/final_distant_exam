@@ -15,11 +15,11 @@
         <div class="header-text homepage-text"><fmt:message key="con.error.page"/></div>
 
         <c:choose>
-            <c:when test="${sessionScope.role=='student'}">
+            <c:when test="${sessionScope.user.role=='student'}">
                 <a class="homepage-btn button margin-top-20" href="${pageContext.request.contextPath}/student_home"><fmt:message
                         key="con.studentpage"/></a>
             </c:when>
-            <c:when test="${sessionScope.role=='teacher'}">
+            <c:when test="${sessionScope.user.role=='teacher'}">
                 <a class="homepage-btn button margin-top-20" href="${pageContext.request.contextPath}/teacher_home"><fmt:message
                         key="con.teacherpage"/></a>
             </c:when>

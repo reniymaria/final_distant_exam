@@ -25,7 +25,7 @@
     <c:when test="${requestScope.listEmpty != null}">
         <div class="parent-container">
             <div class="child-container">
-                <div class="error-message">
+                <div class="input-form">
                     <c:out value="${requestScope.listEmpty}"/>
                 </div>
                 <form class="input-form upload-form" onsubmit="onFileSubmit(event, '${confileerrortype}')" action="${pageContext.request.contextPath}/upload" method="Post"
@@ -102,7 +102,7 @@
                                 <form action="${pageContext.request.contextPath}/controller" method="Get">
                                     <input type="hidden" name="command" value="questions">
                                     <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
-                                    <input type="hidden" name="langId" value="${sessionScope.langId}"/>
+                                    <input type="hidden" name="lang" value="${sessionScope.lang}"/>
                                     <input type="hidden" name="page" value="${requestScope.currentPage - 1}">
                                     <button class="table-btn"><fmt:message
                                             key="con.prev"/></button>
@@ -122,7 +122,7 @@
                                         <form action="${pageContext.request.contextPath}/controller" method="Get">
                                             <input type="hidden" name="command" value="questions">
                                             <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
-                                            <input type="hidden" name="langId" value="${sessionScope.langId}"/>
+                                            <input type="hidden" name="lang" value="${sessionScope.lang}"/>
                                             <input type="hidden" name="page" value="${i}">
                                             <button class="table-btn">${i}</button>
                                         </form>
@@ -135,7 +135,7 @@
                                 <form action="${pageContext.request.contextPath}/controller" method="Get">
                                     <input type="hidden" name="command" value="questions">
                                     <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
-                                    <input type="hidden" name="langId" value="${sessionScope.langId}"/>
+                                    <input type="hidden" name="lang" value="${sessionScope.lang}"/>
                                     <input type="hidden" name="page" value="${requestScope.currentPage + 1}">
                                     <button class="table-btn"><fmt:message
                                             key="con.next"/></button>
@@ -150,6 +150,11 @@
                     <button><fmt:message key="con.addquestionlabel"/></button>
                     <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
                     <input type="hidden" name="langId" value="${sessionScope.langId}"/>
+                </form>
+                <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
+                    <input type="hidden" name="command" value="subjects">
+                    <input type="hidden" name="page" value="1">
+                    <button><fmt:message key="con.subjects"/></button>
                 </form>
                 <br>
             </div>

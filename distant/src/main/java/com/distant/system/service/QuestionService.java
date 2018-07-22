@@ -18,6 +18,8 @@ public class QuestionService {
 
     private static final String CON_LIST_QUESTION_ERROR = "con.list.question.error";
     private static final String CON_FIELD_EMPTY = "con.field.empty";
+    private static final String CON_LIST_EMPTY = "con.list.empty";
+    private static final String CON_INCORRECT_DATA_UPLOADED = "con.incorrect.data.uploaded";
 
     public List<Question> getQuestions(String subject, String language) throws ServiceException, ValidationException {
         try {
@@ -72,17 +74,27 @@ public class QuestionService {
         }
     }
 
-    public int allQuestions(int subjectId, int langId) throws ServiceException {
+    public int allQuestions(int subjectId, int langId) throws ServiceException, ValidationException {
         try {
-            return questionDao.allQuestions(subjectId, langId);
+            if (questionDao.allQuestions(subjectId, langId) == 0) {
+                throw new ValidationException(CON_LIST_EMPTY);
+            } else {
+                return questionDao.allQuestions(subjectId, langId);
+            }
         } catch (DaoException e) {
             throw new ServiceException("Exception during getting questions", e);
         }
     }
 
-    public void add(List<Question> questions) throws ServiceException {
+    public void add(List<Question> questions) throws ServiceException, ValidationException {
         try {
-            questionDao.add(questions);
+            for (Question question : questions) {
+                if (!Validation.isQuestionDataValid(question)) {
+                    throw new ValidationException(CON_INCORRECT_DATA_UPLOADED);
+                } else {
+                    questionDao.add(questions);
+                }
+            }
         } catch (DaoException e) {
             throw new ServiceException("Exception during adding list of questions", e);
         }

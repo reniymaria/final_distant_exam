@@ -53,19 +53,6 @@ public class InMemorySubjectDao extends AbstractDAO implements SubjectDao {
     }
 
     @Override
-    public int getSubjectId(String subject) throws DaoException {
-        int subjectId = 0;
-        List<Subject> subjects = getAllsubjects();
-        for (Subject subjectList : subjects) {
-            if (subjectList.getSubject().equals(subject)) {
-                subjectId = subjectList.getSubjectID();
-                break;
-            }
-        }
-        return subjectId;
-    }
-
-    @Override
     public List<Subject> getStudentAvailableSubjects(int studentId) throws DaoException {
         List<Subject> subjects = new ArrayList<Subject>();
 

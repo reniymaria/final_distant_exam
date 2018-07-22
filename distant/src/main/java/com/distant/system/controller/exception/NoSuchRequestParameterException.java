@@ -1,6 +1,11 @@
 package com.distant.system.controller.exception;
 
+/**
+ * Thrown when SessionRequestContent param is not defined for chosen type.
+ */
+
 public class NoSuchRequestParameterException extends Exception {
+
     public NoSuchRequestParameterException() {
         super();
     }

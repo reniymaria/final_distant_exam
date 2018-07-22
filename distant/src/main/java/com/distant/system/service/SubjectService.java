@@ -6,6 +6,8 @@ import com.distant.system.dao.SubjectDao;
 import com.distant.system.dao.exception.DaoException;
 import com.distant.system.entity.Subject;
 import com.distant.system.service.exception.ServiceException;
+import com.distant.system.service.exception.ValidationException;
+import com.distant.system.service.util.Validation;
 
 import java.util.List;
 
@@ -14,13 +16,8 @@ public class SubjectService {
     private static final DAOManager daoManager = DAOFactory.getFactory().getMainDAOManager();
     private static final SubjectDao subjectDao = daoManager.getSubjectDao();
 
-    public int getSubjectId(String subject) throws ServiceException {
-        try {
-            return subjectDao.getSubjectId(subject);
-        } catch (DaoException e) {
-            throw new ServiceException("Exception during getting Subject id", e);
-        }
-    }
+    private static final String CON_FIELD_EMPTY = "con.field.empty";
+
 
     public int getSizeStudentAvailableSubjects(int studentId) throws ServiceException {
         try {
@@ -62,17 +59,25 @@ public class SubjectService {
         }
     }
 
-    public void addSubject(String subject) throws ServiceException {
+    public void addSubject(String subject) throws ServiceException, ValidationException {
         try {
-            subjectDao.addSubject(subject);
+            if (Validation.isEmpty(subject)) {
+                throw new ValidationException(CON_FIELD_EMPTY);
+            } else {
+                subjectDao.addSubject(subject);
+            }
         } catch (DaoException e) {
             throw new ServiceException("Exception during adding subject", e);
         }
     }
 
-    public void updateSubject(int subjectId, String value) throws ServiceException {
+    public void updateSubject(int subjectId, String value) throws ServiceException, ValidationException {
         try {
-            subjectDao.updateSubject(subjectId, value);
+            if (Validation.isEmpty(value)) {
+                throw new ValidationException(CON_FIELD_EMPTY);
+            } else {
+                subjectDao.updateSubject(subjectId, value);
+            }
         } catch (DaoException e) {
             throw new ServiceException("Exception during updating of subject", e);
         }

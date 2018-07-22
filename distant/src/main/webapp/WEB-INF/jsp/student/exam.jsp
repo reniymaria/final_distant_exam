@@ -38,7 +38,11 @@
                     </c:forEach>
                     <button><fmt:message key="con.buttonsubmit"/></button>
                 </form>
-
+                <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
+                    <input type="hidden" name="command" value="subject_list">
+                    <input type="hidden" name="page" value="1">
+                    <button><fmt:message key="con.available.exams"/></button>
+                </form>
             </div>
         </div>
     </c:otherwise>

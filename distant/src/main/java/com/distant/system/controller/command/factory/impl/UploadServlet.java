@@ -37,9 +37,12 @@ public class UploadServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private static final Logger LOGGER = LogManager.getLogger(UploadServlet.class);
+    private static final String CON_UPLOAD_ERROR = "con.upload.error";
+    private static final String ERROR_UPLOAD = "errorUpload";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         Locale locale;
 
         HttpSession session = request.getSession();
@@ -59,18 +62,21 @@ public class UploadServlet extends HttpServlet {
                         Date dateNow = new Date();
                         SimpleDateFormat ft = new SimpleDateFormat(PATTERN_DATE);
                         String name = new File(item.getName()).getName();
-                        pathName = "D:\\upload" + File.separator + ft.format(dateNow)+"_"+ name;
+                        pathName = "D:\\upload" + File.separator + ft.format(dateNow) + "_" + name;
                         item.write(new File(pathName));
                     }
                 }
 
-                ParseExcel.parseExcel(pathName, langId, subjectId);
-                request.setAttribute(UPLOAD_SUCCESS, bundle.getString(CON_SUCCESS_UPLOAD));
+                if (!ParseExcel.parseExcel(pathName, langId, subjectId)) {
+                    request.setAttribute(ERROR_UPLOAD, bundle.getString(CON_UPLOAD_ERROR));
 
-                request.setAttribute(LANG_ID_ATTR, langId);
-                request.setAttribute(SUBJECT_ID_ATTR, subjectId);
+                } else {
+                    request.setAttribute(UPLOAD_SUCCESS, bundle.getString(CON_SUCCESS_UPLOAD));
+                }
+
             } catch (Exception ex) {
-               LOGGER.error("File is not uploaded");
+                LOGGER.error("File is not uploaded");
+                request.setAttribute(ERROR_UPLOAD, bundle.getString(CON_UPLOAD_ERROR));
             }
         }
 
@@ -78,15 +84,7 @@ public class UploadServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException{
-
-        HttpSession session = request.getSession();
-
-        int subjectId = (int) session.getAttribute(SUBJECT_ID_ATTR);
-        int langId = (int) session.getAttribute(LANG_ID_ATTR);
-
-        request.setAttribute(LANG_ID_ATTR, langId);
-        request.setAttribute(SUBJECT_ID_ATTR, subjectId);
+            throws ServletException, IOException {
 
         request.getRequestDispatcher(ConfigurationManager.getProperty(ACTION_COMPLETED)).forward(request, response);
 

@@ -7,6 +7,9 @@ import com.distant.system.controller.command.factory.impl.student.StudentExamLis
 import com.distant.system.controller.command.factory.impl.student.StudentExamResultCommand;
 import com.distant.system.controller.command.factory.impl.teacher.*;
 
+/**
+ * A enum for creating Commands that process the request commands
+ */
 public enum CommandEnum {
 
     LOGIN {

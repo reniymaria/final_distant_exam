@@ -42,20 +42,22 @@
                         <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
                             <button><fmt:message key="con.edit"/></button>
                             <input type="hidden" name="command" value="editsubject"/>
-                            <input type="hidden" name="subjectId" value="${subject.subjectID}"/>
                             <input type="hidden" name="subject" value="${subject.subject}"/>
+                            <input type="hidden" name="subjectId" value="${subject.subjectID}"/>
                         </form>
                         <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
                             <button><fmt:message key="con.openquestions.ru"/></button>
                             <input type="hidden" name="command" value="questions"/>
+                            <input type="hidden" name="page" value="1"/>
                             <input type="hidden" name="subjectId" value="${subject.subjectID}"/>
-                            <input type="hidden" name="langId" value="2"/>
+                            <input type="hidden" name="lang" value="ru"/>
                         </form>
                         <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
                             <button><fmt:message key="con.openquestions.en"/></button>
                             <input type="hidden" name="command" value="questions"/>
+                            <input type="hidden" name="page" value="1"/>
                             <input type="hidden" name="subjectId" value="${subject.subjectID}"/>
-                            <input type="hidden" name="langId" value="1"/>
+                            <input type="hidden" name="lang" value="en"/>
                         </form>
                     </td>
                 </tr>
@@ -109,8 +111,8 @@
         </table>
 
         <br>
-
         <a class="button" href="${pageContext.request.contextPath}/add_subject"><fmt:message key="con.add.subject"/></a>
+        <a class="button" href="${pageContext.request.contextPath}/teacher_home"><span class="header-text"><fmt:message key="con.teacherpage"/></span></a>
     </div>
 </div>
 <script src="../js/app.js"></script>

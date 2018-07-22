@@ -19,41 +19,53 @@
                 <c:out value="${requestScope.examDeletedMsg}"/>
                 <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
                     <input type="hidden" name="command" value="results">
+                    <input type="hidden" name="page" value="1">
                     <button><fmt:message key="con.exam.results"/></button>
                 </form>
             </c:if>
+        </div>
 
+        <div class="input-form">
             <c:if test="${requestScope.msgdeletesubject != null}">
                 <c:out value="${requestScope.msgdeletesubject}"/>
                 <br>
                 <br>
                 <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
                     <input type="hidden" name="command" value="subjects">
+                    <input type="hidden" name="page" value="1">
                     <button><fmt:message key="con.subjects"/></button>
                 </form>
             </c:if>
+        </div>
 
 
+        <div class="input-form">
             <c:if test="${requestScope.msgaddsubject != null}">
                 <c:out value="${requestScope.msgaddsubject}"/>
                 <br>
                 <br>
                 <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
                     <input type="hidden" name="command" value="subjects">
+                    <input type="hidden" name="page" value="1">
                     <button><fmt:message key="con.subjects"/></button>
                 </form>
             </c:if>
+        </div>
 
+        <div class="input-form">
             <c:if test="${requestScope.msgeditsubject != null}">
                 <c:out value="${requestScope.msgeditsubject}"/>
                 <br>
                 <br>
                 <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
                     <input type="hidden" name="command" value="subjects">
+                    <input type="hidden" name="page" value="1">
                     <button><fmt:message key="con.subjects"/></button>
                 </form>
             </c:if>
+        </div>
 
+        <div class="input-form">
             <c:if test="${requestScope.msgaddquestion != null}">
                 <c:out value="${requestScope.msgaddquestion}"/>
                 <br>
@@ -61,10 +73,30 @@
                 <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
                     <button><fmt:message key="con.openquestions"/></button>
                     <input type="hidden" name="command" value="questions"/>
-                    <input type="hidden" name="subjectId" value="${requestScope.subjectId}"/>
-                    <input type="hidden" name="langId" value="${requestScope.langId}"/>
+                    <input type="hidden" name="page" value="1">
+                    <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
+                    <input type="hidden" name="lang" value="${sessionScope.lang}"/>
                 </form>
             </c:if>
+        </div>
+
+
+        <div class="error-message">
+            <c:if test="${requestScope.errorUpload != null}">
+                <c:out value="${requestScope.errorUpload}"/>
+                <br>
+                <br>
+                <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
+                    <button><fmt:message key="con.openquestions"/></button>
+                    <input type="hidden" name="command" value="questions"/>
+                    <input type="hidden" name="page" value="1">
+                    <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
+                    <input type="hidden" name="lang" value="${sessionScope.lang}"/>
+                </form>
+            </c:if>
+        </div>
+
+        <div class="input-form">
             <c:if test="${requestScope.uploadSuccess != null}">
                 <c:out value="${requestScope.uploadSuccess}"/>
                 <br>
@@ -72,12 +104,14 @@
                 <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
                     <button><fmt:message key="con.openquestions"/></button>
                     <input type="hidden" name="command" value="questions"/>
-                    <input type="hidden" name="subjectId" value="${requestScope.subjectId}"/>
-                    <input type="hidden" name="langId" value="${requestScope.langId}"/>
+                    <input type="hidden" name="page" value="1">
+                    <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
+                    <input type="hidden" name="lang" value="${sessionScope.lang}"/>
                 </form>
             </c:if>
+        </div>
 
-
+        <div class="input-form">
             <c:if test="${requestScope.msgeditquestion != null}">
                 <c:out value="${requestScope.msgeditquestion}"/>
                 <br>
@@ -85,12 +119,14 @@
                 <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
                     <button><fmt:message key="con.openquestions"/></button>
                     <input type="hidden" name="command" value="questions"/>
-                    <input type="hidden" name="subjectId" value="${requestScope.question.subjectId}"/>
-                    <input type="hidden" name="langId" value="${requestScope.question.languageId}"/>
+                    <input type="hidden" name="page" value="1">
+                    <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
+                    <input type="hidden" name="lang" value="${sessionScope.lang}"/>
                 </form>
             </c:if>
+        </div>
 
-
+        <div class="input-form">
             <c:if test="${requestScope.msgdeletequestion != null}">
                 <c:out value="${requestScope.msgdeletequestion}"/>
                 <br>
@@ -98,12 +134,16 @@
                 <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
                     <button><fmt:message key="con.openquestions"/></button>
                     <input type="hidden" name="command" value="questions"/>
+                    <input type="hidden" name="page" value="1">
                     <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
-                    <input type="hidden" name="langId" value="${sessionScope.langId}"/>
+                    <input type="hidden" name="lang" value="${sessionScope.lang}"/>
                 </form>
             </c:if>
         </div>
-    </div>
-</div>
+
+          </div>
+        </div>
+      </div>
+
 </body>
 </html>
