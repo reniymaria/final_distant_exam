@@ -2,7 +2,7 @@ package com.distant.dao;
 
 import com.distant.system.dao.DAOFactory;
 import com.distant.system.dao.UserDao;
-import com.distant.system.dao.conection.ConnectionPool;
+import com.distant.system.dao.connection.ConnectionPool;
 import com.distant.system.dao.exception.DaoException;
 import com.distant.system.entity.User;
 import com.distant.system.service.util.HashUtil;

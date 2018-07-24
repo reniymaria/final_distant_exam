@@ -74,7 +74,7 @@ public interface UserDao {
      *            the login
      * @param password
      *            the password
-     * @return the user who appropriates specified {@code login or email} and
+     * @return the user who appropriates specified {@code login} and
      *         {@code password}. Returns {@code null} if such user is not found.
      * @throws DaoException
      *             the exception during getting user from DB

@@ -8,6 +8,8 @@ import com.distant.system.dao.util.DaoUtil;
 import com.distant.system.entity.Question;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.service.QuestionService;
+import com.distant.system.service.ServiceFactory;
+import com.distant.system.service.impl.QuestionServiceImpl;
 import com.distant.system.controller.util.ConfigurationManager;
 import com.distant.system.service.exception.ServiceException;
 import com.distant.system.service.exception.ValidationException;
@@ -28,13 +30,13 @@ public class StudentExamCommand implements ActionCommand {
     private static final String PATH_PAGE_ERROR_503 = "path.page.error.503";
     private static final String CON_PARAM_ERROR = "con.param.error";
 
-    private QuestionService questionService = new QuestionService();
+    private QuestionService questionService = ServiceFactory.getInstance().getQuestionService();
 
-    private static final Logger LOGGER = LogManager.getLogger(StudentExamCommand.class);
+    private static final Logger logger = LogManager.getLogger(StudentExamCommand.class);
 
 
     @Override
-    public String executePost(SessionRequestContent requestContent) {
+    public String execute(SessionRequestContent requestContent) {
 
         String page;
         String subject;
@@ -50,23 +52,19 @@ public class StudentExamCommand implements ActionCommand {
             requestContent.setSessionAttribute(EXAM_QUESTIONS_ATTR, examQuestion);
             page = ConfigurationManager.getProperty(EXAM_PATH_PAGE);
         } catch (NoSuchRequestParameterException e) {
-            LOGGER.warn("No such parameter", e);
+            logger.warn("No such parameter", e);
             requestContent.setAttribute(QUESTION_NOT_ENOUGH_ATTR, bundle.getString(CON_PARAM_ERROR));
             page = ConfigurationManager.getProperty(EXAM_PATH_PAGE);
         } catch (ValidationException e) {
-            LOGGER.warn("Validation exception");
+            logger.warn("Validation exception");
             requestContent.setAttribute(QUESTION_NOT_ENOUGH_ATTR, bundle.getString(e.getMessage()));
             page = ConfigurationManager.getProperty(EXAM_PATH_PAGE);
         } catch (ServiceException e) {
-            LOGGER.error("Service exception", e);
+            logger.error("Service exception", e);
             page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
         }
 
         return page;
     }
 
-    @Override
-    public String executeGet(SessionRequestContent requestContent) {
-        return null;
-    }
 }

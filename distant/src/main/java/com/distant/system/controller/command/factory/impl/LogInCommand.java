@@ -5,7 +5,9 @@ import com.distant.system.controller.SessionRequestContent;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.controller.util.CommandUtil;
 import com.distant.system.entity.User;
+import com.distant.system.service.ServiceFactory;
 import com.distant.system.service.UserService;
+import com.distant.system.service.impl.UserServiceImpl;
 import com.distant.system.controller.util.ConfigurationManager;
 import com.distant.system.service.exception.ServiceException;
 import com.distant.system.service.exception.ValidationException;
@@ -28,12 +30,12 @@ public class LogInCommand implements ActionCommand {
     private static final String PATH_PAGE_ERROR_503 = "path.page.error.503";
     private static final String USER = "user";
 
-    private UserService userService = new UserService();
+    private UserService userService = ServiceFactory.getInstance().getUserService();
 
     private static final Logger LOGGER = LogManager.getLogger(LogInCommand.class);
 
     @Override
-    public String executePost(SessionRequestContent requestContent) {
+    public String execute(SessionRequestContent requestContent) {
         String page = null;
 
         String login;
@@ -72,8 +74,4 @@ public class LogInCommand implements ActionCommand {
         return page;
     }
 
-    @Override
-    public String executeGet(SessionRequestContent requestContent) {
-        return ConfigurationManager.getProperty(LOGIN_PAGE_PATH);
-    }
 }

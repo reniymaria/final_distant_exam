@@ -49,7 +49,7 @@ public class Controller extends HttpServlet {
 
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String page = null;
+        String page;
 
         if (client == null) {
             client = new ActionFactory();
@@ -58,12 +58,9 @@ public class Controller extends HttpServlet {
         ActionCommand command = client.defineCommand(request);
 
         SessionRequestContent requestContent = new SessionRequestContent(request);
-        if ("POST".equals(request.getMethod())) {
-            page = command.executePost(requestContent);
 
-        } else if ("GET".equals(request.getMethod())) {
-            page = command.executeGet(requestContent);
-        }
+        page = command.execute(requestContent);
+
 
         if (page != null) {
             requestContent.insertValues(request);

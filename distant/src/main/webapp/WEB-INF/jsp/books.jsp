@@ -27,25 +27,57 @@
 
                 <p><b>${conbookcompweb}</b></p>
 
-                <p><a href="https://www.bsuir.by/m/12_100229_1_85460.pdf">https://www.bsuir.by/m/12<em>100229</em>1_85460.pdf</a> - ${conbookmainbook}.</p>
+                <p class="book-container">
 
-                <p><a href="https://www.ozon.ru/context/detail/id/7309924/">https://www.ozon.ru/context/detail/id/7309924/</a> - ${conbookmodernweb}.</p>
+                    <a href="https://www.bsuir.by/m/12_100229_1_85460.pdf" target="_blank">
+                        <img src="../../img/olipher1_.jpg" alt="${conbookmainbook}">
+                        <span>${conbookmainbook}</span>
+                    </a>
+                </p>
 
-                <br/>
+                <hr>
 
-                <p><b>${conbookbasicprog}</b></p>
+                <p class="book-container">
+                    <a href="https://www.ozon.ru/context/detail/id/7309924/" target="_blank">
+                        <img src="../../img/tanenbaum2.jpg" alt="${conbookmodernweb}">
+                        <span>${conbookmodernweb}</span>
+                    </a>
+                </p>
 
-                <p><a href="http://interactivepython.org/runestone/static/pythonds/index.html">http://interactivepython.org/runestone/static/pythonds/index.html</a> - ${conbookalgo}.</p>
+                <hr>
 
-                <br/>
+                <p>
+                    <b>${conbookbasicprog}</b>
+                </p>
 
-                <p><b>${conbookbasiclinux}</b></p>
+                <p class="book-container">
+                    <a href="http://interactivepython.org/runestone/static/pythonds/index.html" target="_blank">
+                        <img src="../../img/PythonDScover.jpg" alt="${conbookalgo}">
+                        <span>${conbookalgo}</span>
+                    </a>
+                </p>
 
-                <p><a href="https://stepik.org/course/73/syllabus">https://stepik.org/course/73/syllabus</a> - ${conbookmodernlinux}</p>
+                <hr>
 
-                <p><a href="https://www.ozon.ru/context/detail/id/31924164/">https://www.ozon.ru/context/detail/id/31924164/</a> - ${conbookadmin}</p>
+                <p>
+                    <b>${conbookbasiclinux}</b>
+                </p>
 
-                <br/>
+                <p class="book-container">
+                    <a href="https://stepik.org/course/73/syllabus" target="_blank">
+                        <img src="../../img/linux3.jpg" alt="${conbookmodernlinux}">
+                        <span>${conbookmodernlinux}</span>
+                    </a>
+                </p>
+
+                <hr>
+
+                <p class="book-container">
+                    <a href="https://www.ozon.ru/context/detail/id/31924164/" target="_blank">
+                        <img src="../../img/linux4.jpg" alt="${conbookadmin}">
+                        <span>${conbookadmin}</span>
+                    </a>
+                </p>
             </div>
         </div>
     </body>

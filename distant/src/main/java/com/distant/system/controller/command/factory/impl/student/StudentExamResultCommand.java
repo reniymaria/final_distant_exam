@@ -7,6 +7,8 @@ import com.distant.system.entity.Question;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.entity.User;
 import com.distant.system.service.MarkService;
+import com.distant.system.service.ServiceFactory;
+import com.distant.system.service.impl.MarkServiceImpl;
 import com.distant.system.controller.util.ConfigurationManager;
 import com.distant.system.service.exception.ServiceException;
 import com.distant.system.service.exception.ValidationException;
@@ -26,13 +28,13 @@ public class StudentExamResultCommand implements ActionCommand {
     private static final String PATH_PAGE_ERROR_503 = "path.page.error.503";
     private static final String USER = "user";
 
-    private MarkService markService = new MarkService();
+    private MarkService markService = ServiceFactory.getInstance().getMarkService();
 
-    private static final Logger LOGGER = LogManager.getLogger(StudentExamResultCommand.class);
+    private static final Logger logger = LogManager.getLogger(StudentExamResultCommand.class);
 
 
     @Override
-    public String executePost(SessionRequestContent requestContent) {
+    public String execute(SessionRequestContent requestContent) {
 
         String page;
         ResourceBundle bundle = CommandUtil.takeBundle(requestContent);
@@ -67,18 +69,13 @@ public class StudentExamResultCommand implements ActionCommand {
             requestContent.removeSessionAttribute(EXAM_QUESTIONS_ATTR);
             page = ConfigurationManager.getProperty(EXAM_RESULT_PATH_PAGE);
         } catch (NoSuchRequestParameterException e) {
-            LOGGER.warn("No such parameter", e);
+            logger.warn("No such parameter", e);
             page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
         } catch (ServiceException e) {
-            LOGGER.error("Service exception", e);
+            logger.error("Service exception", e);
             page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
         }
         return page;
     }
 
-
-    @Override
-    public String executeGet(SessionRequestContent requestContent) {
-        return null;
-    }
 }

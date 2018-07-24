@@ -2,8 +2,8 @@ package com.distant.system.dao.mysql.impl;
 
 
 import com.distant.system.dao.QuestionDao;
-import com.distant.system.dao.conection.ConnectionPool;
-import com.distant.system.dao.conection.ConnectionPoolException;
+import com.distant.system.dao.connection.ConnectionPool;
+import com.distant.system.dao.connection.ConnectionPoolException;
 import com.distant.system.dao.exception.DaoException;
 import com.distant.system.dao.mysql.AbstractDAO;
 import com.distant.system.dao.util.DaoUtil;

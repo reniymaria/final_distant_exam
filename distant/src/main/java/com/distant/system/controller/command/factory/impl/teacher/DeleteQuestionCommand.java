@@ -5,6 +5,8 @@ import com.distant.system.controller.SessionRequestContent;
 import com.distant.system.controller.util.CommandUtil;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.service.QuestionService;
+import com.distant.system.service.ServiceFactory;
+import com.distant.system.service.impl.QuestionServiceImpl;
 import com.distant.system.controller.util.ConfigurationManager;
 import com.distant.system.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
@@ -20,13 +22,13 @@ public class DeleteQuestionCommand implements ActionCommand {
     private static final String CON_DELETE_QUESTION = "con.delete.question";
     private static final String PATH_PAGE_ERROR_503 = "path.page.error.503";
 
-    private QuestionService questionService = new QuestionService();
+    private QuestionService questionService = ServiceFactory.getInstance().getQuestionService();
 
-    private static final Logger LOGGER = LogManager.getLogger(DeleteQuestionCommand.class);
+    private static final Logger logger = LogManager.getLogger(DeleteQuestionCommand.class);
 
 
     @Override
-    public String executePost(SessionRequestContent requestContent) {
+    public String execute(SessionRequestContent requestContent) {
         String page;
         int questionId;
         ResourceBundle bundle = CommandUtil.takeBundle(requestContent);
@@ -37,19 +39,15 @@ public class DeleteQuestionCommand implements ActionCommand {
             requestContent.setAttribute(MSG_DELETE_QUESTION, bundle.getString(CON_DELETE_QUESTION));
             page = ConfigurationManager.getProperty(ACTION_COMPLETED);
         } catch (NoSuchRequestParameterException e) {
-            LOGGER.warn("Parameter is not found");
+            logger.warn("Parameter is not found");
             e.printStackTrace();
             page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
         } catch (ServiceException e) {
-            LOGGER.error("Service exception", e);
+            logger.error("Service exception", e);
             page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
         }
 
         return page;
     }
 
-    @Override
-    public String executeGet(SessionRequestContent requestContent) {
-        return null;
-    }
 }

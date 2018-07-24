@@ -1,8 +1,8 @@
 package com.distant.dao;
 
 
-import com.distant.system.dao.conection.ConnectionPool;
-import com.distant.system.dao.conection.ConnectionPoolException;
+import com.distant.system.dao.connection.ConnectionPool;
+import com.distant.system.dao.connection.ConnectionPoolException;
 import org.apache.ibatis.jdbc.ScriptRunner;
 
 import java.io.BufferedReader;

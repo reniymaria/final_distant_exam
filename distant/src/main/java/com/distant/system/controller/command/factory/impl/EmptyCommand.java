@@ -9,12 +9,7 @@ public class EmptyCommand implements ActionCommand {
     private static final String ERROR_PAGE_PATH = "path.page.error";
 
     @Override
-    public String executePost(SessionRequestContent requestContent) {
-        return ConfigurationManager.getProperty(ERROR_PAGE_PATH);
-    }
-
-    @Override
-    public String executeGet(SessionRequestContent requestContent) {
+    public String execute(SessionRequestContent requestContent) {
         return ConfigurationManager.getProperty(ERROR_PAGE_PATH);
     }
 }

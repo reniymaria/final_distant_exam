@@ -5,16 +5,16 @@ import com.distant.system.controller.command.ActionCommand;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.controller.util.CommandUtil;
 import com.distant.system.controller.util.ConfigurationManager;
+import com.distant.system.service.ServiceFactory;
+import com.distant.system.service.UserService;
 import com.distant.system.service.exception.ValidationException;
 import com.distant.system.service.util.Validation;
-import com.distant.system.service.util.HashUtil;
 import com.distant.system.entity.User;
-import com.distant.system.service.UserService;
+import com.distant.system.service.impl.UserServiceImpl;
 import com.distant.system.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class RegisterCommand implements ActionCommand {
@@ -34,12 +34,12 @@ public class RegisterCommand implements ActionCommand {
     private static final String ERR_MESS = "errMess";
     private static final String CON_REGISTER_SUCCESS = "con.register.success";
 
-    private UserService userService = new UserService();
+    private UserService userService = ServiceFactory.getInstance().getUserService();
 
     private static final Logger LOGGER = LogManager.getLogger(RegisterCommand.class);
 
     @Override
-    public String executePost(SessionRequestContent requestContent) {
+    public String execute(SessionRequestContent requestContent) {
 
         String page;
         String login;
@@ -79,10 +79,5 @@ public class RegisterCommand implements ActionCommand {
             page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
         }
         return page;
-    }
-
-    @Override
-    public String executeGet(SessionRequestContent requestContent) {
-        return ConfigurationManager.getProperty(REGISTER_PATH_PAGE);
     }
 }

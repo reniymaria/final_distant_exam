@@ -1,4 +1,4 @@
-package com.distant.system.dao.conection;
+package com.distant.system.dao.connection;
 
 import java.sql.*;
 import java.util.ResourceBundle;

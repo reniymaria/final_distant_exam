@@ -3,7 +3,7 @@ package com.distant.system.entity.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class ExamResult implements Serializable {
+public class ExamResult {
 
     public ExamResult() {
     }

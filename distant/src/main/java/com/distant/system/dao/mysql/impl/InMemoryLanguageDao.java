@@ -1,11 +1,10 @@
 package com.distant.system.dao.mysql.impl;
 
 import com.distant.system.dao.LanguageDao;
-import com.distant.system.dao.conection.ConnectionPool;
-import com.distant.system.dao.conection.ConnectionPoolException;
+import com.distant.system.dao.connection.ConnectionPool;
+import com.distant.system.dao.connection.ConnectionPoolException;
 import com.distant.system.dao.exception.DaoException;
 import com.distant.system.dao.mysql.AbstractDAO;
-
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +14,7 @@ import java.sql.SQLException;
 public class InMemoryLanguageDao extends AbstractDAO implements LanguageDao {
 
 
-    public static final String LANGUAGE = "language";
+    private static final String LANGUAGE = "language";
 
     @Override
     public int findId(String language) throws DaoException {

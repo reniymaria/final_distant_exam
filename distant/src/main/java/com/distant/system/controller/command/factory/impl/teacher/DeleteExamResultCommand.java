@@ -5,6 +5,8 @@ import com.distant.system.controller.SessionRequestContent;
 import com.distant.system.controller.util.CommandUtil;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.service.MarkService;
+import com.distant.system.service.ServiceFactory;
+import com.distant.system.service.impl.MarkServiceImpl;
 import com.distant.system.controller.util.ConfigurationManager;
 import com.distant.system.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
@@ -12,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ResourceBundle;
 
-public class TeacherDeleteExamResultCommand implements ActionCommand {
+public class DeleteExamResultCommand implements ActionCommand {
 
     private static final String SUBJECT_ID_PARAM = "subjectID";
     private static final String USER_ID_PARAM = "userID";
@@ -21,13 +23,13 @@ public class TeacherDeleteExamResultCommand implements ActionCommand {
     private static final String ACTION_COMPLETED = "path.page.action.completed";
     private static final String PATH_PAGE_ERROR_503 = "path.page.error.503";
 
-    private MarkService markService = new MarkService();
+    private MarkService markService = ServiceFactory.getInstance().getMarkService();
 
-    private static final Logger LOGGER = LogManager.getLogger(TeacherDeleteExamResultCommand.class);
+    private static final Logger logger = LogManager.getLogger(DeleteExamResultCommand.class);
 
 
     @Override
-    public String executePost(SessionRequestContent requestContent) {
+    public String execute(SessionRequestContent requestContent) {
 
         String page;
 
@@ -44,18 +46,14 @@ public class TeacherDeleteExamResultCommand implements ActionCommand {
             requestContent.setAttribute(ERR_MSG_ATTR, bundle.getString(CON_VALUE_IS_DELETED));
             page = ConfigurationManager.getProperty(ACTION_COMPLETED);
         } catch (NoSuchRequestParameterException e) {
-            LOGGER.error("No such parameter", e);
+            logger.error("No such parameter", e);
             page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
         } catch (ServiceException e) {
-            LOGGER.error("Service exception", e);
+            logger.error("Service exception", e);
             page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
         }
         return page;
 
     }
 
-    @Override
-    public String executeGet(SessionRequestContent requestContent) {
-        return null;
-    }
 }

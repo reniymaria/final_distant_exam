@@ -28,21 +28,22 @@
                 <div class="input-form">
                     <c:out value="${requestScope.listEmpty}"/>
                 </div>
-                <form class="input-form upload-form" onsubmit="onFileSubmit(event, '${confileerrortype}')" action="${pageContext.request.contextPath}/upload" method="Post"
-                      enctype="multipart/form-data">
-                    <label for="uploading"><a class="button button-full margin-right-10"><fmt:message key="con.choose.excel"/></a></label>
-                    <input type="file" size="50" name="file_upload" id="uploading">
-                    <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
-                    <input type="hidden" name="langId" value="${sessionScope.langId}"/>
-                    <button><fmt:message key="con.upload"/></button>
-                </form>
-                <form class="input-form upload-form" action="${pageContext.request.contextPath}/controller" method="Get">
-                    <input type="hidden" name="command" value="addquestion">
-                    <button><fmt:message key="con.addquestionlabel"/></button>
-                    <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
-                    <input type="hidden" name="langId" value="${sessionScope.langId}"/>
-                </form>
-                <br>
+                <div class="flex-container">
+                    <form class="input-form upload-form margin-right-10" onsubmit="onFileSubmit(event, '${confileerrortype}')" action="${pageContext.request.contextPath}/upload" method="Post"
+                          enctype="multipart/form-data">
+                        <label for="uploading"><a class="button button-full margin-right-10"><fmt:message key="con.choose.excel"/></a></label>
+                        <input type="file" size="50" name="file_upload" id="uploading">
+                        <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
+                        <input type="hidden" name="langId" value="${sessionScope.langId}"/>
+                        <button><fmt:message key="con.upload"/></button>
+                    </form>
+                    <form class="input-form upload-form" action="${pageContext.request.contextPath}/controller" method="Get">
+                        <input type="hidden" name="command" value="open_add_question">
+                        <button><fmt:message key="con.addquestionlabel"/></button>
+                        <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
+                        <input type="hidden" name="langId" value="${sessionScope.langId}"/>
+                    </form>
+                </div>
             </div>
         </div>
 
@@ -80,7 +81,7 @@
                             <td>
                                 <form class="input-form" action="${pageContext.request.contextPath}/controller"
                                       method="GET">
-                                    <input type="hidden" name="command" value="update_question">
+                                    <input type="hidden" name="command" value="open_update_question">
                                     <button><fmt:message key="con.edit"/></button>
                                     <input type="hidden" name="questionId" value="${question.questionId}"/>
                                 </form>
@@ -145,18 +146,19 @@
                     </tr>
                 </table>
                 <br>
-                <form class="input-form upload-form" action="${pageContext.request.contextPath}/controller" method="Get">
-                    <input type="hidden" name="command" value="addquestion">
-                    <button><fmt:message key="con.addquestionlabel"/></button>
-                    <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
-                    <input type="hidden" name="langId" value="${sessionScope.langId}"/>
-                </form>
-                <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
-                    <input type="hidden" name="command" value="subjects">
-                    <input type="hidden" name="page" value="1">
-                    <button><fmt:message key="con.subjects"/></button>
-                </form>
-                <br>
+                <div class="flex-container">
+                    <form class="input-form upload-form margin-right-10" action="${pageContext.request.contextPath}/controller" method="Get">
+                        <input type="hidden" name="command" value="open_add_question">
+                        <button><fmt:message key="con.addquestionlabel"/></button>
+                        <input type="hidden" name="subjectId" value="${sessionScope.subjectId}"/>
+                        <input type="hidden" name="langId" value="${sessionScope.langId}"/>
+                    </form>
+                    <form class="input-form upload-form" action="${pageContext.request.contextPath}/controller" method="Get">
+                        <input type="hidden" name="command" value="subjects">
+                        <input type="hidden" name="page" value="1">
+                        <button><fmt:message key="con.subjects"/></button>
+                    </form>
+                </div>
             </div>
         </div>
     </c:otherwise>

@@ -1,7 +1,7 @@
 package com.distant.system.dao.mysql;
 
-import com.distant.system.dao.conection.ConnectionPool;
-import com.distant.system.dao.conection.ConnectionPoolException;
+import com.distant.system.dao.connection.ConnectionPool;
+import com.distant.system.dao.connection.ConnectionPoolException;
 
 import java.sql.Connection;
 import java.sql.SQLException;

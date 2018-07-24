@@ -72,7 +72,7 @@ public enum CommandEnum {
     },
     SUBJECTS {
         {
-            this.command = new TeacherSubjectsCommand();
+            this.command = new ListSubjectsCommand();
         }
     },
     QUESTIONS {
@@ -92,12 +92,27 @@ public enum CommandEnum {
     },
     DELETE_EXAM_RESULT {
         {
-            this.command = new TeacherDeleteExamResultCommand();
+            this.command = new DeleteExamResultCommand();
         }
     },
     DELETE_QUESTION {
         {
             this.command = new DeleteQuestionCommand();
+        }
+    },
+    OPEN_ADD_QUESTION {
+        {
+            this.command = new OpenAddQuestionCommand();
+        }
+    },
+    OPEN_UPDATE_QUESTION {
+        {
+            this.command = new OpenUpdateQuestionCommand();
+        }
+    },
+    OPEN_EDIT_SUBJECT {
+        {
+            this.command = new OpenEditSubjectCommand();
         }
     };
 

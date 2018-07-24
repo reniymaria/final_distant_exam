@@ -15,7 +15,5 @@ public interface ActionCommand {
      *            parameters, session attributes
      *
      */
-    String executePost(SessionRequestContent requestContent);
-
-    String executeGet(SessionRequestContent requestContent);
+    String execute(SessionRequestContent requestContent);
 }

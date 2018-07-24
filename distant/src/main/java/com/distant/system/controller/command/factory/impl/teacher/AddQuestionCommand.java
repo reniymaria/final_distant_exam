@@ -7,15 +7,17 @@ import com.distant.system.entity.Question;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.service.LanguageService;
 import com.distant.system.service.QuestionService;
+import com.distant.system.service.ServiceFactory;
 import com.distant.system.service.SubjectService;
+import com.distant.system.service.impl.LanguageServiceImpl;
+import com.distant.system.service.impl.QuestionServiceImpl;
+import com.distant.system.service.impl.SubjectServiceImpl;
 import com.distant.system.controller.util.ConfigurationManager;
 import com.distant.system.service.exception.ValidationException;
-import com.distant.system.service.util.Validation;
 import com.distant.system.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class AddQuestionCommand implements ActionCommand {
@@ -37,15 +39,15 @@ public class AddQuestionCommand implements ActionCommand {
     private static final String PATH_PAGE_ERROR_503 = "path.page.error.503";
     private static final String CON_FIELD_EMPTY = "con.field.empty";
 
-    private QuestionService questionService = new QuestionService();
-    private SubjectService subjectService = new SubjectService();
-    private LanguageService languageService = new LanguageService();
+    private QuestionService questionService = ServiceFactory.getInstance().getQuestionService();
+    private SubjectService subjectService = ServiceFactory.getInstance().getSubjectService();
+    private LanguageService languageService = ServiceFactory.getInstance().getLanguageService();
 
-    private static final Logger LOGGER = LogManager.getLogger(AddQuestionCommand.class);
+    private static final Logger logger = LogManager.getLogger(AddQuestionCommand.class);
 
 
     @Override
-    public String executePost(SessionRequestContent requestContent) {
+    public String execute(SessionRequestContent requestContent) {
 
         ResourceBundle bundle = CommandUtil.takeBundle(requestContent);
 
@@ -87,53 +89,19 @@ public class AddQuestionCommand implements ActionCommand {
             page = ConfigurationManager.getProperty(ACTION_COMPLETED);
 
         } catch (NoSuchRequestParameterException e) {
-            LOGGER.warn("Parameter is not found", e);
+            logger.warn("Parameter is not found", e);
             requestContent.setAttribute(ERR_MSG, bundle.getString(CON_FIELD_EMPTY));
             page = ConfigurationManager.getProperty(TEACHER_ADD_QUESTION_PATH_PAGE);
         } catch (ValidationException e) {
-            LOGGER.warn("Validation exception", e);
+            logger.warn("Validation exception", e);
             requestContent.setAttribute(ERR_MSG, bundle.getString(e.getMessage()));
             page = ConfigurationManager.getProperty(TEACHER_ADD_QUESTION_PATH_PAGE);
         } catch (ServiceException e) {
-            LOGGER.error("Service exception", e);
+            logger.error("Service exception", e);
             page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
         }
 
         return page;
     }
 
-    @Override
-    public String executeGet(SessionRequestContent requestContent) {
-
-        String page;
-
-        int subjectId;
-        int langId;
-        String subject;
-        String lang;
-
-        try {
-            subjectId = Integer.parseInt(requestContent.getParameter(SUBJECT_ID));
-            langId = Integer.parseInt(requestContent.getParameter(LANG_ID));
-
-
-            subject = subjectService.getSubjectById(subjectId);
-            lang = languageService.getLanguageById(langId);
-
-            requestContent.setAttribute(SUBJECT_ID, subjectId);
-            requestContent.setAttribute(LANG_ID, langId);
-            requestContent.setAttribute(SUBJECT, subject);
-            requestContent.setAttribute(LANG, lang);
-
-            page = ConfigurationManager.getProperty(TEACHER_ADD_QUESTION_PATH_PAGE);
-
-        } catch (NoSuchRequestParameterException e) {
-            LOGGER.warn("Parameter is not found", e);
-            page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
-        } catch (ServiceException e) {
-            LOGGER.error("Service exception", e);
-            page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
-        }
-        return page;
-    }
 }

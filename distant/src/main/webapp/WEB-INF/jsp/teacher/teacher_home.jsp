@@ -16,11 +16,11 @@
         <fmt:message key="con.main.teacher"/>
 
         <c:if test="${sessionScope.user.name == 'Olga'}">
-
+            <img class="avatar" src="../../../img/smolyakova.jpg" alt="Teacher Photo">
         </c:if>
 
         <c:if test="${sessionScope.user.name == 'Leonid'}">
-
+            <img class="avatar" src="../../../img/leonid.jpg" alt="Teacher Photo">
         </c:if>
         <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
             <input type="hidden" name="command" value="results">

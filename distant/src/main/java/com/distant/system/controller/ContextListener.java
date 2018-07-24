@@ -1,7 +1,7 @@
 package com.distant.system.controller;
 
-import com.distant.system.dao.conection.ConnectionPool;
-import com.distant.system.dao.conection.ConnectionPoolException;
+import com.distant.system.dao.connection.ConnectionPool;
+import com.distant.system.dao.connection.ConnectionPoolException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -1,4 +1,4 @@
-package com.distant.system.dao.conection;
+package com.distant.system.dao.connection;
 
 public class DBParameter {
 

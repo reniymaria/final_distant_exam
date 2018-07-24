@@ -14,6 +14,7 @@
 <div class="parent-container">
     <div class="child-container align-center">
         <fmt:message key="con.main.student"/>
+        <img class="avatar" src="../../../img/student.jpg" alt="Student Photo">
         <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
             <input type="hidden" name="command" value="subject_list">
             <input type="hidden" name="page" value="1">

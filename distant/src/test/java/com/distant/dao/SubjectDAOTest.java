@@ -2,7 +2,7 @@ package com.distant.dao;
 
 import com.distant.system.dao.DAOFactory;
 import com.distant.system.dao.SubjectDao;
-import com.distant.system.dao.conection.ConnectionPool;
+import com.distant.system.dao.connection.ConnectionPool;
 import com.distant.system.dao.exception.DaoException;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import org.junit.AfterClass;

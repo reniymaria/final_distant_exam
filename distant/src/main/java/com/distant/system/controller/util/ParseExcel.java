@@ -1,7 +1,7 @@
 package com.distant.system.controller.util;
 
 import com.distant.system.entity.Question;
-import com.distant.system.service.QuestionService;
+import com.distant.system.service.impl.QuestionServiceImpl;
 import com.distant.system.service.exception.ServiceException;
 import com.distant.system.service.exception.ValidationException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -18,7 +18,7 @@ import java.util.List;
 public class ParseExcel {
 
     private static final int I = 0;
-    private static QuestionService questionService = new QuestionService();
+    private static QuestionServiceImpl questionService = new QuestionServiceImpl();
 
     private ParseExcel() {
         throw new AssertionError("Class contains static methods only. You should not instantiate it!");

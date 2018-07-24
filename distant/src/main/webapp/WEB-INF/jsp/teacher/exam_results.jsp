@@ -74,11 +74,11 @@
                     <tr>
                         <c:if test="${requestScope.currentPage != 1}">
                             <td>
-                                <form class="input-form" action="${pageContext.request.contextPath}/controller"
+                                <form action="${pageContext.request.contextPath}/controller"
                                       method="Get">
                                     <input type="hidden" name="command" value="results">
                                     <input type="hidden" name="page" value="${requestScope.currentPage - 1}">
-                                    <button>${previousbutton}</button>
+                                    <button class="table-btn">${previousbutton}</button>
                                 </form>
                             </td>
                         </c:if>
@@ -92,11 +92,11 @@
                                 </c:when>
                                 <c:otherwise>
                                     <td>
-                                        <form class="input-form" action="${pageContext.request.contextPath}/controller"
+                                        <form action="${pageContext.request.contextPath}/controller"
                                               method="Get">
                                             <input type="hidden" name="command" value="results">
                                             <input type="hidden" name="page" value="${i}">
-                                            <button>${i}</button>
+                                            <button class="table-btn">${i}</button>
                                         </form>
                                     </td>
                                 </c:otherwise>
@@ -105,16 +105,17 @@
 
                         <c:if test="${requestScope.currentPage lt requestScope.noOfPages}">
                             <td>
-                                <form class="input-form" action="${pageContext.request.contextPath}/controller"
+                                <form action="${pageContext.request.contextPath}/controller"
                                       method="Get">
                                     <input type="hidden" name="command" value="results">
                                     <input type="hidden" name="page" value="${requestScope.currentPage + 1}">
-                                    <button>${nextbutton}</button>
+                                    <button class="table-btn">${nextbutton}</button>
                                 </form>
                             </td>
                         </c:if>
                     </tr>
                 </table>
+                <br>
                 <a class="button" href="${pageContext.request.contextPath}/teacher_home">${conteacherpage}</a>
             </div>
         </div>

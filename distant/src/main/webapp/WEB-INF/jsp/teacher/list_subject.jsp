@@ -41,7 +41,7 @@
                         </form>
                         <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Get">
                             <button><fmt:message key="con.edit"/></button>
-                            <input type="hidden" name="command" value="editsubject"/>
+                            <input type="hidden" name="command" value="open_edit_subject"/>
                             <input type="hidden" name="subject" value="${subject.subject}"/>
                             <input type="hidden" name="subjectId" value="${subject.subjectID}"/>
                         </form>
@@ -112,7 +112,7 @@
 
         <br>
         <a class="button" href="${pageContext.request.contextPath}/add_subject"><fmt:message key="con.add.subject"/></a>
-        <a class="button" href="${pageContext.request.contextPath}/teacher_home"><span class="header-text"><fmt:message key="con.teacherpage"/></span></a>
+        <a class="button" href="${pageContext.request.contextPath}/teacher_home"><fmt:message key="con.teacherpage"/></a>
     </div>
 </div>
 <script src="../js/app.js"></script>

@@ -7,6 +7,8 @@ import com.distant.system.entity.User;
 import com.distant.system.entity.dto.ExamResult;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.service.MarkService;
+import com.distant.system.service.ServiceFactory;
+import com.distant.system.service.impl.MarkServiceImpl;
 import com.distant.system.controller.util.ConfigurationManager;
 import com.distant.system.service.exception.ServiceException;
 import com.distant.system.service.exception.ValidationException;
@@ -27,53 +29,61 @@ public class StudentExamListCommand implements ActionCommand {
     private static final String PATH_PAGE_ERROR_503 = "path.page.error.503";
     private static final String USER = "user";
 
-    private MarkService markService = new MarkService();
+    private MarkService markService = ServiceFactory.getInstance().getMarkService();
 
-    private static final Logger LOGGER = LogManager.getLogger(StudentExamListCommand.class);
+    private static final Logger logger = LogManager.getLogger(StudentExamListCommand.class);
 
 
     @Override
-    public String executePost(SessionRequestContent requestContent) {
-        return null;
+    public String execute(SessionRequestContent requestContent) {
+
+        String pageString;
+        int page;
+
+        try {
+            page = Integer.parseInt(requestContent.getParameter(PAGE));
+            pageString = createListMarks(page, requestContent);
+        } catch (NoSuchRequestParameterException e) {
+            logger.warn("No such parameter page is found", e);
+            page = 1;
+            pageString = createListMarks(page, requestContent);
+        }
+        return pageString;
     }
 
-    @Override
-    public String executeGet(SessionRequestContent requestContent) {
+    private String createListMarks(int page, SessionRequestContent requestContent) {
 
         ResourceBundle bundle = CommandUtil.takeBundle(requestContent);
 
-        String pageNumber = null;
+        String pageString;
         int studentId;
-        int noOfRecords = 0;
-        List<ExamResult> list = null;
-        int page = 1;
+        int noOfRecords;
+        List<ExamResult> list;
         int recordsPerPage = 3;
 
         try {
-
             User user = (User) requestContent.getSessionAttribute(USER);
             studentId = user.getUserID();
 
-            page = Integer.parseInt(requestContent.getParameter(PAGE));
             list = markService.numberOfStudentMarks(studentId, (page - 1), recordsPerPage);
             noOfRecords = markService.allStudentMarks(studentId);
+            int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+            requestContent.setAttribute(EXAM_LIST, list);
+            requestContent.setAttribute(NO_OF_PAGES, noOfPages);
+            requestContent.setAttribute(CURRENT_PAGE, page);
 
-        } catch (NoSuchRequestParameterException e) {
-            LOGGER.warn("No such parameter page is found ", e);
-            page = 1;
+            pageString = ConfigurationManager.getProperty(MARK_RESULTS_PATH);
+
         } catch (ValidationException e) {
             requestContent.setAttribute(LIST_EMPTY, bundle.getString(e.getMessage()));
+            pageString = ConfigurationManager.getProperty(MARK_RESULTS_PATH);
         } catch (ServiceException e) {
-            LOGGER.error("Service exception", e);
-            pageNumber = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
+            logger.error("Service exception", e);
+            pageString = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
+        } catch (NoSuchRequestParameterException e) {
+            logger.error("Parameter exception", e);
+            pageString = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
         }
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-        requestContent.setAttribute(EXAM_LIST, list);
-        requestContent.setAttribute(NO_OF_PAGES, noOfPages);
-        requestContent.setAttribute(CURRENT_PAGE, page);
-        if (pageNumber == null) {
-            pageNumber = ConfigurationManager.getProperty(MARK_RESULTS_PATH);
-        }
-        return pageNumber;
+        return pageString;
     }
 }
