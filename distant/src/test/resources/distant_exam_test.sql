@@ -114,6 +114,7 @@ CREATE TABLE IF NOT EXISTS `distant_exam_test`.`marks` (
   `mark` INT NULL COMMENT 'Отметка',
   `subjects_id` INT UNSIGNED NOT NULL COMMENT 'FK на предмет по которому поставлена отметка',
   `users_id` INT UNSIGNED NOT NULL COMMENT 'FK к таблице с пользователями',
+  `date` DATETIME NOT NULL,
   INDEX `fk_marks_subjects1_idx` (`subjects_id` ASC),
   PRIMARY KEY (`subjects_id`, `users_id`),
   INDEX `fk_marks_users1_idx` (`users_id` ASC),
@@ -273,8 +274,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `distant_exam_test`;
-INSERT INTO `marks` (`mark`, `subjects_id`, `users_id`) VALUES (4,2,5);
-INSERT INTO `marks` (`mark`, `subjects_id`, `users_id`) VALUES (5,16,5);
+INSERT INTO `marks` (`mark`, `subjects_id`, `users_id`, date) VALUES (4,2,5, '2018-05-08 11:57:00');
+INSERT INTO `marks` (`mark`, `subjects_id`, `users_id`, date) VALUES (5,16,5, '2018-05-08 11:57:00');
 
 COMMIT;
 

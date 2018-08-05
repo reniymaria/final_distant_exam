@@ -7,7 +7,6 @@ import com.distant.system.controller.util.CommandUtil;
 import com.distant.system.entity.User;
 import com.distant.system.service.ServiceFactory;
 import com.distant.system.service.UserService;
-import com.distant.system.service.impl.UserServiceImpl;
 import com.distant.system.controller.util.ConfigurationManager;
 import com.distant.system.service.exception.ServiceException;
 import com.distant.system.service.exception.ValidationException;
@@ -32,7 +31,7 @@ public class LogInCommand implements ActionCommand {
 
     private UserService userService = ServiceFactory.getInstance().getUserService();
 
-    private static final Logger LOGGER = LogManager.getLogger(LogInCommand.class);
+    private static final Logger logger = LogManager.getLogger(LogInCommand.class);
 
     @Override
     public String execute(SessionRequestContent requestContent) {
@@ -60,11 +59,11 @@ public class LogInCommand implements ActionCommand {
                 }
             }
         } catch (NoSuchRequestParameterException e) {
-            LOGGER.warn("Parameters are not found", e);
+            logger.warn("Parameters are not found", e);
             requestContent.setAttribute(ERR_MESS, bundle.getString(CON_FIELD_EMPTY));
             page = ConfigurationManager.getProperty(LOGIN_PAGE_PATH);
         } catch (ValidationException e) {
-            LOGGER.warn("Validation error", e);
+            logger.warn("Validation error", e);
             requestContent.setAttribute(ERR_MESS, bundle.getString(e.getMessage()));
             page = ConfigurationManager.getProperty(LOGIN_PAGE_PATH);
         } catch (ServiceException e) {

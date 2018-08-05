@@ -5,6 +5,8 @@ import com.distant.system.dao.connection.ConnectionPool;
 import com.distant.system.dao.connection.ConnectionPoolException;
 import com.distant.system.dao.exception.DaoException;
 import com.distant.system.dao.mysql.AbstractDAO;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +15,7 @@ import java.sql.SQLException;
 
 public class InMemoryLanguageDao extends AbstractDAO implements LanguageDao {
 
-
+    private static final Logger logger = LogManager.getLogger(InMemoryLanguageDao.class);
     private static final String LANGUAGE = "language";
 
     @Override
@@ -38,7 +40,7 @@ public class InMemoryLanguageDao extends AbstractDAO implements LanguageDao {
                 closeMainConnection(connection);
                 ConnectionPool.getInstance().closeDBResources(rs, statement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQL exception", e);
             }
         }
 
@@ -67,7 +69,7 @@ public class InMemoryLanguageDao extends AbstractDAO implements LanguageDao {
                 closeMainConnection(connection);
                 ConnectionPool.getInstance().closeDBResources(rs, statement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQL exception", e);
             }
         }
 

@@ -7,13 +7,14 @@ import com.distant.system.dao.exception.DaoException;
 import com.distant.system.dao.mysql.AbstractDAO;
 import com.distant.system.dao.util.DaoUtil;
 import com.distant.system.entity.dto.ExamResult;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -25,6 +26,11 @@ public class InMemoryMarkDao extends AbstractDAO implements MarkDao {
     private static final String MARK = "mark";
     private static final String SUBJECTS_ID = "subjects_id";
     private static final String USERS_ID = "users_id";
+    private static final String DATE = "date";
+    private static final String PATTERN = "YYYY-MM-dd HH:mm:ss";
+
+    private static final Logger logger = LogManager.getLogger(InMemoryMarkDao.class);
+
 
     @Override
     public void addMark(int mark, int studentId, int subjectId) throws DaoException {
@@ -46,10 +52,11 @@ public class InMemoryMarkDao extends AbstractDAO implements MarkDao {
                 closeMainConnection(connection);
                 ConnectionPool.getInstance().closeDBResources(statement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQL exception", e);
             }
         }
     }
+
 
     @Override
     public List<ExamResult> getExamMarks() throws DaoException {
@@ -71,6 +78,8 @@ public class InMemoryMarkDao extends AbstractDAO implements MarkDao {
                 examResult.setMark(rs.getInt(MARK));
                 examResult.setSubjectID(rs.getInt(SUBJECTS_ID));
                 examResult.setUserID(rs.getInt(USERS_ID));
+                String timeStamp = new SimpleDateFormat(PATTERN).format(rs.getTimestamp(DATE));
+                examResult.setDate(timeStamp);
                 examList.add(examResult);
             }
         } catch (SQLException | ConnectionPoolException e) {
@@ -80,7 +89,7 @@ public class InMemoryMarkDao extends AbstractDAO implements MarkDao {
                 closeMainConnection(connection);
                 ConnectionPool.getInstance().closeDBResources(rs, statement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQL exception", e);
             }
         }
 
@@ -142,7 +151,7 @@ public class InMemoryMarkDao extends AbstractDAO implements MarkDao {
                 closeMainConnection(connection);
                 ConnectionPool.getInstance().closeDBResources(statement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQL exception", e);
             }
         }
 

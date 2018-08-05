@@ -8,6 +8,8 @@ import com.distant.system.dao.exception.DaoException;
 import com.distant.system.dao.mysql.AbstractDAO;
 import com.distant.system.dao.util.DaoUtil;
 import com.distant.system.entity.Question;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -24,6 +26,8 @@ public class InMemoryQuestionDao extends AbstractDAO implements QuestionDao {
     private static final String ANSWER = "answer";
     private static final String SUBJECTS_ID = "subjects_id";
     private static final String LANGUAGES_ID = "languages_id";
+
+    private static final Logger logger = LogManager.getLogger(InMemoryQuestionDao.class);
 
     @Override
     public List<Question> getQuestions(String subject, String language) throws DaoException {
@@ -58,7 +62,7 @@ public class InMemoryQuestionDao extends AbstractDAO implements QuestionDao {
                 closeMainConnection(connection);
                 ConnectionPool.getInstance().closeDBResources(rs, statement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQL exception", e);
             }
         }
 
@@ -98,7 +102,7 @@ public class InMemoryQuestionDao extends AbstractDAO implements QuestionDao {
                 closeMainConnection(connection);
                 ConnectionPool.getInstance().closeDBResources(rs, statement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQL exception", e);
             }
         }
 
@@ -129,7 +133,7 @@ public class InMemoryQuestionDao extends AbstractDAO implements QuestionDao {
                 closeMainConnection(connection);
                 ConnectionPool.getInstance().closeDBResources(statement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQL exception", e);
             }
         }
     }
@@ -171,7 +175,7 @@ public class InMemoryQuestionDao extends AbstractDAO implements QuestionDao {
                 closeMainConnection(connection);
                 ConnectionPool.getInstance().closeDBResources(rs, statement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQL exception", e);
             }
         }
 
@@ -219,7 +223,7 @@ public class InMemoryQuestionDao extends AbstractDAO implements QuestionDao {
                 closeMainConnection(connection);
                 ConnectionPool.getInstance().closeDBResources(statement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQL exception", e);
             }
         }
     }
@@ -254,7 +258,7 @@ public class InMemoryQuestionDao extends AbstractDAO implements QuestionDao {
                 closeMainConnection(connection);
                 ConnectionPool.getInstance().closeDBResources(statement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQL exception", e);
             }
         }
     }

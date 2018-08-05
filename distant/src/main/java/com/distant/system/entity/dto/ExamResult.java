@@ -1,6 +1,6 @@
 package com.distant.system.entity.dto;
 
-import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 public class ExamResult {
@@ -14,6 +14,15 @@ public class ExamResult {
     private String subject;
     private int subjectID;
     private int userID;
+    private String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public int getSubjectID() {
         return subjectID;
@@ -73,12 +82,13 @@ public class ExamResult {
                 userID == that.userID &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(surname, that.surname) &&
-                Objects.equals(subject, that.subject);
+                Objects.equals(subject, that.subject) &&
+                Objects.equals(date, that.date);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(name, surname, mark, subject, subjectID, userID);
+        return Objects.hash(name, surname, mark, subject, subjectID, userID, date);
     }
 }

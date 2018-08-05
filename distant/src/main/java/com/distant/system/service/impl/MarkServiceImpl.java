@@ -9,6 +9,7 @@ import com.distant.system.service.MarkService;
 import com.distant.system.service.exception.ServiceException;
 import com.distant.system.service.exception.ValidationException;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class MarkServiceImpl implements MarkService {

@@ -15,6 +15,9 @@ import com.distant.system.service.exception.ValidationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -27,6 +30,7 @@ public class StudentExamResultCommand implements ActionCommand {
     private static final String CON_EXAMRESULT_STUDENT = "con.examresult.student";
     private static final String PATH_PAGE_ERROR_503 = "path.page.error.503";
     private static final String USER = "user";
+    private static final String PATTERN = "yyyy-mm-dd hh:mm:ss";
 
     private MarkService markService = ServiceFactory.getInstance().getMarkService();
 
@@ -61,9 +65,11 @@ public class StudentExamResultCommand implements ActionCommand {
             }
 
             requestContent.setAttribute(RESULT_ATTR, bundle.getString(CON_EXAMRESULT_STUDENT) + examResult);
+
             markService.addMark(examResult, studentId, subjectId);
             requestContent.removeSessionAttribute(EXAM_QUESTIONS_ATTR);
             page = ConfigurationManager.getProperty(EXAM_RESULT_PATH_PAGE);
+
         } catch (ValidationException e) {
             requestContent.setAttribute(RESULT_FAILED_ATTR, bundle.getString(e.getMessage()) + examResult);
             requestContent.removeSessionAttribute(EXAM_QUESTIONS_ATTR);

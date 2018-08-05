@@ -14,6 +14,7 @@
 
 <fmt:message key="con.subject" var="consubject"/>
 <fmt:message key="con.mark" var="conmark"/>
+<fmt:message key="con.date" var="condate"/>
 
 <c:choose>
     <c:when test="${requestScope.listEmpty != null}">
@@ -37,12 +38,14 @@
                     <tr>
                         <th>${consubject}</th>
                         <th>${conmark}</th>
+                        <th>${condate}</th>
                     </tr>
                     <c:forEach var="examresult" items="${requestScope.ExamList}">
 
                         <tr>
                             <td>${examresult.subject}</td>
                             <td>${examresult.mark}</td>
+                            <td>${examresult.date}</td>
                         </tr>
                     </c:forEach>
                 </table>

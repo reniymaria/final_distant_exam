@@ -27,6 +27,14 @@
                     <td>${subject.subject}</td>
                     <td>
                         <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Post">
+                            <button><fmt:message key="con.pass"/></button>
+                            <input type="hidden" name="command" value="studentexam"/>
+                            <input type="hidden" name="subject" value="${subject.subject}"/>
+                            <input type="hidden" name="examlang" value="${sessionScope.language}"/>
+                        </form>
+                        <!--
+                        <br>
+                        <form class="input-form" action="${pageContext.request.contextPath}/controller" method="Post">
                             <button><fmt:message key="con.pass.in.en"/></button>
                             <input type="hidden" name="command" value="studentexam"/>
                             <input type="hidden" name="subject" value="${subject.subject}"/>
@@ -39,6 +47,7 @@
                             <input type="hidden" name="subject" value="${subject.subject}"/>
                             <input type="hidden" name="examlang" value="ru"/>
                         </form>
+                        -->
                     </td>
                 </tr>
             </c:forEach>

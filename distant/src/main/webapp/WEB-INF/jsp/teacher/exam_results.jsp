@@ -22,7 +22,7 @@
 <fmt:message key="con.prev" var="previousbutton"/>
 <fmt:message key="con.delete.message" var="condeletemessage"/>
 <fmt:message key="con.teacherpage" var="conteacherpage"/>
-
+<fmt:message key="con.date" var="condate"/>
 
 <c:choose>
     <c:when test="${requestScope.listEmpty != null}">
@@ -48,6 +48,7 @@
                         <th>${consurname}</th>
                         <th>${consubject}</th>
                         <th>${conmark}</th>
+                        <th>${condate}</th>
                         <th>${conaction}</th>
                     </tr>
                     <c:forEach var="examresult" items="${requestScope.MarkList}">
@@ -57,6 +58,7 @@
                             <td>${examresult.surname}</td>
                             <td>${examresult.subject}</td>
                             <td>${examresult.mark}</td>
+                            <td>${examresult.date}</td>
                             <td>
                                 <form class="input-form" onsubmit="preventSubmit(event, '${condeletemessage}')"
                                       action="${pageContext.request.contextPath}/controller" method="POST">

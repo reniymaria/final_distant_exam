@@ -4,6 +4,7 @@ import com.distant.system.entity.dto.ExamResult;
 import com.distant.system.service.exception.ServiceException;
 import com.distant.system.service.exception.ValidationException;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**

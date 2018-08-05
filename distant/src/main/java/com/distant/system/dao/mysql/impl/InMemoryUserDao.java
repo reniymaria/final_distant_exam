@@ -8,6 +8,8 @@ import com.distant.system.dao.connection.ConnectionPoolException;
 import com.distant.system.dao.exception.DaoException;
 import com.distant.system.dao.mysql.AbstractDAO;
 import com.distant.system.entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -22,6 +24,8 @@ public class InMemoryUserDao extends AbstractDAO implements UserDao {
     public static final String NAME = "name";
     private static final String SURNAME = "surname";
     private static final String ROLE = "role";
+
+    private static final Logger logger = LogManager.getLogger(InMemoryUserDao.class);
 
     @Override
     public List<User> allUsers() throws DaoException {
@@ -52,7 +56,7 @@ public class InMemoryUserDao extends AbstractDAO implements UserDao {
                 closeMainConnection(connection);
                 ConnectionPool.getInstance().closeDBResources(rs, statement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQL exception", e);
             }
         }
         return users;
@@ -92,7 +96,7 @@ public class InMemoryUserDao extends AbstractDAO implements UserDao {
                 closeMainConnection(connection);
                 ConnectionPool.getInstance().closeDBResources(statement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQL exception", e);
             }
         }
     }
@@ -166,7 +170,7 @@ public class InMemoryUserDao extends AbstractDAO implements UserDao {
                 closeMainConnection(connection);
                 ConnectionPool.getInstance().closeDBResources(rs, statement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQL exception", e);
             }
         }
         return user;

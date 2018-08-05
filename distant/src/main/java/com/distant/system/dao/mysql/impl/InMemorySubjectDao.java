@@ -9,6 +9,8 @@ import com.distant.system.dao.exception.DaoException;
 import com.distant.system.dao.mysql.AbstractDAO;
 import com.distant.system.dao.util.DaoUtil;
 import com.distant.system.entity.Subject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,6 +21,8 @@ public class InMemorySubjectDao extends AbstractDAO implements SubjectDao {
 
     private static final String ID = "id";
     private static final String SUBJECT = "subject";
+
+    private static final Logger logger = LogManager.getLogger(InMemorySubjectDao.class);
 
     @Override
     public List<Subject> getAllsubjects() throws DaoException {
@@ -45,7 +49,7 @@ public class InMemorySubjectDao extends AbstractDAO implements SubjectDao {
                 closeMainConnection(connection);
                 ConnectionPool.getInstance().closeDBResources(rs, statement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQL exception", e);
             }
         }
         return subjects;
@@ -78,7 +82,7 @@ public class InMemorySubjectDao extends AbstractDAO implements SubjectDao {
                 closeMainConnection(connection);
                 ConnectionPool.getInstance().closeDBResources(rs, statement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQL exception", e);
             }
         }
 
@@ -128,7 +132,7 @@ public class InMemorySubjectDao extends AbstractDAO implements SubjectDao {
                 closeMainConnection(connection);
                 ConnectionPool.getInstance().closeDBResources(statement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQL exception", e);
             }
         }
     }
@@ -151,7 +155,7 @@ public class InMemorySubjectDao extends AbstractDAO implements SubjectDao {
                 closeMainConnection(connection);
                 ConnectionPool.getInstance().closeDBResources(statement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQL exception", e);
             }
         }
     }
@@ -174,7 +178,7 @@ public class InMemorySubjectDao extends AbstractDAO implements SubjectDao {
                 closeMainConnection(connection);
                 ConnectionPool.getInstance().closeDBResources(statement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQL exception", e);
             }
         }
     }
@@ -202,7 +206,7 @@ public class InMemorySubjectDao extends AbstractDAO implements SubjectDao {
                 closeMainConnection(connection);
                 ConnectionPool.getInstance().closeDBResources(rs, statement);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQL exception", e);
             }
         }
         return subject;
