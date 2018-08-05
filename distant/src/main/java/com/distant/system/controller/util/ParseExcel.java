@@ -1,6 +1,8 @@
 package com.distant.system.controller.util;
 
 import com.distant.system.entity.Question;
+import com.distant.system.service.QuestionService;
+import com.distant.system.service.ServiceFactory;
 import com.distant.system.service.impl.QuestionServiceImpl;
 import com.distant.system.service.exception.ServiceException;
 import com.distant.system.service.exception.ValidationException;
@@ -18,7 +20,7 @@ import java.util.List;
 public class ParseExcel {
 
     private static final int I = 0;
-    private static QuestionServiceImpl questionService = new QuestionServiceImpl();
+    private static QuestionService questionService = ServiceFactory.getInstance().getQuestionService();
 
     private ParseExcel() {
         throw new AssertionError("Class contains static methods only. You should not instantiate it!");

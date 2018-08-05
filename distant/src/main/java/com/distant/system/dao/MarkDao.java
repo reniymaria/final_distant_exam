@@ -17,70 +17,53 @@ public interface MarkDao {
     String SQL_DELETE_MARK = "DELETE FROM marks WHERE subjects_id = ? AND users_id = ?";
 
     /**
-     * @param mark int id of mark
-     *
+     * @param mark      int id of mark
      * @param studentId id of student
-     *
      * @param subjectId id of subject
-     *
-     * @throws DaoException
-     *              the exception during getting data from DB
+     * @throws DaoException the exception during getting data from DB
      */
     void addMark(int mark, int studentId, int subjectId) throws DaoException;
+
     /**
      * @return list of exam results
-     *
-     * @throws DaoException
-     *              the exception during getting data from DB
+     * @throws DaoException the exception during getting data from DB
      */
     List<ExamResult> getExamMarks() throws DaoException;
+
     /**
-     * @param offset set of records
-     *
+     * @param offset  set of records
      * @param records number of records
-     *
      * @return list of exam results
-     *
-     * @throws DaoException
-     *             the exception during getting data from DB
+     * @throws DaoException the exception during getting data from DB
      */
     List<ExamResult> numberOfMarks(int offset, int records) throws DaoException;
+
     /**
      * @return size of all marks
-     *
-     * @throws DaoException
-     *              the exception during getting data from DB
+     * @throws DaoException the exception during getting data from DB
      */
     int allMarks() throws DaoException;
+
     /**
      * @param studentId int id of student
-     *
-     * @param offset set of records
-     *
-     * @param records number of records
-     *
+     * @param offset    set of records
+     * @param records   number of records
      * @return list of exam results
-     *
-     * @throws DaoException
-     *              the exception during getting data from DB
+     * @throws DaoException the exception during getting data from DB
      */
     List<ExamResult> numberOfStudentMarks(int studentId, int offset, int records) throws DaoException;
+
     /**
      * @param studentId int id of student
-     *
      * @return size of marks for student
-     *
-     * @throws DaoException
-     *              the exception during getting data from DB
+     * @throws DaoException the exception during getting data from DB
      */
     int allStudentMarks(int studentId) throws DaoException;
+
     /**
-     * @param userId int id of student
-     *
+     * @param userId    int id of student
      * @param subjectId id of subject
-     *
-     * @throws DaoException
-     *              the exception during getting data from DB
+     * @throws DaoException the exception during getting data from DB
      */
     void deleteMark(int userId, int subjectId) throws DaoException;
 
