@@ -67,6 +67,7 @@ public class LogInCommand implements ActionCommand {
             requestContent.setAttribute(ERR_MESS, bundle.getString(e.getMessage()));
             page = ConfigurationManager.getProperty(LOGIN_PAGE_PATH);
         } catch (ServiceException e) {
+            logger.error("Service exception", e);
             page = ConfigurationManager.getProperty(PATH_PAGE_ERROR_503);
         }
 

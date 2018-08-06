@@ -8,8 +8,6 @@ import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.service.LanguageService;
 import com.distant.system.service.QuestionService;
 import com.distant.system.service.ServiceFactory;
-import com.distant.system.service.impl.LanguageServiceImpl;
-import com.distant.system.service.impl.QuestionServiceImpl;
 import com.distant.system.controller.util.ConfigurationManager;
 import com.distant.system.service.exception.ServiceException;
 import com.distant.system.service.exception.ValidationException;

@@ -8,16 +8,12 @@ import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.entity.User;
 import com.distant.system.service.MarkService;
 import com.distant.system.service.ServiceFactory;
-import com.distant.system.service.impl.MarkServiceImpl;
 import com.distant.system.controller.util.ConfigurationManager;
 import com.distant.system.service.exception.ServiceException;
 import com.distant.system.service.exception.ValidationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -30,7 +26,6 @@ public class StudentExamResultCommand implements ActionCommand {
     private static final String CON_EXAMRESULT_STUDENT = "con.examresult.student";
     private static final String PATH_PAGE_ERROR_503 = "path.page.error.503";
     private static final String USER = "user";
-    private static final String PATTERN = "yyyy-mm-dd hh:mm:ss";
 
     private MarkService markService = ServiceFactory.getInstance().getMarkService();
 

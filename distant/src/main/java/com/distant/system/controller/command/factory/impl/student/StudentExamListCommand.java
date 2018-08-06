@@ -8,7 +8,6 @@ import com.distant.system.entity.dto.ExamResult;
 import com.distant.system.controller.exception.NoSuchRequestParameterException;
 import com.distant.system.service.MarkService;
 import com.distant.system.service.ServiceFactory;
-import com.distant.system.service.impl.MarkServiceImpl;
 import com.distant.system.controller.util.ConfigurationManager;
 import com.distant.system.service.exception.ServiceException;
 import com.distant.system.service.exception.ValidationException;

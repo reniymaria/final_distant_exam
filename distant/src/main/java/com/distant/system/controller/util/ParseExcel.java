@@ -3,9 +3,10 @@ package com.distant.system.controller.util;
 import com.distant.system.entity.Question;
 import com.distant.system.service.QuestionService;
 import com.distant.system.service.ServiceFactory;
-import com.distant.system.service.impl.QuestionServiceImpl;
 import com.distant.system.service.exception.ServiceException;
 import com.distant.system.service.exception.ValidationException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -21,6 +22,8 @@ public class ParseExcel {
 
     private static final int I = 0;
     private static QuestionService questionService = ServiceFactory.getInstance().getQuestionService();
+
+    private static final Logger logger = LogManager.getLogger(ParseExcel.class);
 
     private ParseExcel() {
         throw new AssertionError("Class contains static methods only. You should not instantiate it!");
@@ -62,6 +65,7 @@ public class ParseExcel {
         try {
             questionService.add(questions);
         } catch (ValidationException | ServiceException e) {
+            logger.error("Questions are not added after parsing", e);
             return false;
         }
         return true;

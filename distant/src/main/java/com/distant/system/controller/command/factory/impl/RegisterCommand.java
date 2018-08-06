@@ -10,7 +10,6 @@ import com.distant.system.service.UserService;
 import com.distant.system.service.exception.ValidationException;
 import com.distant.system.service.util.Validation;
 import com.distant.system.entity.User;
-import com.distant.system.service.impl.UserServiceImpl;
 import com.distant.system.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -15,7 +15,7 @@ public class CommandUtil {
     private static final String BASE_NAME = "i18n.content";
 
 
-    private static final Logger LOGGER = LogManager.getLogger(CommandUtil.class);
+    private static final Logger logger = LogManager.getLogger(CommandUtil.class);
 
     private CommandUtil() {
         throw new AssertionError("Class contains static methods only. You should not instantiate it!");
@@ -27,7 +27,7 @@ public class CommandUtil {
         try {
             locale = new Locale(requestContent.getSessionAttribute(LANGUAGE).toString());
         } catch (NoSuchRequestParameterException e) {
-            LOGGER.warn("Parameter locale is not found. Set locale ru", e);
+            logger.warn("Parameter locale is not found. Set locale ru", e);
             locale = new Locale(RU_DEFAULT);
         }
         bundle = ResourceBundle.getBundle(BASE_NAME, locale);

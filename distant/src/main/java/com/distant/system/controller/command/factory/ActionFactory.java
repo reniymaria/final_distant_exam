@@ -2,7 +2,7 @@ package com.distant.system.controller.command.factory;
 
 import com.distant.system.controller.command.ActionCommand;
 import com.distant.system.controller.command.CommandEnum;
-import com.distant.system.controller.command.factory.impl.EmptyCommand;
+import com.distant.system.controller.command.factory.impl.NoFoundCommand;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,7 +16,7 @@ public class ActionFactory {
 
     public ActionCommand defineCommand(HttpServletRequest request) {
 
-        ActionCommand current = new EmptyCommand();
+        ActionCommand current = new NoFoundCommand();
         String userCommand = request.getParameter(COMMAND_PARAM);
 
         if (userCommand == null || userCommand.isEmpty()) {
